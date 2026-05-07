@@ -19,36 +19,114 @@
     --muted: #8aa0c0;
     --border: rgba(79, 195, 247, 0.15);
     --border-strong: rgba(79, 195, 247, 0.3);
+
+    /* Aliases used in this file */
+    --cream: #0a1628;
+    --cream-light: #0f2040;
+    --cream-dark: #172a50;
+    --ink: #f0eff8;
+    --ink-soft: #c0cfe8;
+    --orange: #4fc3f7;
+    --orange-deep: #a8edcc;
+    --border-warm: rgba(79, 195, 247, 0.3);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background-color: var(--navy);
-    color: var(--white);
+    background-color: var(--cream);
+    color: var(--ink);
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     line-height: 1.7;
     min-height: 100vh;
   }
 
-  /* HEADER */
-  header {
-    position: relative;
-    padding: 80px 0 60px;
-    text-align: center;
+  /* NAV */
+  nav {
     border-bottom: 1px solid var(--border);
-    overflow: hidden;
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cream-light);
   }
 
-  header::before {
-    content: '';
-    position: absolute;
-    top: -100px; left: 50%; transform: translateX(-50%);
-    width: 700px; height: 400px;
-    background: radial-gradient(ellipse, rgba(79,195,247,0.08) 0%, transparent 70%);
-    pointer-events: none;
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
   }
+
+  .nav-logo span { color: var(--electric); }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--electric); }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 52px 32px;
+    display: flex;
+    align-items: center;
+    gap: 52px;
+  }
+
+  @media (max-width: 680px) {
+    .header-inner { flex-direction: column; text-align: center; gap: 32px; }
+    .meta-row { justify-content: center; }
+  }
+
+  /* LOGO */
+  .logo-wrap {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--cream-light);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .logo-placeholder {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .header-text { flex: 1; }
 
   .tag {
     display: inline-block;
@@ -60,33 +138,30 @@
     border: 1px solid var(--border-strong);
     padding: 5px 14px;
     border-radius: 2px;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
+    background: rgba(79, 195, 247, 0.04);
   }
 
   .acronym {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(72px, 12vw, 120px);
+    font-size: clamp(52px, 8vw, 90px);
     font-weight: 600;
     letter-spacing: -0.02em;
     color: var(--white);
     line-height: 1;
-    margin-bottom: 20px;
-    position: relative;
+    margin-bottom: 14px;
   }
 
   .acronym span { color: var(--electric); }
 
   .workshop-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 400;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 10px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 8px;
   }
 
   .workshop-subtitle {
@@ -95,16 +170,12 @@
     font-weight: 400;
     font-style: italic;
     color: var(--electric);
-    margin-bottom: 32px;
-    max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 24px;
   }
 
   .meta-row {
     display: flex;
-    justify-content: center;
-    gap: 32px;
+    gap: 24px;
     flex-wrap: wrap;
   }
 
@@ -174,7 +245,6 @@
 
   p:last-child { margin-bottom: 0; }
 
-  /* OBJECTIVE BOX */
   .objective-box {
     border: 1px solid var(--border-strong);
     border-left: 3px solid var(--electric);
@@ -211,13 +281,9 @@
     transition: background 0.2s;
   }
 
-  .session-card:hover {
-    background: var(--navy-mid);
-  }
+  .session-card:hover { background: var(--navy-mid); }
 
-  .session-card.full {
-    grid-column: 1 / -1;
-  }
+  .session-card.full { grid-column: 1 / -1; }
 
   .session-num {
     font-family: 'DM Mono', monospace;
@@ -240,14 +306,10 @@
     font-size: 14px;
     color: var(--muted);
     line-height: 1.75;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
-  .topics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
+  .topics { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 
   .topic-tag {
     font-size: 11px;
@@ -272,13 +334,7 @@
     background: rgba(240,192,96,0.04);
   }
 
-  /* PROJECT HIGHLIGHT */
-  .project-highlight {
-    display: grid;
-    grid-template-columns: 3px 1fr;
-    gap: 24px;
-    margin-top: 28px;
-  }
+  .project-highlight { display: grid; grid-template-columns: 3px 1fr; gap: 24px; margin-top: 28px; }
 
   .project-bar {
     background: linear-gradient(to bottom, var(--aurora), var(--electric));
@@ -293,6 +349,22 @@
     margin-bottom: 10px;
   }
 
+  .communities { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+  .community-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--navy-mid);
+  }
+
+  .community-pill .icon { width: 8px; height: 8px; border-radius: 50%; }
+
+  .community-pill span { font-size: 13px; color: #c0cfe8; }
+
   /* FOOTER */
   footer {
     border-top: 1px solid var(--border);
@@ -300,11 +372,7 @@
     padding: 40px 32px;
   }
 
-  footer p {
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
+  footer p { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
 
   .fapesp-badge {
     display: inline-block;
@@ -317,54 +385,37 @@
     letter-spacing: 0.1em;
     margin-top: 12px;
   }
-
-  /* DIVIDER */
-  hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 48px 0;
-  }
-
-  /* COMMUNITIES */
-  .communities {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .community-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: var(--navy-mid);
-  }
-
-  .community-pill .icon {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-  }
-
-  .community-pill span {
-    font-size: 13px;
-    color: #c0cfe8;
-  }
 </style>
 </head>
 <body>
 
+<nav>
+  <a class="nav-logo" href="workshop_MNS4A.html">MN<span>S</span>4A</a>
+  <ul class="nav-links">
+    <li><a href="workshop_MNS4A.html" class="active">About</a></li>
+    <li><a href="workshop_MNS4A.html#sessions">Sessions</a></li>
+    <li><a href="committee_MNS4A.html">Committee</a></li>
+  </ul>
+</nav>
+
 <header>
-  <div class="tag">International Scientific Workshop</div>
-  <div class="acronym">MN<span>S</span>4A</div>
-  <div class="workshop-title">Modeling · Networks · Scientific Instrumentation for Aeronomy</div>
-  <div class="workshop-subtitle">Implications to Natural Hazard Impacts on Aeronomy</div>
-  <div class="meta-row">
-    <div class="meta-item"><div class="dot"></div><span>FAPESP Project — IONO_DIET</span></div>
-    <div class="meta-item"><div class="dot"></div><span>International Forum</span></div>
-    <div class="meta-item"><div class="dot"></div><span>3–4 Day Format</span></div>
+  <div class="header-inner">
+    <!-- LOGO -->
+    <div class="logo-wrap">
+      <img src="img/logo.jpeg" alt="MNS4A Workshop Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;logo-placeholder&quot;>LOGO<br>HERE</div>'">
+    </div>
+
+    <div class="header-text">
+      <div class="tag">International Scientific Workshop</div>
+      <div class="acronym">MN<span>S</span>4A</div>
+      <div class="workshop-title">Modeling · Networks · Scientific Instrumentation for Aeronomy</div>
+      <div class="workshop-subtitle">Implications to Natural Hazard Impacts on Aeronomy</div>
+      <div class="meta-row">
+        <div class="meta-item"><div class="dot"></div><span>FAPESP Project — IONO_DIET</span></div>
+        <div class="meta-item"><div class="dot"></div><span>International Forum</span></div>
+        <div class="meta-item"><div class="dot"></div><span>INPE — São José dos Campos</span></div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -390,14 +441,6 @@
       The primary scientific focus is on presenting advances and challenges in modeling and measuring the variability of the atmosphere-ionosphere system, with special emphasis on natural hazards and space weather phenomena.
     </p>
 
-    <div class="project-highlight">
-      <div class="project-bar"></div>
-      <div class="project-content">
-        <h3>Project IONO_DIET</h3>
-        <p>Funded by FAPESP, this project investigates ionospheric variability and its links to meteorological conditions at the Earth's surface, troposphere, and near-space environments. The workshop is organized within its framework, aiming to produce a structured outline of sessions to be submitted to the scientific committee.</p>
-      </div>
-    </div>
-
     <div class="communities">
       <div class="community-pill"><div class="icon" style="background:#4fc3f7"></div><span>Aeronomy</span></div>
       <div class="community-pill"><div class="icon" style="background:#a8edcc"></div><span>Seismology</span></div>
@@ -407,7 +450,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="sessions">
     <div class="section-label">Workshop Sessions</div>
     <h2>Session <em>structure</em></h2>
     <p>The workshop is organized into three core thematic sessions. Each session will have a responsible pair from the local committee, who will prepare a base text for review by the scientific committee.</p>
@@ -429,7 +472,7 @@
           <span class="topic-tag">Empirical models</span>
           <span class="topic-tag">Data-driven methods</span>
           <span class="topic-tag">Data assimilation</span>
-          <span class="topic-tag">TIDs & natural hazards</span>
+          <span class="topic-tag">TIDs &amp; natural hazards</span>
           <span class="topic-tag">Space weather</span>
           <span class="topic-tag">Forecast capability</span>
         </div>
@@ -448,7 +491,7 @@
         <div class="topics">
           <span class="topic-tag aurora">Ground-based networks</span>
           <span class="topic-tag aurora">Satellite observations</span>
-          <span class="topic-tag aurora">GNSS & GPS arrays</span>
+          <span class="topic-tag aurora">GNSS &amp; GPS arrays</span>
           <span class="topic-tag aurora">Magnetometers</span>
           <span class="topic-tag aurora">Ionosondes</span>
           <span class="topic-tag aurora">Observational gaps</span>
@@ -473,7 +516,7 @@
           <span class="topic-tag gold">Instrument development</span>
           <span class="topic-tag gold">Low-cost solutions</span>
           <span class="topic-tag gold">Signal processing</span>
-          <span class="topic-tag gold">Passive & active techniques</span>
+          <span class="topic-tag gold">Passive &amp; active techniques</span>
           <span class="topic-tag gold">Instrument intercomparison</span>
           <span class="topic-tag gold">Data assimilation</span>
           <span class="topic-tag gold">Nowcasting</span>
@@ -503,9 +546,23 @@
 </main>
 
 <footer>
-  <p>Organized by the MNS4A Local &amp; Scientific Committee</p>
-  <div>
-    <span class="fapesp-badge">Funded by FAPESP — IONO_DIET Project</span>
+  <div style="max-width:1000px; margin:0 auto; padding:48px 32px 32px; border-top:1px solid var(--border);">
+    <div style="display:grid; grid-template-columns:3px 1fr; gap:24px; margin-bottom:32px;">
+      <div style="background:linear-gradient(to bottom, var(--aurora), var(--electric)); border-radius:2px;"></div>
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--electric-dim); margin-bottom:12px;">This workshop is a product of</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; color:var(--aurora); margin-bottom:12px;">Project IONO-DIET</div>
+        <p style="font-size:14px; color:#c0cfe8; margin-bottom:10px;">MNS4A is a direct scientific output of <em>IONO-DIET — Ionospheric Detection and Imaging of Earthquakes and Tsunamis in Near-Real Time</em>, a joint Brazil–France initiative funded by FAPESP (Process 2022/03502-6) and ANR (AAPG2022), coordinated by Dr. Esfhan Alam Kherani (INPE) and Dr. Elvira Astafyeva (IPGP/CNRS).</p>
+        <p style="font-size:14px; color:#c0cfe8; margin-bottom:20px;">The project aims to develop, for the first time, an ionosphere-based system for near-real-time detection of earthquakes and tsunamis from GNSS-TEC measurements, uniting researchers from INPE, IPGP, NORSAR and ERAU across a 48-month effort (2023–2026).</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">FAPESP 2022/03502-6</span>
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">ANR — AAPG2022</span>
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">INPE · IPGP · NORSAR · ERAU</span>
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">2023 – 2026</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:11px; color:var(--muted); text-align:center; border-top:1px solid var(--border); padding-top:20px; letter-spacing:0.05em;">Organized by the MNS4A Local &amp; Scientific Committee · INPE — São José dos Campos</p>
   </div>
 </footer>
 
