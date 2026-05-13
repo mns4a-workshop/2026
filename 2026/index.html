@@ -78,6 +78,75 @@
 
   .nav-links a:hover, .nav-links a.active { color: var(--electric); }
 
+  .nav-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    border: 1px solid rgba(240,192,96,0.3);
+    background: rgba(240,192,96,0.06);
+    padding: 4px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .meta-item.meta-date span {
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .dot-gold {
+    background: rgba(240,192,96,0.8) !important;
+  }
+
+  /* HEADER DATE DISPLAY */
+  .header-date {
+    margin: 22px 0 20px;
+  }
+
+  .header-date-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(240,192,96,0.07);
+    border: 1px solid rgba(240,192,96,0.4);
+    border-radius: 4px;
+    padding: 12px 20px;
+  }
+
+  .header-date-icon {
+    color: var(--gold);
+    opacity: 0.9;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-date-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-date-range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .header-date-place {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    color: rgba(240,192,96,0.65);
+    text-transform: uppercase;
+  }
+
   /* HEADER */
   header {
     border-bottom: 1px solid var(--border);
@@ -236,6 +305,22 @@
     color: var(--electric);
   }
 
+  h2 .date-highlight {
+    font-style: normal;
+    color: var(--gold);
+    font-size: 0.78em;
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    border: 1px solid rgba(240,192,96,0.35);
+    background: rgba(240,192,96,0.07);
+    padding: 2px 12px;
+    border-radius: 2px;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
+  }
+
   p {
     font-size: 15px;
     color: #c0cfe8;
@@ -374,6 +459,94 @@
 
   footer p { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
 
+  /* INSTITUTION LOGOS */
+  .logos-strip {
+    margin: 36px 0 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .logos-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .logos-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .logo-item {
+    height: 52px;
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--navy-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+    min-width: 110px;
+  }
+
+  .logo-item:hover {
+    border-color: var(--border-strong);
+    background: var(--navy-light);
+  }
+
+  .logo-item img {
+    max-height: 34px;
+    max-width: 120px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1) opacity(0.75);
+    transition: opacity 0.2s;
+  }
+
+  .logo-item:hover img { opacity: 1; filter: brightness(0) invert(1) opacity(0.95); }
+
+  .logo-fallback {
+    display: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .logo-item:hover .logo-fallback { color: var(--ink-soft); }
+
+  /* ORCID */
+  .orcid-link {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 5px;
+    opacity: 0.55;
+    transition: opacity 0.2s, transform 0.15s;
+    position: relative;
+    top: -1px;
+  }
+
+  .orcid-link:hover {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  .orcid-icon {
+    width: 15px;
+    height: 15px;
+    display: block;
+  }
+
   .fapesp-badge {
     display: inline-block;
     font-family: 'DM Mono', monospace;
@@ -385,6 +558,317 @@
     letter-spacing: 0.1em;
     margin-top: 12px;
   }
+
+  /* SESSION CHAIRS */
+  .session-chairs {
+    margin-top: 20px;
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--electric-dim);
+    background: rgba(79, 195, 247, 0.03);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .chair-row {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    padding: 3px 0;
+    font-size: 12.5px;
+  }
+
+  .chair-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+  }
+
+  .session-card.aurora-card .session-chairs { border-left-color: var(--aurora-dim); background: rgba(168, 237, 204, 0.03); }
+  .session-card.aurora-card .chair-label { color: var(--aurora-dim); }
+
+  .session-card.gold-card .session-chairs { border-left-color: rgba(240, 192, 96, 0.55); background: rgba(240, 192, 96, 0.03); }
+  .session-card.gold-card .chair-label { color: rgba(240, 192, 96, 0.85); }
+
+  .chair-name { color: #d8e8f8; }
+  .chair-name .affil { color: var(--muted); font-size: 11.5px; }
+
+  /* INVITED SPEAKERS LIST */
+  .invited-list {
+    margin-top: 4px;
+    margin-bottom: 18px;
+  }
+
+  .invited-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .invited-list ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .invited-list li {
+    font-size: 12.5px;
+    color: #d8e8f8;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .invited-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--electric-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .session-card.aurora-card .invited-list li::before { color: var(--aurora-dim); }
+  .session-card.gold-card .invited-list li::before { color: rgba(240, 192, 96, 0.7); }
+
+  .invited-list .affil { color: var(--muted); font-size: 11.5px; }
+
+  /* AGENDA */
+  .agenda-days {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 28px;
+  }
+
+  @media (max-width: 860px) {
+    .agenda-days { grid-template-columns: 1fr; }
+  }
+
+  .agenda-day {
+    background: var(--navy);
+  }
+
+  .day-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--navy-mid);
+  }
+
+  .day-header .day-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .day-header .day-num em {
+    font-style: normal;
+    color: var(--electric);
+  }
+
+  .day-header .day-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .day-header .day-theme {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .day-header .day-theme .tbd {
+    color: var(--electric-dim);
+    margin-left: 4px;
+  }
+
+  .time-slots {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slot {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .slot:last-child { border-bottom: none; }
+  .slot:hover { background: var(--navy-mid); }
+
+  .slot .slot-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--electric-dim);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .slot .slot-content {
+    font-size: 12.5px;
+    color: #d8e8f8;
+    line-height: 1.35;
+  }
+
+  .slot .slot-content .type-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-bottom: 2px;
+  }
+
+  .type-badge.invited {
+    color: var(--gold);
+    border: 1px solid rgba(240,192,96,0.35);
+    background: rgba(240,192,96,0.07);
+  }
+
+  .type-badge.talk {
+    color: var(--electric);
+    border: 1px solid var(--border-strong);
+    background: rgba(79,195,247,0.05);
+  }
+
+  .type-badge.round {
+    color: var(--aurora);
+    border: 1px solid rgba(168,237,204,0.35);
+    background: rgba(168,237,204,0.06);
+  }
+
+  .slot.break-slot { background: rgba(255,255,255,0.012); }
+  .slot.break-slot .slot-content { color: var(--muted); font-style: italic; font-size: 12px; }
+  .slot.break-slot .slot-time { color: var(--muted); }
+  .slot.break-slot:hover { background: rgba(255,255,255,0.02); }
+
+  .committee-status.confirmed {
+    color: var(--aurora);
+    border-color: rgba(168, 237, 204, 0.35);
+    background: rgba(168, 237, 204, 0.06);
+  }
+
+  .pulse-green {
+    background: var(--aurora) !important;
+    box-shadow: 0 0 0 0 rgba(168, 237, 204, 0.5) !important;
+    animation: pulse-green 2.2s infinite !important;
+  }
+
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(168, 237, 204, 0.55); }
+    70%  { box-shadow: 0 0 0 7px rgba(168, 237, 204, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(168, 237, 204, 0); }
+  }
+
+  .marker-green {
+    background: rgba(168, 237, 204, 0.7) !important;
+  }
+
+  .loc-member:hover { background: var(--navy-mid); }
+
+  /* COMMITTEE */
+  .committee-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(240, 192, 96, 0.3);
+    background: rgba(240, 192, 96, 0.05);
+    padding: 5px 12px;
+    border-radius: 2px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+  }
+
+  .committee-status .pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 0 rgba(240, 192, 96, 0.5);
+    animation: pulse 2.2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(240, 192, 96, 0.55); }
+    70% { box-shadow: 0 0 0 7px rgba(240, 192, 96, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(240, 192, 96, 0); }
+  }
+
+  .committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .committee-member {
+    background: var(--navy);
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: background 0.15s;
+  }
+
+  .committee-member:hover { background: var(--navy-mid); }
+
+  .committee-member .marker {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(240, 192, 96, 0.55);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .committee-member .member-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .committee-member .member-name {
+    font-size: 13.5px;
+    color: #d8e8f8;
+    line-height: 1.4;
+  }
+
+  .committee-member .member-affil {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-top: 2px;
+  }
 </style>
 </head>
 <body>
@@ -394,8 +878,11 @@
   <ul class="nav-links">
     <li><a href="workshop_MNS4A.html" class="active">About</a></li>
     <li><a href="workshop_MNS4A.html#sessions">Sessions</a></li>
-    <li><a href="committee_MNS4A.html">Committee</a></li>
+    <li><a href="workshop_MNS4A.html#agenda">Agenda</a></li>
+    <li><a href="workshop_MNS4A.html#loc">LOC</a></li>
+    <li><a href="workshop_MNS4A.html#committee">SOC</a></li>
   </ul>
+  <div class="nav-date">19–21 Oct 2026</div>
 </nav>
 
 <header>
@@ -410,10 +897,29 @@
       <div class="acronym">MN<span>S</span>4A</div>
       <div class="workshop-title">Modeling · Networks · Scientific Instrumentation for Aeronomy</div>
       <div class="workshop-subtitle">Implications to Natural Hazard Impacts on Aeronomy</div>
+
+      <div class="header-date">
+        <div class="header-date-inner">
+          <div class="header-date-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M3 9h18" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="8" cy="14" r="1.2" fill="currentColor"/>
+              <circle cx="12" cy="14" r="1.2" fill="currentColor"/>
+              <circle cx="16" cy="14" r="1.2" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="header-date-text">
+            <span class="header-date-range">19 – 21 October 2026</span>
+            <span class="header-date-place">INPE · São José dos Campos, Brazil</span>
+          </div>
+        </div>
+      </div>
+
       <div class="meta-row">
         <div class="meta-item"><div class="dot"></div><span>FAPESP Project — IONO_DIET</span></div>
         <div class="meta-item"><div class="dot"></div><span>International Forum</span></div>
-        <div class="meta-item"><div class="dot"></div><span>INPE — São José dos Campos</span></div>
       </div>
     </div>
   </div>
@@ -423,7 +929,7 @@
 
   <section>
     <div class="section-label">About the Workshop</div>
-    <h2>A forum where <em>geophysics</em> meets technology</h2>
+    <h2>A workshop where <em>science</em> meets technology</h2>
     <p>
       MNS4A is an international forum for geophysicists and technologists to discuss the most pressing challenges at the intersection of atmospheric modeling, observational networks, and scientific instrumentation — bridging fundamental science with real-world applications.
     </p>
@@ -447,26 +953,32 @@
       <div class="community-pill"><div class="icon" style="background:#f0c060"></div><span>Meteorology</span></div>
       <div class="community-pill"><div class="icon" style="background:#cf9fff"></div><span>Space Weather</span></div>
       <div class="community-pill"><div class="icon" style="background:#f09575"></div><span>Instrumentation</span></div>
+      <div class="community-pill"><div class="icon" style="background:#6da547"></div><span>Networks</span></div>
+      <div class="community-pill"><div class="icon" style="background:#943788"></div><span>Modeling</span></div>
     </div>
   </section>
 
   <section id="sessions">
     <div class="section-label">Workshop Sessions</div>
     <h2>Session <em>structure</em></h2>
-    <p>The workshop is organized into three core thematic sessions. Each session will have a responsible pair from the local committee, who will prepare a base text for review by the scientific committee.</p>
-
+    <p>The workshop is organized into three core thematic sessions.
     <div class="sessions-grid">
 
       <!-- SESSION 1: MODELING -->
       <div class="session-card">
-        <div class="session-num">SESSION 01</div>
-        <h3>Modeling for Aeronomic Forecasting &amp; Hazard Assessment</h3>
+        <div class="session-num">SESSION 01 · MODELING</div>
+        <h3>Modeling of Atmosphere and Ionosphere Variabilities</h3>
         <p>
-          Contributions on modeling for forecasting applications, hazard characterization, emerging modeling techniques, improved data assimilation, and data–model integration. Modeling is central to aeronomy because it enables the quantitative testing of physical mechanisms that cannot be isolated from observations alone.
+        This session welcomes contributions focused on modeling approaches for forecasting applications, hazard characterization, emerging techniques such as machine learning and data-driven methods, data assimilation, and data–model integration, as well as strategies to reduce observational gaps through optimized instrument deployment and expanded monitoring networks. Modeling plays a central role in aeronomy because it enables the quantitative investigation of physical mechanisms that cannot be isolated from observations alone, linking lithospheric and meteorological conditions, neutral dynamics, ionospheric electrodynamics, plasma transport, composition, and conductivity across the thermosphere–ionosphere system. Recent advances have improved the representation of key aeronomic phenomena such as Traveling Ionospheric Disturbances, Sq current systems, the equatorial electrojet, vertical E × B drifts, plasma density structures, sporadic E layers, and plasma irregularities, leading to a better understanding of their variability with local time, season, solar flux, geomagnetic activity, and longitude, as well as space weather impacts on technological systems. Continued progress, however, depends on stronger observational constraints and further development of physics-based, empirical, machine learning, and data-driven models, particularly through studies integrating ground-based and satellite observations, evaluating model performance, improving forecast capabilities, and investigating sensitivities to winds, electric fields, conductivities, lower atmospheric forcing, and geomagnetic disturbances
         </p>
-        <p>
-          Models provide the framework needed to link neutral dynamics, ionospheric electrodynamics, plasma transport, composition, and conductivity across the lower thermosphere and ionosphere. Key features represented include Traveling Ionospheric Disturbances from natural hazards, Sq current systems, the equatorial electrojet, vertical E × B drifts, plasma density structures, sporadic E layers, and plasma irregularities.
-        </p>
+
+        <div class="session-chairs">
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Jonas Rodrigues Souza <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Sophia Rodrigues Laranja <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Saúl Alejandro Sánchez Juarez <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Laysa Cristina Araujo Resende <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+        </div>
+
         <div class="topics">
           <span class="topic-tag">Physics-based modeling</span>
           <span class="topic-tag">Empirical models</span>
@@ -479,15 +991,20 @@
       </div>
 
       <!-- SESSION 2: NETWORKS -->
-      <div class="session-card">
-        <div class="session-num">SESSION 02</div>
-        <h3>Aeronomic Observational Networks &amp; Instrumentation</h3>
+      <div class="session-card aurora-card">
+        <div class="session-num">SESSION 02 · NETWORKS</div>
+        <h3>Scientific Networks for Atmosphere and Ionospheric Applications</h3>
         <p>
-          The development of aeronomic research has advanced significantly through integrated observational networks combining ground-based and space-based systems, enabling simultaneous data acquisition across multiple spatial and temporal scales.
+          We invite contributions related to open scientific questions in aeronomy, including applications of multi-instrument observational networks for studies of atmosphere-ionosphere coupling, space weather, and geospace variability. Advances in aeronomic research have been driven by integrated ground-based and space-based observational networks, enabling coordinated measurements across multiple spatial and temporal scales and improving our understanding of atmospheric and ionospheric processes. Ground-based instruments, including seismometers, Fabry-Perot interferometers, radars, ionosondes, GNSS receivers, magnetometers, All-sky imagers, and riometers, provide continuous high-resolution observations, while satellite missions offer global coverage and synoptic monitoring of large-scale phenomena. Despite significant progress, major scientific challenges remain due to gaps in the geographic distribution of observational infrastructure, and real-time data acquisition,  limiting our understanding of spatial-temporal variability and atmosphere-ionosphere coupling. This session will address key open questions in aeronomy, emphasizing observational gaps and international efforts to expand and coordinate instrumentation networks.
         </p>
-        <p>
-          Ground-based instruments — including Fabry-Perot interferometers, radars, ionosondes, GNSS receivers, magnetometers, all-sky imagers, and riometers — offer continuous high-temporal-resolution measurements. This session presents major open scientific questions, with emphasis on identifying observational gaps and international efforts to address them.
-        </p>
+
+        <div class="session-chairs">
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Sony Su Chen <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Prosper Kwamla Nyassor <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Ângela Machado dos Santos <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Rogério Hisashi Honda <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+        </div>
+
         <div class="topics">
           <span class="topic-tag aurora">Ground-based networks</span>
           <span class="topic-tag aurora">Satellite observations</span>
@@ -500,18 +1017,20 @@
       </div>
 
       <!-- SESSION 3: SCIENTIFIC INSTRUMENTATION -->
-      <div class="session-card full">
-        <div class="session-num">SESSION 03</div>
-        <h3>Scientific Instrumentation — Development, Deployment &amp; Integration</h3>
+      <div class="session-card gold-card full">
+        <div class="session-num">SESSION 03 · INSTRUMENTATION</div>
+        <h3>Scientific Instrumentation and Challenges</h3>
         <p>
-          Understanding atmospheric and space phenomena requires instrumentation capable of capturing processes across a wide range of spatiotemporal scales — from seconds to days, and from centimeters to thousands of kilometers. Ground-based and space-borne platforms, including rockets and satellites, are fundamental for investigating the coupled atmosphere-ionosphere-space environment system and its impacts on technological infrastructure and socioeconomic activities.
+          This session welcomes contributions on instrument development, acquisition, operation, maintenance, dataflow coordination, low-cost alternatives, instrument intercomparison, nowcasting, data assimilation, novel observational strategies, advances in data acquisition and analysis, and coordinated observations. The advancement of scientific instruments is essential for observing atmospheric and space phenomena across different spatiotemporal scales and for understanding the coupling among the lithosphere, atmosphere, ionosphere, and space environment. Ground-based and space-borne instruments, including rockets and satellites, provide complementary observations that support studies of atmospheric and ionospheric variability and their impacts on technological infrastructure and socioeconomic activities. Ground-based instruments offer continuous, long-term, and high-temporal-resolution monitoring, although with limited spatial coverage. Space-borne instruments provide broader spatial coverage and a global perspective, generally with lower temporal resolution. Both passive and active techniques are widely used, but they may face limitations related to weather conditions, environmental interference, operational complexity, technical constraints, and financial costs.
         </p>
-        <p>
-          Ground-based instruments provide continuous, localized, and high-temporal-resolution observations, while space-borne instruments offer broader spatial and global coverage. Both passive and active observational techniques play important roles, each with their own constraints: passive optical systems are limited by illumination and weather conditions, while active instruments face challenges related to environmental interference, calibration, and maintenance costs.
-        </p>
-        <p>
-          This session encourages contributions addressing innovative approaches to instrument development, data acquisition, signal processing, and observational strategies — with particular emphasis on low-cost instrumentation, alternative hardware solutions, instrument intercomparison, and integrated observational techniques. Studies on nowcasting, data assimilation, and physics-based or numerical modeling efforts aimed at improving forecasting capability are also welcome.
-        </p>
+
+        <div class="session-chairs">
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Rodolfo de Jesus <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Vinícius Deggeroni <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Vânia de Fátima Andrioli <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Oluwasegun Michael Adebayo <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+        </div>
+
         <div class="topics">
           <span class="topic-tag gold">Instrument development</span>
           <span class="topic-tag gold">Low-cost solutions</span>
@@ -524,6 +1043,154 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section id="agenda">
+    <div class="section-label">Program &amp; Schedule</div>
+    <h2>Three-day <em>agenda</em> <span class="date-highlight">19–21 October</span></h2>
+    <p>
+      The workshop spans three full days of invited talks, contributed presentations, and round-table discussions. The schedule below shows the time structure of each day; speakers and titles will be assigned after the call for contributions closes.
+    </p>
+
+    <div class="agenda-days">
+
+      <!-- DAY 1 -->
+      <div class="agenda-day">
+        <div class="day-header">
+          <div class="day-num">Day <em>01</em></div>
+          <div class="day-date">19 October</div>
+          <div class="day-theme">Session<span class="tbd">· TBD</span></div>
+        </div>
+        <div class="time-slots">
+          <div class="slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">09:40–10:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:50–12:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">12:10–12:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">12:30–14:00</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">14:40–15:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">15:00–15:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">15:40–16:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">16:00–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div class="agenda-day">
+        <div class="day-header">
+          <div class="day-num">Day <em>02</em></div>
+          <div class="day-date">20 October</div>
+          <div class="day-theme">Session<span class="tbd">· TBD</span></div>
+        </div>
+        <div class="time-slots">
+          <div class="slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">09:40–10:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:50–12:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">12:10–12:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">12:30–14:00</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">14:40–15:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">15:00–15:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">15:40–16:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">16:00–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div class="agenda-day">
+        <div class="day-header">
+          <div class="day-num">Day <em>03</em></div>
+          <div class="day-date">21 October</div>
+          <div class="day-theme">Session<span class="tbd">· TBD</span></div>
+        </div>
+        <div class="time-slots">
+          <div class="slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">09:40–10:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">11:50–12:30</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">12:30–14:00</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">14:40–15:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">15:00–15:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">15:40–16:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">16:00–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="loc">
+    <div class="section-label">Local Organizing Committee (LOC)</div>
+    <h2>Local organizing <em>committee</em></h2>
+    <p>
+      The Local Organizing Committee is responsible for the logistical and operational coordination of MNS4A, hosted at INPE — São José dos Campos.
+    </p>
+
+    <div class="committee-status confirmed">
+      <span class="pulse pulse-green"></span>
+      <span>Confirmed</span>
+    </div>
+
+    <div class="committee-grid">
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Esfham Kherani <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Clezio Denardini <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Alexandre Alvares Pimenta <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Ângela Machado dos Santos <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Laysa Cristina Araujo Resende <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Oluwasegun Michael Adebayo <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Prosper Kwamla Nyassor <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Rodolfo de Jesus <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Rogério Hisashi Honda <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Saúl Alejandro Sánchez Juarez <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Sony Su Chen <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Sophia Rodrigues Laranja <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Vânia de Fátima Andrioli <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Vinícius Deggeroni <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+    </div>
+  </section>
+
+  <section id="committee">
+    <div class="section-label">Scientific Organizing Committee (SOC)</div>
+    <h2>Scientific organizing <em>committee</em> </span> <span class="date-highlight">To be confirmed</span></h2>
+    <p>
+      The Scientific Organizing Committee (SOC) brings together researchers from Brazil and abroad working across aeronomy, ionospheric physics, and observational networks. The list below reflects the proposed composition; confirmations are currently being collected.
+    </p>
+
+    <div class="committee-grid">
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Alison de Oliveira Moraes <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IAE / ITA</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Boris Maletckii <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">Japan</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Danny Scipión <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IGP, Peru</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Elvira Astafyeva <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">CNRS, France</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Francisco Carlos de Meneses Jr. <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IFPR</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. George Sand Leão Araújo de França <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">USP</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Giorgio Picanço <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UMass Lowell, USA</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Igo Paulino da Silva <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UFCG</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Inez Staciarini Batista <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. José Henrique Fernandez <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UFRN</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Juliano Moro <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Marco Antonio Ridenti <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">ITA</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Marco Milla <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">PUC, Peru</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Maurício José Alves Bolzam <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UFJ</span></div></div>
+      <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Virgínia Klausner <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UNIVAP</span></div></div>
     </div>
   </section>
 
@@ -562,7 +1229,47 @@
         </div>
       </div>
     </div>
-    <p style="font-size:11px; color:var(--muted); text-align:center; border-top:1px solid var(--border); padding-top:20px; letter-spacing:0.05em;">Organized by the MNS4A Local &amp; Scientific Committee · INPE — São José dos Campos</p>
+
+
+<!-- INSTITUTION LOGOS -->
+    <div class="logos-strip">
+      <div class="logos-label">Supporting Institutions</div>
+      <div class="logos-row">
+        <a class="logo-item" href="https://fapesp.br" target="_blank" rel="noopener" title="FAPESP">
+          <img src="img/logo_fapesp.png" alt="FAPESP"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">FAPESP</div>
+        </a>
+        <a class="logo-item" href="https://anr.fr" target="_blank" rel="noopener" title="ANR">
+          <img src="img/logo_anr.png" alt="ANR"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">ANR</div>
+        </a>
+        <a class="logo-item" href="https://www.gov.br/inpe" target="_blank" rel="noopener" title="INPE">
+          <img src="img/logo_inpe.png" alt="INPE"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">INPE</div>
+        </a>
+        <a class="logo-item" href="https://www.ipgp.fr" target="_blank" rel="noopener" title="IPGP">
+          <img src="img/logo_ipgp.png" alt="IPGP"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">IPGP</div>
+        </a>
+        <a class="logo-item" href="https://www.norsar.no" target="_blank" rel="noopener" title="NORSAR">
+          <img src="img/logo_norsar.png" alt="NORSAR"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">NORSAR</div>
+        </a>
+        <a class="logo-item" href="https://erau.edu" target="_blank" rel="noopener" title="ERAU">
+          <img src="img/logo_erau.png" alt="ERAU"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">ERAU</div>
+        </a>
+      </div>
+    </div>
+
+
+    <p style="font-size:11px; color:var(--muted); text-align:center; border-top:1px solid var(--border); padding-top:20px; letter-spacing:0.05em;">Organized by the MNS4A Local &amp; Scientific Organizing Committee (SOC) · INPE — São José dos Campos</p>
   </div>
 </footer>
 

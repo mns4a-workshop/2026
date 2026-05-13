@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNS4A Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f2040;
+    --navy-light: #172a50;
+    --electric: #4fc3f7;
+    --electric-dim: #1a8fbf;
+    --aurora: #a8edcc;
+    --aurora-dim: #3db87a;
+    --gold: #f0c060;
+    --white: #f0eff8;
+    --muted: #8aa0c0;
+    --border: rgba(79, 195, 247, 0.15);
+    --border-strong: rgba(79, 195, 247, 0.3);
+
+    /* Aliases used in this file */
+    --cream: #0a1628;
+    --cream-light: #0f2040;
+    --cream-dark: #172a50;
+    --ink: #f0eff8;
+    --ink-soft: #c0cfe8;
+    --orange: #4fc3f7;
+    --orange-deep: #a8edcc;
+    --border-warm: rgba(79, 195, 247, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cream-light);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--electric); }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--electric); }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 52px 32px;
+    display: flex;
+    align-items: center;
+    gap: 52px;
+  }
+
+  @media (max-width: 680px) {
+    .header-inner { flex-direction: column; text-align: center; gap: 32px; }
+    .meta-row { justify-content: center; }
+  }
+
+  /* LOGO */
+  .logo-wrap {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--cream-light);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .logo-placeholder {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .header-text { flex: 1; }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--electric);
+    border: 1px solid var(--border-strong);
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    background: rgba(79, 195, 247, 0.04);
+  }
+
+  .acronym {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 90px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .acronym span { color: var(--electric); }
+
+  .workshop-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .workshop-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--electric);
+    margin-bottom: 24px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .meta-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--aurora-dim);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  /* SECTION */
+  section { margin-top: 72px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--white);
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--electric);
+  }
+
+  p {
+    font-size: 15px;
+    color: #c0cfe8;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  .objective-box {
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--electric);
+    padding: 28px 32px;
+    margin-top: 28px;
+    background: rgba(79, 195, 247, 0.04);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .objective-box p {
+    font-size: 16px;
+    font-style: italic;
+    color: #d8e8f8;
+    line-height: 1.85;
+  }
+
+  /* SESSIONS */
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 28px;
+  }
+
+  @media (max-width: 640px) {
+    .sessions-grid { grid-template-columns: 1fr; }
+  }
+
+  .session-card {
+    background: var(--navy);
+    padding: 32px 28px;
+    transition: background 0.2s;
+  }
+
+  .session-card:hover { background: var(--navy-mid); }
+
+  .session-card.full { grid-column: 1 / -1; }
+
+  .session-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--electric-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+
+  .session-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .session-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .topics { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+
+  .topic-tag {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 3px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+    color: var(--electric);
+    background: rgba(79,195,247,0.05);
+    white-space: nowrap;
+  }
+
+  .topic-tag.aurora {
+    color: var(--aurora);
+    border-color: rgba(168, 237, 204, 0.25);
+    background: rgba(168,237,204,0.04);
+  }
+
+  .topic-tag.gold {
+    color: var(--gold);
+    border-color: rgba(240,192,96,0.25);
+    background: rgba(240,192,96,0.04);
+  }
+
+  .project-highlight { display: grid; grid-template-columns: 3px 1fr; gap: 24px; margin-top: 28px; }
+
+  .project-bar {
+    background: linear-gradient(to bottom, var(--aurora), var(--electric));
+    border-radius: 2px;
+  }
+
+  .project-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--aurora);
+    margin-bottom: 10px;
+  }
+
+  .communities { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+  .community-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--navy-mid);
+  }
+
+  .community-pill .icon { width: 8px; height: 8px; border-radius: 50%; }
+
+  .community-pill span { font-size: 13px; color: #c0cfe8; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 40px 32px;
+  }
+
+  footer p { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+
+  .fapesp-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 12px;
+    border: 1px solid rgba(168,237,204,0.3);
+    color: var(--aurora);
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="workshop_MNS4A.html">MN<span>S</span>4A</a>
+  <ul class="nav-links">
+    <li><a href="workshop_MNS4A.html" class="active">About</a></li>
+    <li><a href="workshop_MNS4A.html#sessions">Sessions</a></li>
+    <li><a href="committee_MNS4A.html">Committee</a></li>
+  </ul>
+</nav>
+
+<header>
+  <div class="header-inner">
+    <!-- LOGO -->
+    <div class="logo-wrap">
+      <img src="img/logo.jpeg" alt="MNS4A Workshop Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;logo-placeholder&quot;>LOGO<br>HERE</div>'">
+    </div>
+
+    <div class="header-text">
+      <div class="tag">International Scientific Workshop</div>
+      <div class="acronym">MN<span>S</span>4A</div>
+      <div class="workshop-title">Modeling · Networks · Scientific Instrumentation for Aeronomy</div>
+      <div class="workshop-subtitle">Implications to Natural Hazard Impacts on Aeronomy</div>
+      <div class="meta-row">
+        <div class="meta-item"><div class="dot"></div><span>FAPESP Project — IONO_DIET</span></div>
+        <div class="meta-item"><div class="dot"></div><span>International Forum</span></div>
+        <div class="meta-item"><div class="dot"></div><span>INPE — São José dos Campos</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <div class="section-label">About the Workshop</div>
+    <h2>A forum where <em>geophysics</em> meets technology</h2>
+    <p>
+      MNS4A is an international forum for geophysicists and technologists to discuss the most pressing challenges at the intersection of atmospheric modeling, observational networks, and scientific instrumentation — bridging fundamental science with real-world applications.
+    </p>
+    <div class="objective-box">
+      <p>
+        The workshop facilitates discussion on advancing real-time data acquisition, modeling techniques, and measurement systems — including applications that address both societal challenges and technological demands from the perspective of aeronomy and the atmosphere-ionosphere system.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Scientific Focus</div>
+    <h2>Natural hazards &amp; the <em>ionosphere-atmosphere</em> system</h2>
+    <p>
+      The primary scientific focus is on presenting advances and challenges in modeling and measuring the variability of the atmosphere-ionosphere system, with special emphasis on natural hazards and space weather phenomena.
+    </p>
+
+    <div class="communities">
+      <div class="community-pill"><div class="icon" style="background:#4fc3f7"></div><span>Aeronomy</span></div>
+      <div class="community-pill"><div class="icon" style="background:#a8edcc"></div><span>Seismology</span></div>
+      <div class="community-pill"><div class="icon" style="background:#f0c060"></div><span>Meteorology</span></div>
+      <div class="community-pill"><div class="icon" style="background:#cf9fff"></div><span>Space Weather</span></div>
+      <div class="community-pill"><div class="icon" style="background:#f09575"></div><span>Instrumentation</span></div>
+    </div>
+  </section>
+
+  <section id="sessions">
+    <div class="section-label">Workshop Sessions</div>
+    <h2>Session <em>structure</em></h2>
+    <p>The workshop is organized into three core thematic sessions. Each session will have a responsible pair from the local committee, who will prepare a base text for review by the scientific committee.</p>
+
+    <div class="sessions-grid">
+
+      <!-- SESSION 1: MODELING -->
+      <div class="session-card">
+        <div class="session-num">SESSION 01</div>
+        <h3>Modeling for Aeronomic Forecasting &amp; Hazard Assessment</h3>
+        <p>
+          Contributions on modeling for forecasting applications, hazard characterization, emerging modeling techniques, improved data assimilation, and data–model integration. Modeling is central to aeronomy because it enables the quantitative testing of physical mechanisms that cannot be isolated from observations alone.
+        </p>
+        <p>
+          Models provide the framework needed to link neutral dynamics, ionospheric electrodynamics, plasma transport, composition, and conductivity across the lower thermosphere and ionosphere. Key features represented include Traveling Ionospheric Disturbances from natural hazards, Sq current systems, the equatorial electrojet, vertical E × B drifts, plasma density structures, sporadic E layers, and plasma irregularities.
+        </p>
+        <div class="topics">
+          <span class="topic-tag">Physics-based modeling</span>
+          <span class="topic-tag">Empirical models</span>
+          <span class="topic-tag">Data-driven methods</span>
+          <span class="topic-tag">Data assimilation</span>
+          <span class="topic-tag">TIDs &amp; natural hazards</span>
+          <span class="topic-tag">Space weather</span>
+          <span class="topic-tag">Forecast capability</span>
+        </div>
+      </div>
+
+      <!-- SESSION 2: NETWORKS -->
+      <div class="session-card">
+        <div class="session-num">SESSION 02</div>
+        <h3>Aeronomic Observational Networks &amp; Instrumentation</h3>
+        <p>
+          The development of aeronomic research has advanced significantly through integrated observational networks combining ground-based and space-based systems, enabling simultaneous data acquisition across multiple spatial and temporal scales.
+        </p>
+        <p>
+          Ground-based instruments — including Fabry-Perot interferometers, radars, ionosondes, GNSS receivers, magnetometers, all-sky imagers, and riometers — offer continuous high-temporal-resolution measurements. This session presents major open scientific questions, with emphasis on identifying observational gaps and international efforts to address them.
+        </p>
+        <div class="topics">
+          <span class="topic-tag aurora">Ground-based networks</span>
+          <span class="topic-tag aurora">Satellite observations</span>
+          <span class="topic-tag aurora">GNSS &amp; GPS arrays</span>
+          <span class="topic-tag aurora">Magnetometers</span>
+          <span class="topic-tag aurora">Ionosondes</span>
+          <span class="topic-tag aurora">Observational gaps</span>
+          <span class="topic-tag aurora">Global coverage</span>
+        </div>
+      </div>
+
+      <!-- SESSION 3: SCIENTIFIC INSTRUMENTATION -->
+      <div class="session-card full">
+        <div class="session-num">SESSION 03</div>
+        <h3>Scientific Instrumentation — Development, Deployment &amp; Integration</h3>
+        <p>
+          Understanding atmospheric and space phenomena requires instrumentation capable of capturing processes across a wide range of spatiotemporal scales — from seconds to days, and from centimeters to thousands of kilometers. Ground-based and space-borne platforms, including rockets and satellites, are fundamental for investigating the coupled atmosphere-ionosphere-space environment system and its impacts on technological infrastructure and socioeconomic activities.
+        </p>
+        <p>
+          Ground-based instruments provide continuous, localized, and high-temporal-resolution observations, while space-borne instruments offer broader spatial and global coverage. Both passive and active observational techniques play important roles, each with their own constraints: passive optical systems are limited by illumination and weather conditions, while active instruments face challenges related to environmental interference, calibration, and maintenance costs.
+        </p>
+        <p>
+          This session encourages contributions addressing innovative approaches to instrument development, data acquisition, signal processing, and observational strategies — with particular emphasis on low-cost instrumentation, alternative hardware solutions, instrument intercomparison, and integrated observational techniques. Studies on nowcasting, data assimilation, and physics-based or numerical modeling efforts aimed at improving forecasting capability are also welcome.
+        </p>
+        <div class="topics">
+          <span class="topic-tag gold">Instrument development</span>
+          <span class="topic-tag gold">Low-cost solutions</span>
+          <span class="topic-tag gold">Signal processing</span>
+          <span class="topic-tag gold">Passive &amp; active techniques</span>
+          <span class="topic-tag gold">Instrument intercomparison</span>
+          <span class="topic-tag gold">Data assimilation</span>
+          <span class="topic-tag gold">Nowcasting</span>
+          <span class="topic-tag gold">Space-borne platforms</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Format &amp; Participation</div>
+    <h2>An <em>inclusive</em> scientific forum</h2>
+    <p>
+      MNS4A is designed to be a forum for researchers at all career stages. The organizing committee is committed to including early-career researchers in oral presentations, alongside invited senior scientists. The tone of the workshop is collaborative and open — this is not a workshop for the select few, but for anyone genuinely working to solve problems at the intersection of science, instrumentation, and societal need.
+    </p>
+    <div class="objective-box">
+      <p>
+        Early-career researchers are especially encouraged to participate and present their work. The scientific committee will actively seek to include emerging voices in oral sessions, recognizing that fresh perspectives are essential to the progress of the field.
+      </p>
+    </div>
+    <p style="margin-top: 20px;">
+      Contributions are welcome in oral and poster format. The scientific committee will evaluate submissions and provide feedback on texts before final structuring of the program.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div style="max-width:1000px; margin:0 auto; padding:48px 32px 32px; border-top:1px solid var(--border);">
+    <div style="display:grid; grid-template-columns:3px 1fr; gap:24px; margin-bottom:32px;">
+      <div style="background:linear-gradient(to bottom, var(--aurora), var(--electric)); border-radius:2px;"></div>
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--electric-dim); margin-bottom:12px;">This workshop is a product of</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; color:var(--aurora); margin-bottom:12px;">Project IONO-DIET</div>
+        <p style="font-size:14px; color:#c0cfe8; margin-bottom:10px;">MNS4A is a direct scientific output of <em>IONO-DIET — Ionospheric Detection and Imaging of Earthquakes and Tsunamis in Near-Real Time</em>, a joint Brazil–France initiative funded by FAPESP (Process 2022/03502-6) and ANR (AAPG2022), coordinated by Dr. Esfhan Alam Kherani (INPE) and Dr. Elvira Astafyeva (IPGP/CNRS).</p>
+        <p style="font-size:14px; color:#c0cfe8; margin-bottom:20px;">The project aims to develop, for the first time, an ionosphere-based system for near-real-time detection of earthquakes and tsunamis from GNSS-TEC measurements, uniting researchers from INPE, IPGP, NORSAR and ERAU across a 48-month effort (2023–2026).</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">FAPESP 2022/03502-6</span>
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">ANR — AAPG2022</span>
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">INPE · IPGP · NORSAR · ERAU</span>
+          <span style="font-family:'DM Mono',monospace; font-size:11px; padding:3px 10px; border:1px solid rgba(168,237,204,0.25); border-radius:2px; color:var(--aurora); background:rgba(168,237,204,0.04);">2023 – 2026</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:11px; color:var(--muted); text-align:center; border-top:1px solid var(--border); padding-top:20px; letter-spacing:0.05em;">Organized by the MNS4A Local &amp; Scientific Committee · INPE — São José dos Campos</p>
+  </div>
+</footer>
+
+</body>
+</html>
