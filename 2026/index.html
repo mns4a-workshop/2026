@@ -33,6 +33,8 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+
   body {
     background-color: var(--cream);
     color: var(--ink);
@@ -321,6 +323,16 @@
     top: -3px;
   }
 
+  h2 .tbc-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5em;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+
   p {
     font-size: 15px;
     color: #c0cfe8;
@@ -524,21 +536,32 @@
 
   .logo-item:hover .logo-fallback { color: var(--ink-soft); }
 
+  h2 .tbc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.42em;
+    font-style: normal;
+    font-weight: 400;
+    color: #ff6b6b;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    vertical-align: middle;
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    background: rgba(255, 107, 107, 0.08);
+    padding: 2px 10px;
+    border-radius: 2px;
+    position: relative;
+    top: -3px;
+  }
+
   /* ORCID */
   .orcid-link {
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
     margin-left: 5px;
-    opacity: 0.55;
-    transition: opacity 0.2s, transform 0.15s;
+    opacity: 1;
     position: relative;
     top: -1px;
-  }
-
-  .orcid-link:hover {
-    opacity: 1;
-    transform: scale(1.15);
   }
 
   .orcid-icon {
@@ -876,11 +899,11 @@
 <nav>
   <a class="nav-logo" href="workshop_MNS4A.html">MN<span>S</span>4A</a>
   <ul class="nav-links">
-    <li><a href="workshop_MNS4A.html" class="active">About</a></li>
-    <li><a href="workshop_MNS4A.html#sessions">Sessions</a></li>
-    <li><a href="workshop_MNS4A.html#agenda">Agenda</a></li>
-    <li><a href="workshop_MNS4A.html#loc">LOC</a></li>
-    <li><a href="workshop_MNS4A.html#committee">SOC</a></li>
+    <li><a href="#about" class="active">About</a></li>
+    <li><a href="#sessions">Sessions</a></li>
+    <li><a href="#agenda">Agenda</a></li>
+    <li><a href="#loc">LOC</a></li>
+    <li><a href="#committee">SOC</a></li>
   </ul>
   <div class="nav-date">19–21 Oct 2026</div>
 </nav>
@@ -927,7 +950,7 @@
 
 <main>
 
-  <section>
+  <section id="about">
     <div class="section-label">About the Workshop</div>
     <h2>A workshop where <em>science</em> meets technology</h2>
     <p>
@@ -961,7 +984,7 @@
   <section id="sessions">
     <div class="section-label">Workshop Sessions</div>
     <h2>Session <em>structure</em></h2>
-    <p>The workshop is organized into three core thematic sessions.
+    <p>The workshop is organized into three core thematic sessions.</p>
     <div class="sessions-grid">
 
       <!-- SESSION 1: MODELING -->
@@ -1170,7 +1193,7 @@
 
   <section id="committee">
     <div class="section-label">Scientific Organizing Committee (SOC)</div>
-    <h2>Scientific organizing <em>committee</em> </span> <span class="date-highlight">To be confirmed</span></h2>
+    <h2>Scientific organizing <em>committee</em> <span class="tbc-label">— to be confirmed</span></h2>
     <p>
       The Scientific Organizing Committee (SOC) brings together researchers from Brazil and abroad working across aeronomy, ionospheric physics, and observational networks. The list below reflects the proposed composition; confirmations are currently being collected.
     </p>
