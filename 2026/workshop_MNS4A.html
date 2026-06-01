@@ -98,9 +98,9 @@
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.12em;
-    color: var(--gold);
-    border: 1px solid rgba(240,192,96,0.3);
-    background: rgba(240,192,96,0.06);
+    color: var(--electric);
+    border: 1px solid rgba(79,195,247,0.3);
+    background: rgba(79,195,247,0.06);
     padding: 4px 12px;
     border-radius: 2px;
     white-space: nowrap;
@@ -122,18 +122,39 @@
     margin: 22px 0 20px;
   }
 
+  .header-when {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--muted);
+    margin: 18px 0 20px;
+    line-height: 1.6;
+  }
+
+  .header-when-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--electric);
+    letter-spacing: 0.04em;
+  }
+
+  .header-when-place {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
   .header-date-inner {
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    background: rgba(240,192,96,0.07);
-    border: 1px solid rgba(240,192,96,0.4);
+    background: rgba(79,195,247,0.06);
+    border: 1px solid rgba(79,195,247,0.35);
     border-radius: 4px;
     padding: 12px 20px;
   }
 
   .header-date-icon {
-    color: var(--gold);
+    color: var(--electric);
     opacity: 0.9;
     flex-shrink: 0;
     display: flex;
@@ -146,11 +167,20 @@
     gap: 3px;
   }
 
+  .header-date-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(79,195,247,0.45);
+    margin-bottom: 2px;
+  }
+
   .header-date-range {
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
     font-weight: 600;
-    color: var(--gold);
+    color: var(--electric);
     letter-spacing: 0.02em;
     line-height: 1;
   }
@@ -159,7 +189,7 @@
     font-family: 'DM Mono', monospace;
     font-size: 10.5px;
     letter-spacing: 0.12em;
-    color: rgba(240,192,96,0.65);
+    color: rgba(79,195,247,0.6);
     text-transform: uppercase;
   }
 
@@ -260,8 +290,28 @@
 
   .meta-row {
     display: flex;
-    gap: 24px;
+    gap: 8px;
     flex-wrap: wrap;
+  }
+
+  .meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 4px 10px;
+  }
+
+  .meta-chip svg {
+    opacity: 0.5;
+    flex-shrink: 0;
   }
 
   .meta-item {
@@ -323,13 +373,13 @@
 
   h2 .date-highlight {
     font-style: normal;
-    color: var(--gold);
+    color: var(--electric);
     font-size: 0.78em;
     font-family: 'DM Mono', monospace;
     font-weight: 400;
     letter-spacing: 0.08em;
-    border: 1px solid rgba(240,192,96,0.35);
-    background: rgba(240,192,96,0.07);
+    border: 1px solid rgba(79,195,247,0.35);
+    background: rgba(79,195,247,0.06);
     padding: 2px 12px;
     border-radius: 2px;
     vertical-align: middle;
@@ -781,7 +831,7 @@
   .type-badge.invited {
     color: var(--gold);
     border: 1px solid rgba(240,192,96,0.35);
-    background: rgba(240,192,96,0.07);
+    background: rgba(79,195,247,0.06);
   }
 
   .slot.invited-slot {
@@ -964,14 +1014,6 @@
   .btn-submit svg { flex-shrink: 0; }
 
   /* Header CTA wrapper */
-  .header-cta {
-    margin-top: 24px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
   .header-cta-note {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -1302,6 +1344,149 @@
     color: var(--aurora);
   }
 
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    background: rgba(240, 192, 96, 0.06);
+    border: 1px solid rgba(240, 192, 96, 0.3);
+    border-radius: 3px;
+    padding: 8px 16px;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .back-to-top:hover {
+    background: rgba(240, 192, 96, 0.13);
+    border-color: rgba(240, 192, 96, 0.55);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost.btn-ghost-deadline {
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .btn-ghost-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .btn-ghost-label {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-ghost-deadline-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: rgba(168, 237, 204, 0.6);
+    text-transform: uppercase;
+  }
+
+  .btn-ghost:hover .btn-ghost-deadline-text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .btn-ghost-free-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(168, 237, 204, 0.4);
+    text-transform: uppercase;
+    margin-top: 1px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(168, 237, 204, 0.12);
+  }
+
+  .btn-ghost:hover .btn-ghost-free-text {
+    color: rgba(255, 255, 255, 0.5);
+    border-top-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Header pair buttons */
+  .header-cta {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn-header-date,
+  .btn-header-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 16px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 0.18s, border-color 0.18s;
+    align-self: flex-start;
+  }
+
+  .btn-header-date {
+    color: var(--electric);
+    background: rgba(79, 195, 247, 0.06);
+    border: 1px solid rgba(79, 195, 247, 0.25);
+  }
+
+  .btn-header-date:hover {
+    background: rgba(79, 195, 247, 0.12);
+    border-color: rgba(79, 195, 247, 0.45);
+  }
+
+  .btn-header-submit {
+    color: var(--aurora);
+    background: rgba(168, 237, 204, 0.06);
+    border: 1px solid rgba(168, 237, 204, 0.25);
+  }
+
+  .btn-header-submit:hover {
+    background: rgba(168, 237, 204, 0.12);
+    border-color: rgba(168, 237, 204, 0.45);
+  }
+
+  .btn-header-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .btn-header-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .btn-header-main {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-header-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    text-transform: uppercase;
+  }
+
 </style>
 </head>
 <body>
@@ -1332,45 +1517,38 @@
       <div class="workshop-title">Modeling · Networks · Scientific Instrumentation for Aeronomy</div>
       <div class="workshop-subtitle">Implications to Natural Hazard Impacts on Aeronomy</div>
 
-      <div class="header-date">
-        <div class="header-date-inner">
-          <div class="header-date-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M3 9h18" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <circle cx="8" cy="14" r="1.2" fill="currentColor"/>
-              <circle cx="12" cy="14" r="1.2" fill="currentColor"/>
-              <circle cx="16" cy="14" r="1.2" fill="currentColor"/>
-            </svg>
-          </div>
-          <div class="header-date-text">
-            <span class="header-date-range">19 – 21 October 2026</span>
-            <span class="header-date-place">INPE · São José dos Campos, Brazil</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="meta-row">
-        <div class="meta-item"><div class="dot"></div><span>FAPESP</span></div>
-        <div class="meta-item"><div class="dot"></div><span>IONO-DIET</span></div>
-        <div class="meta-item"><div class="dot"></div><span>International Forum</span></div>
-      </div>
-
       <div class="header-cta">
-        <div>
-          <a href="#submit" class="btn-ghost">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Submit Your Abstract
-          </a>
-          <p style="margin-top:8px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--muted); line-height:1.8;">
-            Free of charge &nbsp;·&nbsp; Open to all researchers &nbsp;·&nbsp; No registration fee
-          </p>
-          <span class="header-cta-note">Deadline: TBD &middot; Oral &amp; Poster</span>
-        </div>
+        <a href="#agenda" class="btn-header-date">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9h18" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span class="btn-header-inner">
+            <span class="btn-header-eyebrow">Workshop</span>
+            <span class="btn-header-main">19 – 21 October 2026</span>
+            <span class="btn-header-sub">INPE · São José dos Campos</span>
+          </span>
+        </a>
+        <a href="#submit" class="btn-header-submit">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="btn-header-inner">
+            <span class="btn-header-eyebrow">Call for Abstracts</span>
+            <span class="btn-header-main">Submit by 30 August 2026</span>
+            <span class="btn-header-sub">Oral &amp; Poster · Free</span>
+          </span>
+        </a>
       </div>
+
+      <div class="meta-row" style="margin-top:20px;">
+        <span class="meta-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>FAPESP</span>
+        <span class="meta-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>IONO-DIET</span>
+        <span class="meta-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/></svg>International Forum</span>
+      </div>
+
     </div>
   </div>
 </header>
@@ -1388,6 +1566,7 @@
         The workshop facilitates discussion on advancing real-time data acquisition, modeling techniques, and measurement systems — including applications that address both societal challenges and technological demands from the perspective of aeronomy and the atmosphere-ionosphere system.
       </p>
     </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
 
   <section>
@@ -1406,6 +1585,7 @@
       <div class="community-pill"><div class="icon" style="background:#6da547"></div><span>Networks</span></div>
       <div class="community-pill"><div class="icon" style="background:#943788"></div><span>Modeling</span></div>
     </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
 
   <section id="sessions">
@@ -1494,6 +1674,7 @@
       </div>
 
     </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
 
   <section id="agenda">
@@ -1586,6 +1767,7 @@
       </div>
 
     </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
 
   <section id="loc">
@@ -1616,6 +1798,7 @@
       <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Vânia de Fátima Andrioli <a href="https://orcid.org/0000-0001-9065-2122" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
       <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Vinícius Deggeroni <a href="https://orcid.org/0000-0002-0725-6055" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
     </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
 
   <section id="committee">
@@ -1642,6 +1825,7 @@
       <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Maurício José Alves Bolzam <a href="https://orcid.org/0000-0002-6037-5483" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UFJ</span></div></div>
       <div class="committee-member"><div class="marker"></div><div class="member-info"><span class="member-name">Dr. Virgínia Klausner <a href="https://orcid.org/0000-0003-0250-5574" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UNIVAP</span></div></div>
     </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
 
   <section>
@@ -1695,6 +1879,7 @@
       </div>
 
     </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
 
 </main>
