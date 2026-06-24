@@ -561,34 +561,40 @@
   }
 
   .logo-item {
-    height: 52px;
-    padding: 8px 20px;
+    width: 150px;
+    height: 80px;
+    padding: 14px 18px;
     border: 1px solid var(--border);
-    border-radius: 4px;
-    background: var(--navy-mid);
+    border-radius: 6px;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 0.2s, background 0.2s;
-    min-width: 110px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
   }
 
   .logo-item:hover {
     border-color: var(--border-strong);
-    background: var(--navy-light);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   }
 
   .logo-item img {
-    max-height: 34px;
-    max-width: 120px;
+    max-height: 72px;
+    max-width: 114px;
     width: auto;
+    height: auto;
     object-fit: contain;
-    filter: brightness(0) invert(1) opacity(0.75);
-    transition: opacity 0.2s;
+    filter: opacity(0.9);
+    transition: filter 0.2s;
   }
 
-  .logo-item:hover img { opacity: 1; filter: brightness(0) invert(1) opacity(0.95); }
+  .logo-item img.logo-wide {
+    max-width: 140px;
+    max-height: 44px;
+  }
 
+  .logo-item:hover img { filter: opacity(1); }
   .logo-fallback {
     display: none;
     font-family: 'DM Mono', monospace;
@@ -1839,6 +1845,7 @@
     </div>
 
     <div class="committee-grid">
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Esfhan Alam Kherani <a href="https://orcid.org/0000-0003-0182-2252" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
       <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Alexandre Alvares Pimenta <a href="https://orcid.org/0000-0001-7263-0368" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
       <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Alison de Oliveira Moraes <a href="https://orcid.org/0000-0002-6493-1694" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IAE / UNITAL</span></div></div>
       <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Boris Maletckii <a href="https://orcid.org/0000-0001-7435-3069" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UTokyo, Japan</span></div></div>
@@ -2194,10 +2201,11 @@
 
 <!-- INSTITUTION LOGOS -->
     <div class="logos-strip">
-      <div class="logos-label">Supporting Institutions</div>
-      <div class="logos-row">
+
+      <div class="logos-label">Financial Support</div>
+      <div class="logos-row" style="margin-bottom:28px;">
         <a class="logo-item" href="https://fapesp.br" target="_blank" rel="noopener" title="FAPESP">
-          <img src="img/logo_fapesp.png" alt="FAPESP"
+          <img src="img/logo_fapesp.png" alt="FAPESP" class="logo-wide"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="logo-fallback">FAPESP</div>
         </a>
@@ -2206,20 +2214,28 @@
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="logo-fallback">ANR</div>
         </a>
+      </div>
+
+      <div class="logos-label">Realization</div>
+      <div class="logos-row" style="margin-bottom:28px;">
         <a class="logo-item" href="https://www.gov.br/inpe" target="_blank" rel="noopener" title="INPE">
           <img src="img/logo_inpe.png" alt="INPE"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="logo-fallback">INPE</div>
         </a>
-        <a class="logo-item" href="https://www.gov.br/planalto/pt-br" target="_blank" rel="noopener" title="INPE">
-          <img src="img/logo_gf.png" alt="INPE"
+        <a class="logo-item" href="https://www.gov.br/planalto/pt-br" target="_blank" rel="noopener" title="Brasil">
+          <img src="img/logo_gf.png" alt="Brasil"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="logo-fallback">INPE</div>
+          <div class="logo-fallback">Brasil</div>
         </a>
-        <a class="logo-item" href="https://www.unb.br/" target="_blank" rel="noopener" title="INPE">
-          <img src="img/logo_unb.png" alt="INPE"
+      </div>
+
+      <div class="logos-label">Supporting Institutions</div>
+      <div class="logos-row">
+        <a class="logo-item" href="https://www.unb.br/" target="_blank" rel="noopener" title="UnB">
+          <img src="img/logo_unb.png" alt="UnB"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="logo-fallback">INPE</div>
+          <div class="logo-fallback">UnB</div>
         </a>
         <a class="logo-item" href="https://www.ipgp.fr" target="_blank" rel="noopener" title="IPGP">
           <img src="img/logo_ipgp.png" alt="IPGP"
@@ -2232,11 +2248,17 @@
           <div class="logo-fallback">NORSAR</div>
         </a>
         <a class="logo-item" href="https://erau.edu" target="_blank" rel="noopener" title="ERAU">
-          <img src="img/logo_erau.png" alt="ERAU"
+          <img src="img/logo_erau.png" alt="ERAU" class="logo-wide"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="logo-fallback">ERAU</div>
         </a>
+        <a class="logo-item" href="https://sbgea.org.br/" target="_blank" rel="noopener" title="SBGEA">
+          <img src="img/logo_sbgea.png" alt="SBGEA"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">SBGEA</div>
+        </a>
       </div>
+
     </div>
 
 
