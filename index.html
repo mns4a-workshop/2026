@@ -15,6 +15,7 @@
     --aurora: #a8edcc;
     --aurora-dim: #3db87a;
     --gold: #f0c060;
+    --lavender: #b9a8f0;
     --white: #f0eff8;
     --muted: #8aa0c0;
     --border: rgba(79, 195, 247, 0.15);
@@ -858,15 +859,25 @@
   }
 
   .type-badge.round {
-    color: var(--aurora);
-    border: 1px solid rgba(168,237,204,0.35);
-    background: rgba(168,237,204,0.06);
+    color: var(--lavender);
+    border: 1px solid rgba(185,168,240,0.35);
+    background: rgba(185,168,240,0.06);
   }
 
-  .slot.break-slot { background: rgba(255,255,255,0.012); }
-  .slot.break-slot .slot-content { color: var(--muted); font-style: italic; font-size: 12px; }
-  .slot.break-slot .slot-time { color: var(--muted); }
-  .slot.break-slot:hover { background: rgba(255,255,255,0.02); }
+  .slot.round-slot {
+    background: rgba(185,168,240,0.05);
+    border-left: 2px solid rgba(185,168,240,0.3);
+  }
+  .slot.round-slot:hover { background: rgba(185,168,240,0.09); }
+  .slot.round-slot .slot-time { color: rgba(185,168,240,0.75); }
+
+  .slot.break-slot {
+    background: rgba(168,237,204,0.05);
+    border-left: 2px solid rgba(168,237,204,0.3);
+  }
+  .slot.break-slot .slot-content { color: var(--aurora); font-style: italic; font-size: 12px; }
+  .slot.break-slot .slot-time { color: rgba(168,237,204,0.75); }
+  .slot.break-slot:hover { background: rgba(168,237,204,0.09); }
 
   .committee-status.confirmed {
     color: var(--aurora);
@@ -1733,15 +1744,16 @@
           <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:50–12:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">12:10–12:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot break-slot"><span class="slot-time">12:30–14:00</span><span class="slot-content">Lunch</span></div>
+          <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:40–15:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">15:00–15:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
-          <div class="slot break-slot"><span class="slot-time">15:40–16:00</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">16:00–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+          <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">15:00–15:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">15:20–15:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-time">15:40–16:20</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
         </div>
       </div>
 
@@ -1760,15 +1772,16 @@
           <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:50–12:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">12:10–12:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot break-slot"><span class="slot-time">12:30–14:00</span><span class="slot-content">Lunch</span></div>
+          <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:40–15:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">15:00–15:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
-          <div class="slot break-slot"><span class="slot-time">15:40–16:00</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">16:00–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+          <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">15:00–15:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">15:20–15:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-time">15:40–16:20</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
         </div>
       </div>
 
@@ -1785,16 +1798,17 @@
           <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
           <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">11:50–12:30</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
-          <div class="slot break-slot"><span class="slot-time">12:30–14:00</span><span class="slot-content">Lunch</span></div>
+          <div class="slot invited-slot"><span class="slot-time">11:10–11:50</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:40–15:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">15:00–15:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
-          <div class="slot break-slot"><span class="slot-time">15:40–16:00</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">16:00–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+          <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-time">15:00–15:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-time">15:20–15:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-time">15:40–16:20</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
         </div>
       </div>
 
