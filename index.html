@@ -50,12 +50,13 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-strong);
     padding: 14px 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--cream-light);
+    background: var(--navy-light);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
   }
 
   .nav-logo {
@@ -782,17 +783,48 @@
   }
 
   .day-header .day-theme {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--electric);
+    margin-top: 2px;
+    line-height: 1.2;
   }
 
   .day-header .day-theme .tbd {
+    font-style: italic;
+  }
+
+  .day-chairs {
+    margin-top: 12px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .day-chairs .chair-group + .chair-group {
+    margin-top: 8px;
+  }
+
+  .day-chairs .chair-role {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--electric-dim);
-    margin-left: 4px;
+    margin-bottom: 2px;
+  }
+
+  .day-chairs .chair-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .day-chairs .chair-list li {
+    color: #c0cfe8;
+    line-height: 1.55;
   }
 
   .time-slots {
@@ -870,6 +902,8 @@
   .slot.round-slot {
     background: rgba(185,168,240,0.05);
     border-left: 2px solid rgba(185,168,240,0.3);
+    min-height: 150px;
+    align-items: center;
   }
   .slot.round-slot:hover { background: rgba(185,168,240,0.09); }
   .slot.round-slot .slot-time { color: rgba(185,168,240,0.75); }
@@ -987,6 +1021,148 @@
     color: var(--muted);
     margin-top: 2px;
   }
+
+  /* INVITED SPEAKERS */
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .speaker-card {
+    background: var(--navy);
+    padding: 26px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: background 0.15s;
+  }
+
+  .speaker-card:hover { background: var(--navy-mid); }
+
+  .speaker-photo {
+    display: block;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(79, 195, 247, 0.35);
+    background: var(--navy-mid);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .speaker-card:hover .speaker-photo { border-color: rgba(79, 195, 247, 0.6); }
+
+  .speaker-avatar {
+    display: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--navy);
+    background: linear-gradient(135deg, var(--electric) 0%, var(--aurora) 100%);
+    border: 2px solid rgba(79, 195, 247, 0.35);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: border-color 0.15s;
+  }
+
+  .speaker-card:hover .speaker-avatar { border-color: rgba(79, 195, 247, 0.6); }
+
+  .speaker-info { flex: 1; min-width: 0; }
+
+  .speaker-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16.5px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.35;
+  }
+
+  .speaker-field {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    margin-top: 7px;
+  }
+
+  .speaker-affil {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.55;
+  }
+
+  .speaker-bio {
+    font-size: 12px;
+    color: #a8bcdc;
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+
+  .speaker-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 7px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(79, 195, 247, 0.35);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .speaker-source:hover {
+    color: var(--electric);
+    border-bottom-color: var(--electric);
+  }
+
+  .speaker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin-top: 9px;
+  }
+
+  .speaker-badge .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .speaker-badge.online {
+    color: var(--lavender);
+    border: 1px solid rgba(185, 168, 240, 0.3);
+    background: rgba(185, 168, 240, 0.06);
+  }
+  .speaker-badge.online .dot { background: var(--lavender); }
+
+  .speaker-badge.onsite {
+    color: var(--aurora);
+    border: 1px solid rgba(168, 237, 204, 0.3);
+    background: rgba(168, 237, 204, 0.06);
+  }
+  .speaker-badge.onsite .dot { background: var(--aurora); }
 
   /* ── SUBMIT ABSTRACT BUTTON ── */
   .btn-submit {
@@ -1469,7 +1645,8 @@
   }
 
   .btn-header-date,
-  .btn-header-submit {
+  .btn-header-submit,
+  .btn-header-attend {
     display: inline-flex;
     align-items: center;
     gap: 9px;
@@ -1500,6 +1677,17 @@
   .btn-header-submit:hover {
     background: rgba(168, 237, 204, 0.12);
     border-color: rgba(168, 237, 204, 0.45);
+  }
+
+  .btn-header-attend {
+    color: var(--lavender);
+    background: rgba(185, 168, 240, 0.06);
+    border: 1px solid rgba(185, 168, 240, 0.25);
+  }
+
+  .btn-header-attend:hover {
+    background: rgba(185, 168, 240, 0.12);
+    border-color: rgba(185, 168, 240, 0.45);
   }
 
   .btn-header-inner {
@@ -1538,6 +1726,7 @@
 <nav>
   <a class="nav-logo" href="workshop_MNS4A.html">MN<span>S</span>4A</a>
   <ul class="nav-links">
+    <li><a href="#speakers">Speakers</a></li>
     <li><a href="#about" class="active">About</a></li>
     <li><a href="#sessions">Sessions</a></li>
     <li><a href="#agenda">Agenda</a></li>
@@ -1545,7 +1734,7 @@
     <li><a href="#committee">SOC</a></li>
     <li><a href="#venue">Venue</a></li>
     <li><a href="#visa">Visa</a></li>
-    <li><a href="#submit" class="nav-submit">Submit Abstract</a></li>
+    <li><a href="#submit" class="nav-submit">Register / Submit</a></li>
   </ul>
   <div class="nav-date">19–21 Oct 2026</div>
 </nav>
@@ -1587,6 +1776,18 @@
             <span class="btn-header-sub">Oral &amp; Poster · Free</span>
           </span>
         </a>
+        <a href="#submit" class="btn-header-attend">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="btn-header-inner">
+            <span class="btn-header-eyebrow">Not Presenting?</span>
+            <span class="btn-header-main">Register as an Attendee</span>
+            <span class="btn-header-sub">Free · No Abstract Needed</span>
+          </span>
+        </a>
       </div>
 
       <div class="meta-row" style="margin-top:20px;">
@@ -1600,6 +1801,141 @@
 </header>
 
 <main>
+
+  <section id="speakers">
+    <div class="section-label">Invited Speakers &amp; Keynotes</div>
+    <h2>Leading voices and <em>keynotes</em></h2>
+    <p>
+      MNS4A opens with an internationally recognized lineup — CNRS research directors, institute leaders, and the pioneers behind the very methods now used worldwide to detect earthquakes, tsunamis, and space weather from GNSS and ionospheric data. Their work sets the tone for three days of discussion on modeling, networks, and instrumentation in aeronomy and its links to natural hazards.
+    </p>
+
+    <div class="committee-status confirmed">
+      <span class="pulse pulse-green"></span>
+      <span>Confirmed</span>
+    </div>
+
+    <div class="speakers-grid">
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/aislan-greca.jpg" alt="Aislan Greca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">AG</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Aislan Greca</div>
+          <div class="speaker-field">Data Science &amp; AI</div>
+          <div class="speaker-affil">Petrobras</div>
+          <div class="speaker-bio">Data scientist and AI lead at Petrobras and professor at Universidade Petrobras, bridging communication, data governance and organizational transformation.</div>
+          <a href="https://www.linkedin.com/in/aislan-greca-comunicacao/" target="_blank" rel="noopener" class="speaker-source">Source: LinkedIn ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/boris-maletckii.jpg" alt="Boris Maletckii" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">BM</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Boris Maletckii</div>
+          <div class="speaker-field">Ionospheric Seismology</div>
+          <div class="speaker-affil">University of Tokyo, Japan</div>
+          <div class="speaker-bio">Develops near-real-time methods to detect ionospheric signatures of earthquakes, tsunamis and volcanic eruptions, including the 2022 Hunga Tonga eruption.</div>
+          <a href="https://scholar.google.com/citations?user=uL2aczIAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" rel="noopener" class="speaker-source">Source: Google Scholar ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/cassiano-bortolozo.jpg" alt="Cassiano Antonio Bortolozo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">CB</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Cassiano Antonio Bortolozo</div>
+          <div class="speaker-field">Natural Disasters</div>
+          <div class="speaker-affil">USP</div>
+          <div class="speaker-bio">Researcher at Cemaden and USP's IAG, combining geophysical surveys with geotechnical data to map landslide risk in Brazilian hillside communities.</div>
+          <a href="https://bv.fapesp.br/en/pesquisador/65844/URL" target="_blank" rel="noopener" class="speaker-source">Source: FAPESP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/elvira-astafyeva.jpg" alt="Elvira Astafyeva" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">EA</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Elvira Astafyeva</div>
+          <div class="speaker-field">Ionospheric Seismology</div>
+          <div class="speaker-affil">IPGP, France</div>
+          <div class="speaker-bio">CNRS Research Director at IPGP and principal investigator of IONO-DIET, pioneering the use of ionospheric GNSS data to detect earthquakes and tsunamis in near-real time.</div>
+          <a href="https://www.ipgp.fr/~astafyeva/" target="_blank" rel="noopener" class="speaker-source">Source: IPGP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/george-franca.jpg" alt="George Sand Leão Araújo de França" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">GF</div>
+        <div class="speaker-info">
+          <div class="speaker-name">George Sand Leão Araújo de França</div>
+          <div class="speaker-field">Seismology</div>
+          <div class="speaker-affil">USP</div>
+          <div class="speaker-bio">Seismologist trained at USP's IAG, studying Brazil's crustal structure and natural and reservoir-triggered seismicity.</div>
+          <a href="https://www.iag.usp.br/en/pos-graduacao/geofisica" target="_blank" rel="noopener" class="speaker-source">Source: IAG-USP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/joao-monico.jpg" alt="João Francisco Galera Monico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">JM</div>
+        <div class="speaker-info">
+          <div class="speaker-name">João Francisco Galera Monico</div>
+          <div class="speaker-field">Aeronomy</div>
+          <div class="speaker-affil">UNESP</div>
+          <div class="speaker-bio">Professor at UNESP Presidente Prudente and leader of the GEGE research group, a longtime reference in GNSS geodesy and ionosphere monitoring in Brazil.</div>
+          <a href="https://bv.fapesp.br/en/pesquisador/935/URL" target="_blank" rel="noopener" class="speaker-source">Source: FAPESP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/lucie-rolland.jpg" alt="Lucie Rolland" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">LR</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Lucie Rolland</div>
+          <div class="speaker-field">Ionospheric Seismology</div>
+          <div class="speaker-affil">GeoAzur, France</div>
+          <div class="speaker-bio">Researcher at Géoazur (CNRS / Côte d'Azur Observatory), developing coseismic ionospheric signals to speed up tsunami early-warning systems.</div>
+          <a href="https://cv.archives-ouvertes.fr/lucie-rolland" target="_blank" rel="noopener" class="speaker-source">Source: HAL/CNRS ↗</a>
+          <div class="speaker-badge online"><span class="dot"></span>Online</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/michela-ravanelli.jpg" alt="Michela Ravanelli" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">MR</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Michela Ravanelli</div>
+          <div class="speaker-field">Geodesy and Geomatics</div>
+          <div class="speaker-affil">Sapienza University of Rome, Italy</div>
+          <div class="speaker-bio">Geodesist at Sapienza University of Rome and creator of the GNSS Total Variometric Approach for real-time earthquake and tsunami detection.</div>
+          <a href="https://blogs.egu.eu/divisions/g/?p=4413" target="_blank" rel="noopener" class="speaker-source">Source: EGU ↗</a>
+          <div class="speaker-badge online"><span class="dot"></span>Online</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/maria-molina.jpg" alt="Maria Graciela Molina" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">MM</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Maria Graciela Molina</div>
+          <div class="speaker-field">Aeronomy</div>
+          <div class="speaker-affil">Universidad Nacional de Tucumán, Argentina</div>
+          <div class="speaker-bio">Leads the Tucumán Space Weather Center and chairs the Latin American Association of Space Geophysics (ALAGE), applying machine learning to ionospheric forecasting.</div>
+          <a href="https://bicyt.conicet.gov.ar/fichas/persona/en/335012" target="_blank" rel="noopener" class="speaker-source">Source: CONICET ↗</a>
+          <div class="speaker-badge online"><span class="dot"></span>Online</div>
+        </div>
+      </div>
+
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
 
   <section id="about">
     <div class="section-label">About the Workshop</div>
@@ -1727,7 +2063,7 @@
     <div class="section-label">Program &amp; Schedule</div>
     <h2>Three-day <em>schedule</em> <span class="date-highlight">19–21 October</span></h2>
     <p>
-      The workshop spans three full days of invited talks, contributed presentations, and round-table discussions. The schedule below shows the time structure of each day; speakers and titles will be assigned after the call for contributions closes.
+      The workshop spans three full days of invited talks, contributed presentations, and round-table discussions. Each day is dedicated to one of the three scientific sessions — Day 1: Modeling, Day 2: Networks, Day 3: Instrumentation — mirroring the sessions described above. The schedule below shows the time structure of each day; speakers and titles will be assigned after the call for contributions closes.
     </p>
 
     <div class="agenda-days">
@@ -1737,7 +2073,23 @@
         <div class="day-header">
           <div class="day-num">Day <em>01</em></div>
           <div class="day-date">19 October</div>
-          <div class="day-theme">Session<span class="tbd">· TBD</span></div>
+          <div class="day-theme">Modeling</div>
+          <div class="day-chairs">
+            <div class="chair-group">
+              <span class="chair-role">Chairs</span>
+              <ul class="chair-list">
+                <li>Jonas R. Souza</li>
+                <li>Sophia R. Laranja</li>
+              </ul>
+            </div>
+            <div class="chair-group">
+              <span class="chair-role">Co-chairs</span>
+              <ul class="chair-list">
+                <li>Saúl A. Sánchez Juarez</li>
+                <li>Laysa C. Araujo Resende</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="time-slots">
           <div class="slot invited-slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
@@ -1765,7 +2117,23 @@
         <div class="day-header">
           <div class="day-num">Day <em>02</em></div>
           <div class="day-date">20 October</div>
-          <div class="day-theme">Session<span class="tbd">· TBD</span></div>
+          <div class="day-theme">Networks</div>
+          <div class="day-chairs">
+            <div class="chair-group">
+              <span class="chair-role">Chairs</span>
+              <ul class="chair-list">
+                <li>Sony S. Chen</li>
+                <li>Prosper K. Nyassor</li>
+              </ul>
+            </div>
+            <div class="chair-group">
+              <span class="chair-role">Co-chairs</span>
+              <ul class="chair-list">
+                <li>Ângela Machado dos Santos</li>
+                <li>Rogério H. Honda</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="time-slots">
           <div class="slot invited-slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
@@ -1793,7 +2161,23 @@
         <div class="day-header">
           <div class="day-num">Day <em>03</em></div>
           <div class="day-date">21 October</div>
-          <div class="day-theme">Session<span class="tbd">· TBD</span></div>
+          <div class="day-theme">Instrumentation</div>
+          <div class="day-chairs">
+            <div class="chair-group">
+              <span class="chair-role">Chairs</span>
+              <ul class="chair-list">
+                <li>Rodolfo de Jesus</li>
+                <li>Vinícius Deggeroni</li>
+              </ul>
+            </div>
+            <div class="chair-group">
+              <span class="chair-role">Co-chairs</span>
+              <ul class="chair-list">
+                <li>Vânia F. Andrioli</li>
+                <li>Oluwasegun M. Adebayo</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="time-slots">
           <div class="slot invited-slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
@@ -1909,7 +2293,7 @@
             <span class="section-label" style="margin-bottom:0; color:var(--electric-dim);">Attending Without Presenting</span>
             <strong>Want to join as an observer?</strong>
           </div>
-          <p class="scta-desc">Researchers interested in attending MNS4A without submitting a contribution are warmly welcome. Register your interest by writing to the organizing committee.</p>
+          <p class="scta-desc">Researchers interested in attending MNS4A without submitting a contribution are warmly welcome.</p>
         </div>
 
         <div class="scta-header">
@@ -2154,7 +2538,7 @@
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    Submit Abstract
+    Register / Submit
   </a>
 </div>
 
