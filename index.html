@@ -1725,6 +1725,126 @@
     text-transform: uppercase;
   }
 
+  /* PROGRAMA:CSS:INICIO — gerado por gerar_agenda.py; não edite à mão */
+  /* ── Agenda com apresentações ── */
+  html.abs-open { overflow: hidden; }
+
+  /* Coluna da esquerda: horário + selo (Talk / Invited / Coffee break / Round table), empilhados
+     e centralizados na vertical dentro do cartão. */
+  .slot { align-items: center; }
+  .slot:not(.break-slot):not(.round-slot) { padding-top: 11px; padding-bottom: 11px; }
+  .slot-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .slot-meta .slot-time { padding: 0; }
+  .slot-meta .type-badge {
+    display: inline-block; font-family: 'DM Mono', monospace; font-size: 8.5px; line-height: 1.5;
+    letter-spacing: 0.14em; text-transform: uppercase; padding: 1px 6px; border-radius: 2px;
+  }
+  .slot.break-slot, .slot.round-slot {
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px;
+  }
+  .slot.break-slot .slot-time, .slot.round-slot .slot-time { padding: 0; }
+  .slot.round-slot .slot-content .type-badge { margin-bottom: 0; }
+  .slot-content.tbd { color: var(--muted); }
+
+  .talk-link {
+    display: block; width: 100%; margin: 0; padding: 0; border: 0;
+    background: none; font: inherit; color: inherit; text-align: left; cursor: default;
+  }
+  button.talk-link { cursor: pointer; }
+  .talk-title {
+    display: block; font-size: 12.5px; font-weight: 500; line-height: 1.38;
+    color: #f0f6ff; transition: color 0.15s;
+  }
+  .talk-author { display: block; margin-top: 3px; font-size: 11.5px; line-height: 1.4; color: var(--muted); }
+  .talk-author em { font-style: italic; }
+  /* o "+" fica na linha do autor, que nunca é cortada (o título pode ser) */
+  button.talk-link .talk-author::after {
+    content: "\00a0\00a0+"; font-family: 'DM Mono', monospace; font-size: 11px; font-style: normal;
+    color: var(--electric-dim); transition: color 0.15s;
+  }
+  button.talk-link:hover .talk-title,
+  button.talk-link:focus-visible .talk-title,
+  button.talk-link:hover .talk-author::after,
+  button.talk-link:focus-visible .talk-author::after { color: var(--aurora); }
+  button.talk-link:focus-visible { outline: 2px solid var(--electric); outline-offset: 4px; border-radius: 2px; }
+
+  /* Altura fixa (3 colunas): todos os cartões de apresentação (oral e convidado) têm o mesmo tamanho,
+     então a mesma linha fica alinhada nos três dias. Para ajustar tudo de uma vez, mude --slot-h.
+     Título maior que o cartão é cortado com "…" (o título completo aparece ao clicar).
+     A coluna do horário é mais estreita aqui para sobrar mais largura para o título. */
+  @media (min-width: 861px) {
+    .agenda-days { --slot-h: 152px; }
+    .slot:not(.break-slot):not(.round-slot) {
+      box-sizing: border-box; height: var(--slot-h); overflow: hidden;
+      grid-template-columns: 78px 1fr; column-gap: 8px; padding-right: 12px;
+    }
+    .slot .talk-title {
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; line-clamp: 6; overflow: hidden;
+    }
+  }
+  /* telas largas só um pouco: colunas mais estreitas, título quebra em mais linhas */
+  @media (min-width: 861px) and (max-width: 999px) {
+    .agenda-days { --slot-h: 184px; }
+    .slot .talk-title { -webkit-line-clamp: 7; line-clamp: 7; }
+  }
+
+  .demo-banner {
+    margin: 22px 0 0; padding: 10px 16px; border: 1px dashed rgba(255, 107, 107, 0.6);
+    background: rgba(255, 107, 107, 0.07); color: #ff9c9c; border-radius: 3px;
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  /* Janela do abstract */
+  .abs-dialog {
+    margin: auto; padding: 0; width: min(720px, calc(100vw - 24px)); max-width: none;
+    max-height: min(88vh, 780px); overflow: hidden; color: var(--ink);
+    background: var(--navy-mid); border: 1px solid var(--border-strong);
+    border-top: 3px solid var(--electric); border-radius: 6px;
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.6);
+  }
+  .abs-dialog[data-tipo="invited"] { border-top-color: var(--gold); }
+  .abs-dialog::backdrop { background: rgba(4, 10, 24, 0.74); backdrop-filter: blur(3px); }
+  .abs-card { position: relative; max-height: min(88vh, 780px); overflow-y: auto; padding: 34px 40px 36px; }
+  .abs-close {
+    position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; padding: 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    color: var(--ink-soft); background: rgba(79, 195, 247, 0.06);
+    border: 1px solid var(--border-strong); border-radius: 50%;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .abs-close:hover, .abs-close:focus-visible { color: var(--navy); background: var(--aurora); border-color: var(--aurora); }
+  .abs-eyebrow {
+    margin: 0 44px 14px 0; font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.16em; line-height: 1.7; text-transform: uppercase; color: var(--electric);
+  }
+  .abs-dialog[data-tipo="invited"] .abs-eyebrow { color: var(--gold); }
+  .abs-title {
+    margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-size: 30px;
+    font-weight: 600; line-height: 1.2; color: var(--white);
+  }
+  .abs-authors { font-size: 15px; line-height: 1.6; color: #d8e8f8; }
+  .abs-affils { margin-top: 6px; font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+  .abs-authors sup, .abs-affils sup {
+    font-family: 'DM Mono', monospace; font-size: 0.68em; line-height: 0; color: var(--electric); margin-left: 1px;
+  }
+  .abs-affils sup { margin: 0 3px 0 0; }
+  .abs-presenter {
+    margin-top: 10px; font-family: 'DM Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--aurora);
+  }
+  .abs-label {
+    display: flex; align-items: center; gap: 12px; margin: 26px 0 14px;
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--electric-dim);
+  }
+  .abs-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .abs-body p { margin: 0 0 14px; font-size: 15px; line-height: 1.8; color: #c0cfe8; }
+  .abs-body p:last-child { margin-bottom: 0; }
+  @media (max-width: 560px) {
+    .abs-card { padding: 28px 22px; }
+    .abs-title { font-size: 24px; }
+  }
+  /* PROGRAMA:CSS:FIM */
 </style>
 </head>
 <body>
@@ -2058,7 +2178,7 @@
     <div class="section-label">Program &amp; Schedule</div>
     <h2>Three-day <em>schedule</em> <span class="date-highlight">19–21 October</span></h2>
     <p>
-      The workshop spans three full days of invited talks, contributed presentations, and round-table discussions. Each day is dedicated to one of the three scientific sessions — Day 1: Modeling, Day 2: Networks, Day 3: Instrumentation — mirroring the sessions described above. The schedule below shows the time structure of each day; speakers and titles will be assigned after the call for contributions closes.
+      The workshop spans three full days of invited talks, contributed presentations, and round-table discussions. Each day is dedicated to one of the three scientific sessions — Day 1: Modeling, Day 2: Networks, Day 3: Instrumentation — mirroring the sessions described above. <!-- PROGRAMA:INTRO:INICIO -->Titles and first authors are listed below; click a title to read its abstract. Slots still marked TBD will be filled as the program is finalised.<!-- PROGRAMA:INTRO:FIM -->
     </p>
 
     <div class="agenda-days">
@@ -2087,20 +2207,20 @@
           </div>
         </div>
         <div class="time-slots">
-          <div class="slot invited-slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">09:40–10:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">11:10–11:50</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:50–11:10</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
-          <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:00–14:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">15:00–15:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">15:20–15:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">15:40–16:20</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">15:40–16:20</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
           <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
         </div>
@@ -2130,20 +2250,20 @@
           </div>
         </div>
         <div class="time-slots">
-          <div class="slot invited-slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">09:40–10:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-185236324" title="Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris</span><span class="talk-author">Alexandre Alvares Pimenta</span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260918-084719684" title="Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption</span><span class="talk-author">Vania F Andrioli <em>et al.</em></span></button></span></div>
           <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">11:10–11:50</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">10:50–11:10</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260818-105547803" title="Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network</span><span class="talk-author">Gabriel Brando <em>et al.</em></span></button></span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
-          <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260829-132411672" title="Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation</span><span class="talk-author">Olufemi L. Ogunmola <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">14:00–14:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260829-233025150" title="Multi-Instrument Ground Networks for Equatorial Aeronomy — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Multi-Instrument Ground Networks for Equatorial Aeronomy</span><span class="talk-author">D. Scipion <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-141725462" title="The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion</span><span class="talk-author">Ângela Machado dos Santos <em>et al.</em></span></button></span></div>
           <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">15:00–15:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">15:20–15:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">15:40–16:20</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-231819644" title="NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection</span><span class="talk-author">S. A. Sanchez <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260712-185417959" title="Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector</span><span class="talk-author">Carolina de Sousa do Carmo <em>et al.</em></span></button></span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">15:40–16:20</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
           <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
         </div>
@@ -2173,20 +2293,20 @@
           </div>
         </div>
         <div class="time-slots">
-          <div class="slot invited-slot"><span class="slot-time">09:00–09:40</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">09:40–10:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">11:10–11:50</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:50–11:10</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
-          <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">14:20–14:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:00–14:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-time">15:00–15:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">15:20–15:40</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-time">15:40–16:20</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">15:40–16:20</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
           <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
         </div>
@@ -2616,6 +2736,109 @@
     <p style="font-size:11px; color:var(--muted); text-align:center; border-top:1px solid var(--border); padding-top:20px; letter-spacing:0.05em;">Organized by the MNS4A Local &amp; Scientific Organizing Committee (SOC) · INPE — São José dos Campos</p>
   </div>
 </footer>
+
+<!-- PROGRAMA:MODAL:INICIO — gerado por gerar_agenda.py; não edite à mão -->
+<dialog id="abstract-dialog" class="abs-dialog" aria-labelledby="abs-title">
+  <div class="abs-card">
+    <button type="button" class="abs-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="abs-eyebrow"></div>
+    <h3 class="abs-title" id="abs-title"></h3>
+    <div class="abs-authors"></div>
+    <div class="abs-affils"></div>
+    <div class="abs-presenter"></div>
+    <div class="abs-label">Abstract</div>
+    <div class="abs-body"></div>
+  </div>
+</dialog>
+<script type="application/json" id="programa-data">
+{
+"T20260930-185236324":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"09:40","fim":"10:00","titulo":"Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris","autores":[{"n":"Alexandre Alvares Pimenta","m":"1"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research - INPE"}],"apresentador":"","abstract":["The upper atmosphere responds to natural disturbances and climate-driven forcing over a broad range of temporal and spatial scales. Understanding these responses is increasingly important because variations in atmospheric temperature and neutral density may affect satellite in Very Low Earth Orbit (VLEO) and Low Earth Orbit (LEO). A remarkable example of an impulsive natural disturbance was the super-bolide observed over southeastern Brazil on 25 May 2023. The event released an estimated energy equivalent to approximately 21 kilotons of TNT, with the main explosion occurring at approximately 96–99 km altitude. The observations indicate that energetic bolide explosions can be associated with measurable upper-atmospheric perturbations and raise the possibility that sufficiently intense events may temporarily modify the aerodynamic environment encountered by objects in very low orbits. At much longer timescales, increasing atmospheric CO₂ can enhance radiative cooling in the mesosphere and lower thermosphere (MLT). Integrating ground-based and space-based observations with atmospheric modeling is therefore essential for quantifying these responses and assessing their implications for VLEO/LEO satellite operations, orbital decay, and the long-term persistence of space debris."]},
+"T20260918-084719684":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"10:00","fim":"10:20","titulo":"Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption","autores":[{"n":"Vania F Andrioli","m":"1"},{"n":"Saul Alejandro Sanches Juarez","m":"1"},{"n":"Paulo P. Batista","m":"1"},{"n":"Alexandre Pimenta","m":"1"},{"n":"Hisao Takahashi","m":"1"},{"n":"Esfhan Alam Kherani","m":"1"},{"n":"Maria Paulete Martins","m":"1"},{"n":"Femi Olajide-Owoyomi","m":"1"},{"n":"Rodolfo de Jesus","m":"1,2,3"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research (INPE), São José dos Campos, SP, Brazil"},{"m":"2","t":"State Key Laboratory for Space Weather, National Space Science Center, Chinese Academy of Sciences, Beijing, China"},{"m":"3","t":"China-Brazil Joint Laboratory for Space Weather, NSSC/INPE, São José dos Campos, SP, Brazil"}],"apresentador":"","abstract":["The eruption of the Hunga Tonga–Hunga Ha'apai volcano on 15 January 2022 generated one of the most intense atmospheric disturbances observed in recent decades, producing a global-scale Lamb wave that propagated through the atmosphere. In this study, we investigate the detection of the atmospheric response to the eruption using meteor radar observations from Cachoeira Paulista (22.7°S, 45.0°W), Brazil. Horizontal winds in the mesosphere and lower thermosphere (MLT) region were analyzed to identify perturbations associated with the passage of the Lamb wave over South America. The observations revealed a coherent disturbance in the mesospheric winds following the eruption, with characteristics consistent with the propagation of the Lamb wave. This study demonstrates the capability of meteor radar systems to detect and characterize atmospheric disturbances generated by major natural hazards, highlighting the importance of continuous ground-based observations for monitoring the coupling between the lower and upper atmosphere. The results also emphasize the value of long-term meteor radar networks for investigating the atmospheric impacts of extreme geophysical events and improving our understanding of vertical coupling processes in the Earth's atmosphere."]},
+"T20260818-105547803":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"10:50","fim":"11:10","titulo":"Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network","autores":[{"n":"Gabriel Brando","m":"1"},{"n":"Plinio Jaqueto","m":"1"},{"n":"Edwin Camacho","m":"1"},{"n":"José Alejandro Alfonzo","m":"1"},{"n":"André Wiermann","m":"1"},{"n":"Luiz Benyosef","m":"1"},{"n":"Fábio Vieira","m":"1"},{"n":"Cristiano Mendel","m":"2"},{"n":"Jürgen Matzka","m":"3"},{"n":"Marcos Vinicius da Silva","m":"3"}],"afiliacoes":[{"m":"1","t":"Observatório Nacional, Brazil"},{"m":"2","t":"Universidade Federal do Pará, Brazil"},{"m":"3","t":"GFZ Helmholtz Centre for Geosciences, Germany"}],"apresentador":"","abstract":["Observatório Nacional (ON) is a Brazilian research institute that has been performing magnetic measurements since its creation nearly 200 years ago. Historically, ON is in charge of specific geomagnetic networks in Brazil, including geomagnetic observatories (Vassouras and Tatuoca) and repeat stations (over 175 stations). The presentation will be structured in three parts. In the first part, we will highlight some recent efforts implemented to modernize ON’s geomagnetic network, going through instrumentation, best practices of operations and data processing. As a consequence, we will also demonstrate how the modernization led to new applications of the data, which includes geomagnetic modeling, industry applications and research about ionospheric processes. In the second part of the presentation, we will focus on the motivation, concept and applications of the 5-years old Macapá magnetic station installed in the equatorial region of Brazil through a cooperation with Universidade Federal do Pará (Brazil) and GFZ Helmholtz Centre for Geosciences (Germany). The third part will deal with the near future planning for ON’s network and our recent developments on magnetic sensor manufacturing."]},
+"T20260829-132411672":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"13:40","fim":"14:00","titulo":"Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation","autores":[{"n":"Olufemi L. Ogunmola","m":"1"},{"n":"Marcio T. A. H. Muella","m":"1"},{"n":"Paulo R. Fagundes","m":"1"},{"n":"Valdir G. Pillat","m":"1"},{"n":"Peter T. Muka","m":"1"},{"n":"Thiago A. M. Mancilla","m":"1"}],"afiliacoes":[{"m":"1","t":"Universidade do Vale do Paraíba (IP\u0026D – Laboratório de Física e Astronomia), São José dos Campos, SP - Brasil"}],"apresentador":"","abstract":["This study investigates the characteristic behavior of cusp-type sporadic E (〖Es〗_c ) layers over the Brazilian sector using ionosonde observations from São José dos Campos (〖23.2〗^° S,〖45.8〗^° W,dip lat.: 〖21.0〗^° S) and Palmas (〖10.3〗^° S,〖48.3〗^° W,dip lat.:〖09.03〗^° S) during December 2008 to November 2009. Measurements were obtained using Canadian Advanced Digital Ionosonde (CADI) systems and analyzed on a seasonal basis. At the São José dos Campos and Palmas stations, Es layers were morphologically classified, with 〖Es〗_c treated as a distinct subclass from other Es morphologies. The 〖Es〗_c morphology exhibited two characteristic trace signatures: symmetric and asymmetric. Symmetric cusp traces generally occurred at mean virtual heights of approximately 100 – 105 km, whereas asymmetric cusps tended to occur at higher altitudes. The higher-altitude occurrence of asymmetric cusps may indicate the downward progression of higher-type Es layers, typically observed at approximately 120 – 140 km, toward the lower-altitude asymmetric cusp morphology. Wavelet and spectral analyses of the Es parameters at São José dos Campos and Palmas revealed periodicities ranging from 3 to 24 h, consistent with modulation by atmospheric tides. Enhanced power at periods shorter than 12 h was observed at São José dos Campos, while 6 – 8 h oscillations were particularly evident at Palmas during autumn, winter, and spring."]},
+"T20260829-233025150":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"14:00","fim":"14:20","titulo":"Multi-Instrument Ground Networks for Equatorial Aeronomy","autores":[{"n":"D. Scipion","m":"1"},{"n":"K. Kuyeng","m":"1"},{"n":"C. De La Jara","m":"1"},{"n":"J. Espinoza","m":"1"},{"n":"C. Valladares","m":"2"},{"n":"F. Rodrigues","m":"3"},{"n":"J. Chau","m":"4"}],"afiliacoes":[{"m":"1","t":"Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú"},{"m":"2","t":"Boston University"},{"m":"3","t":"University of Texas at Dallas"},{"m":"4","t":"Leibniz Institute of Atmospheric Physics"}],"apresentador":"","abstract":["Characterizing atmosphere–ionosphere coupling and low-latitude space weather requires coordinated observations from complementary ground-based sensors. The Jicamarca Geophysical Observatory (JGO) operates active and passive observing systems and coordinates the Low-Latitude Ionospheric Sensor Network (LISN), comprising magnetometers, GNSS receivers, and ionosondes distributed across South America. To address regional coverage gaps, LISN has incorporated low-cost (~US$5,000) portable oblique-sounding receivers based on USRP and GNU Radio. These measurements are complemented by a novel ionospheric inversion methodology that combines ray tracing and Particle Swarm Optimization (PSO) to reconstruct partial ionospheric profiles in near real time. JGO also operates the AMISR-14 array alongside the main radar and supports the SIMONe meteor radar network, with stations in northern and central Peru, to measure mesospheric winds and meteor dynamics. Together, these coordinated networks provide multi-instrument observations in near real time to support the Peruvian Space Weather Monitoring Center, enabling continuous space-weather hazard analysis. They also provide essential datasets for constraining and validating global atmospheric and ionospheric climatological models."]},
+"T20260930-141725462":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"14:20","fim":"14:40","titulo":"The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion","autores":[{"n":"Ângela Machado dos Santos","m":"1"},{"n":"Jonas Rodrigues de Souza","m":"1"},{"n":"Inez Staciarini Batista","m":"1"},{"n":"Robert Kerr","m":"2"},{"n":"Juanita Riccobono","m":"2"},{"n":"Mike Migliozzi","m":"2"},{"n":"Sudha Kapali","m":"2"},{"n":"Patrick Dandenault","m":"3"},{"n":"Rafael Luiz Araujo de Mesquita","m":"4"},{"n":"Alexandre Álvares Pimenta","m":"1"},{"n":"Lucas Vaz Peres","m":"4"},{"n":"Rodrigo Silva","m":"4"},{"n":"Theomar Neves","m":"4"},{"n":"Cristiano Wrasse","m":"1"},{"n":"Chunxiau Yan","m":"5"},{"n":"Zhengkuan Liu","m":"5"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research, São José dos Campos, SP, Brazil"},{"m":"2","t":"Computational Physics Inc., Lowell, MA, USA"},{"m":"3","t":"Johns Hopkins University Applied Physics Laboratory, Laurel, MD, USA"},{"m":"4","t":"Federal University of Western Pará, Santarém, Brazil"},{"m":"5","t":"State Key Laboratory of Space Weather, NSSC/CAS, Beijing, China"}],"apresentador":"","abstract":["Ground-based observations are essential for investigating the electrodynamics and variability of the equatorial and low-latitude ionosphere, particularly during space-weather events. Brazil offers an unique geomagnetic domain for such studies, extending from the low northern latitudes, through the equatorial latitudes, to the low southern latitudes. Here, we present the current status and scientific potential of the Brazilian network of ionosondes and Fabry–Perot interferometers, focusing on ionospheric electrodynamics, atmosphere–ionosphere coupling, and space weather. The Digisonde network comprises stations at Boa Vista (2.82°N, 60.67°W), Santarém (2.44°S, 54.70°W), Fortaleza (3.72°S, 38.52°W), São Luís (2.59°S, 44.21°W), Campo Grande (20.44°S, 54.54°W), Cachoeira Paulista (22.68°S, 45.00°W), Santa Maria (29.69°S, 53.81°W), and Juazeirinho (7.07°S, 36.58°W), providing observations over a broad range of latitudes. Fabry–Perot observations at Cachoeira Paulista and Santarém complement these measurements with thermospheric neutral-wind observations. The combined dataset supports studies of the equatorial ionization anomaly, pre-reversal enhancement, plasma drifts, equatorial plasma bubbles, atmospheric and ionospheric disturbances, and storm-time responses. We also highlight the importance of open data access, collaborative use, long-term maintenance, and network expansion to strengthen Brazilian aeronomy research and foster scientific collaborations."]},
+"T20260930-231819644":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"15:00","fim":"15:20","titulo":"NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection","autores":[{"n":"S. A. Sanchez","m":"1"},{"n":"E. A. Kherani","m":"1"},{"n":"E. Astafyeva","m":"2"},{"n":"B. Maletckii","m":"3"},{"n":"A. P. Almeida","m":"4"},{"n":"R. H. Honda","m":"1"}],"afiliacoes":[{"m":"1","t":"INPE, Brasil"},{"m":"2","t":"IPGP, Paris"},{"m":"3","t":"Earthquake Research Institute of the University of Tokyo, Japan"},{"m":"4","t":"Universidade Presbiteriana Mackenzie, Brasil"}],"apresentador":"Saul A Snnchez","abstract":["NRT-TECPRO is an open, automated platform that combines real-time seismic signals with multi-constellation satellite observations (GPS, GLONASS, Galileo, and BeiDou), delivering processed GNSS metrics with only a 2-to-5-minute latency. Its core engine automatically calculates key ionospheric variations (TEC, dTEC, and ROTI), made instantly available through interactive dashboards and APIs. By correlating ground seismic activity with upper-atmosphere disturbances, NRT-TECPRO transforms complex data streams into critical operational intelligence for tsunami early warning systems, space weather monitoring, and disaster mitigation"]},
+"T20260712-185417959":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"15:20","fim":"15:40","titulo":"Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector","autores":[{"n":"Carolina de Sousa do Carmo","m":"1,3"},{"n":"Lei Dai","m":"2"},{"n":"Cristiano Max Wrasse","m":"3"},{"n":"Diego Barros Silva","m":"3"},{"n":"Hisao Takahashi","m":"3"},{"n":"Joaquim Eduardo Rezende Costa","m":"3"},{"n":"Luiz Fillip Rodrigues Vital","m":"4"},{"n":"Paulo Ricardo Jauer","m":"3"},{"n":"Cesar De La Jara","m":"5"},{"n":"Alexander José Carrasco","m":"6"},{"n":"Cosme Alexandre Oliveira Barros Figueiredo","m":"7"},{"n":"Chi Wang","m":"2"},{"n":"Hui Li","m":"2"},{"n":"Liu Zhengkuan","m":"2"}],"afiliacoes":[{"m":"1","t":"China-Brazil Joint Laboratory for Space Weather (CBJLSW)"},{"m":"2","t":"State Key Laboratory of Space Weather (NSSC/CAS)"},{"m":"3","t":"National Institute for Space Research (INPE)"},{"m":"4","t":"Paraíba State University (UEPB)"},{"m":"5","t":"Instituto Geofísico del Perú"},{"m":"6","t":"University of the Andes (ULA)"},{"m":"7","t":"Federal University of Campina Grande (UFCG)"}],"apresentador":"","abstract":["This study investigates the ionospheric response to the moderate (G2) geomagnetic storm of 7–8 October 2024 over the American sector, with emphasis on the generation and suppression of equatorial plasma bubbles (EPBs). A comprehensive analysis was performed using GNSS-derived total electron content (TEC) and rate of TEC index (ROTI), ionosonde observations from Jicamarca (JICA) and São Luís (SALU), and thermospheric neutral wind measurements from the Fabry–Perot interferometer at Cachoeira Paulista (CHPI). Although the storm produced favorable conditions for EPB development, including a pronounced pre-reversal enhancement (PRE) with vertical plasma drifts exceeding 40 m/s, post-sunset EPBs were unexpectedly suppressed. In addition, post-midnight EPBs developed only over the western side of the Latin American sector, while no plasma irregularities were detected over the eastern sector, revealing a marked longitudinal asymmetry in EPB occurrence. The suppression of post-sunset EPBs and the absence of post-midnight EPBs in the eastern sector may be associated with the combined influence of disturbed meridional winds and enhanced E-region conductivity related to the presence of a sporadic E (Es) layer. These results demonstrate that even moderate geomagnetic storms can produce complex and regionally distinct ionospheric responses, highlighting the important role of local electrodynamic and neutral atmospheric processes in controlling EPB development and suppression."]}
+}
+</script>
+<script>
+(function () {
+  var dlg = document.getElementById('abstract-dialog');
+  var store = document.getElementById('programa-data');
+  if (!dlg || !store) return;
+  var data = {};
+  try { data = JSON.parse(store.textContent); } catch (e) { return; }
+  var trigger = null;
+  function q(sel) { return dlg.querySelector(sel); }
+
+  function fill(id) {
+    var t = data[id];
+    if (!t) return false;
+    dlg.setAttribute('data-tipo', t.tipo);
+    q('.abs-eyebrow').textContent = ['Day ' + t.dia, t.tema, t.data, t.inicio + '\u2013' + t.fim, t.rotulo]
+      .filter(Boolean).join(' \u00b7 ');
+    q('.abs-title').textContent = t.titulo;
+    var au = q('.abs-authors');
+    au.textContent = '';
+    (t.autores || []).forEach(function (a, i) {
+      if (i) au.appendChild(document.createTextNode('; '));
+      au.appendChild(document.createTextNode(a.n));
+      if (a.m) { var sp = document.createElement('sup'); sp.textContent = a.m; au.appendChild(sp); }
+    });
+    var aff = q('.abs-affils');
+    aff.textContent = '';
+    (t.afiliacoes || []).forEach(function (a) {
+      var d = document.createElement('div');
+      if (a.m) { var sp = document.createElement('sup'); sp.textContent = a.m; d.appendChild(sp); }
+      d.appendChild(document.createTextNode((a.m ? ' ' : '') + a.t));
+      aff.appendChild(d);
+    });
+    var pr = q('.abs-presenter');
+    pr.textContent = t.apresentador ? 'Presenting author: ' + t.apresentador : '';
+    pr.style.display = t.apresentador ? '' : 'none';
+    var body = q('.abs-body');
+    body.textContent = '';
+    (t.abstract || []).forEach(function (p) {
+      var el = document.createElement('p');
+      el.textContent = p;
+      body.appendChild(el);
+    });
+    q('.abs-card').scrollTop = 0;
+    return true;
+  }
+
+  function onClosed() {
+    document.documentElement.classList.remove('abs-open');
+    if (trigger && trigger.focus) trigger.focus();
+    trigger = null;
+  }
+
+  function openDialog(id, el) {
+    if (!fill(id)) return;
+    trigger = el || null;
+    document.documentElement.classList.add('abs-open');
+    if (typeof dlg.showModal === 'function') { if (!dlg.open) dlg.showModal(); }
+    else { dlg.setAttribute('open', ''); }
+  }
+
+  function closeDialog() {
+    if (typeof dlg.close === 'function') { dlg.close(); }
+    else { dlg.removeAttribute('open'); onClosed(); }
+  }
+
+  dlg.addEventListener('close', onClosed);
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.talk-link[data-id]') : null;
+    if (b) { openDialog(b.getAttribute('data-id'), b); return; }
+    var aberto = dlg.open || dlg.hasAttribute('open');
+    if (aberto && (e.target === dlg || (e.target.closest && e.target.closest('.abs-close')))) closeDialog();
+  });
+})();
+</script>
+<!-- PROGRAMA:MODAL:FIM -->
 
 </body>
 </html>
