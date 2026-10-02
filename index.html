@@ -86,8 +86,12 @@
   .nav-links a:hover, .nav-links a.active { color: var(--electric); }
 
   .nav-links a.nav-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     color: var(--aurora);
-    border: 1px solid rgba(168, 237, 204, 0.25);
+    border: 1px solid rgba(168, 237, 204, 0.4);
+    background: rgba(168, 237, 204, 0.08);
     border-radius: 2px;
     padding: 3px 10px;
     transition: color 0.2s, border-color 0.2s, background 0.2s;
@@ -759,6 +763,7 @@
     padding: 16px 20px;
     border-bottom: 1px solid var(--border);
     background: var(--navy-mid);
+    container-type: inline-size;
   }
 
   .day-header .day-num {
@@ -784,12 +789,13 @@
 
   .day-header .day-theme {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: 36px;
+    font-size: clamp(28px, 14cqw, 46px);
     font-weight: 600;
     font-style: italic;
-    color: var(--electric);
-    margin-top: 2px;
-    line-height: 1.2;
+    color: var(--aurora);
+    margin-top: 4px;
+    line-height: 1.1;
   }
 
   .day-header .day-theme .tbd {
@@ -1734,7 +1740,7 @@
     <li><a href="#committee">SOC</a></li>
     <li><a href="#venue">Venue</a></li>
     <li><a href="#visa">Visa</a></li>
-    <li><a href="#submit" class="nav-submit">Register / Submit</a></li>
+    <li><a href="#submit" class="nav-submit" title="Register as an attendee"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Attendee</a></li>
   </ul>
   <div class="nav-date">19–21 Oct 2026</div>
 </nav>
@@ -1763,17 +1769,6 @@
             <span class="btn-header-eyebrow">Workshop</span>
             <span class="btn-header-main">19 – 21 October 2026</span>
             <span class="btn-header-sub">INPE · São José dos Campos</span>
-          </span>
-        </a>
-        <a href="#submit" class="btn-header-submit">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
-            <path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <span class="btn-header-inner">
-            <span class="btn-header-eyebrow">Call for Abstracts</span>
-            <span class="btn-header-main">Submit by 30 September 2026</span>
-            <span class="btn-header-sub">Oral &amp; Poster · Free</span>
           </span>
         </a>
         <a href="#submit" class="btn-header-attend">
@@ -2097,8 +2092,7 @@
           <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
           <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-time">11:10–11:50</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
           <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
@@ -2141,8 +2135,7 @@
           <div class="slot"><span class="slot-time">10:00–10:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
           <div class="slot"><span class="slot-time">10:50–11:10</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:10–11:30</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
-          <div class="slot"><span class="slot-time">11:30–11:50</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-time">11:10–11:50</span><span class="slot-content"><span class="type-badge invited">Invited</span><br>TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
           <div class="slot"><span class="slot-time">13:40–14:00</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
           <div class="slot"><span class="slot-time">14:00–14:20</span><span class="slot-content"><span class="type-badge talk">Talk</span><br>TBD</span></div>
@@ -2285,10 +2278,10 @@
 
     <div class="section-cta" id="submit" style="background:linear-gradient(135deg,rgba(79,195,247,0.05) 0%,rgba(168,237,204,0.05) 100%); border-color:rgba(168,237,204,0.2); border-left-color:var(--aurora);">
 
-      <!-- Two headers side by side -->
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; border-bottom:1px solid rgba(168,237,204,0.1);">
+      <!-- Attendee header -->
+      <div style="border-bottom:1px solid rgba(168,237,204,0.1);">
 
-        <div class="scta-header" style="border-right:1px solid rgba(168,237,204,0.1);">
+        <div class="scta-header">
           <div class="scta-heading">
             <span class="section-label" style="margin-bottom:0; color:var(--electric-dim);">Attending Without Presenting</span>
             <strong>Want to join as an observer?</strong>
@@ -2296,17 +2289,9 @@
           <p class="scta-desc">Researchers interested in attending MNS4A without submitting a contribution are warmly welcome.</p>
         </div>
 
-        <div class="scta-header">
-          <div class="scta-heading">
-            <span class="section-label" style="margin-bottom:0;">Call for Contributions</span>
-            <strong>Ready to contribute?</strong>
-          </div>
-          <p class="scta-desc">Submit your abstract for oral or poster consideration. The scientific committee will evaluate all submissions and provide feedback before the program is finalised.</p>
-        </div>
-
       </div>
 
-      <!-- Two buttons side by side, centered -->
+      <!-- Attendee button, centered -->
       <div style="display:flex; gap:16px; padding:20px 32px; border-bottom:1px solid rgba(168,237,204,0.1); flex-wrap:wrap; justify-content:center;">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKAtCOdjfY-IBl_jjMFhvDw8NO7OuVSeAAXc0sJjZcthdwlA/viewform?usp=dialog" class="btn-submit" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#7ed320 0%,#d4f542 100%); box-shadow:0 0 0 1px rgba(196,240,40,0.6),0 4px 20px rgba(160,220,30,0.45),0 0 50px rgba(196,240,40,0.25);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2315,14 +2300,6 @@
             <path d="M7 12h10M7 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
           Attendee Only
-        </a>
-        <a href="#" class="btn-submit" id="btn-submit-section" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
-            <path d="M7 2v4M12 2v4M17 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M7 12h10M7 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          Submit Your Abstract
         </a>
       </div>
 
@@ -2527,34 +2504,6 @@
   </section>
 
 </main>
-
-<!-- FLOATING STICKY CTA -->
-<div class="sticky-cta">
-  <div>
-    <span class="sticky-cta-label">Free &amp; open workshop</span>
-    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;color:rgba(168,237,204,0.5);margin-top:2px;">No registration fee</div>
-  </div>
-  <a href="#submit" class="btn-ghost btn-ghost-sm">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Register / Submit
-  </a>
-</div>
-
-<script>
-  // ── GOOGLE FORMS URL ──────────────────────────────────────────────
-  // Replace the placeholder below with your Google Forms link when ready.
-  var ABSTRACT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfKAtCOdjfY-IBl_jjMFhvDw8NO7OuVSeAAXc0sJjZcthdwlA/viewform?usp=dialog';
-  // ─────────────────────────────────────────────────────────────────
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var btn = document.getElementById('btn-submit-section');
-    if (btn) {
-      btn.href = ABSTRACT_FORM_URL;
-    }
-  });
-</script>
 
 <footer>
   <div style="max-width:1000px; margin:0 auto; padding:48px 32px 32px; border-top:1px solid var(--border);">
