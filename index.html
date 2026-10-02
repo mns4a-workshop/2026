@@ -34,7 +34,7 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; } /* a barra fixa não cobre o título ao clicar num link do menu */
 
   body {
     background-color: var(--cream);
@@ -45,67 +45,41 @@
     min-height: 100vh;
   }
 
-  /* NAV */
+  /* NAV — barra única em todas as telas:  logo + data · botão Agenda · Attendee · ☰
+     O botão ☰ abre a lista com os demais links (Speakers, About, Sessions, LOC, SOC, Venue, Visa).
+     Para tirar/pôr um link da lista, edite os <li> dentro de <ul class="nav-links">. */
   nav {
+    /* telas largas: o conteúdo da barra fica alinhado com a coluna da página (936px), não nas pontas */
+    --nav-pad: max(48px, calc((100% - 936px) / 2));
     position: sticky;
     top: 0;
     z-index: 1000;
     border-bottom: 1px solid var(--border-strong);
-    padding: 14px 48px;
+    padding: 12px var(--nav-pad);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px;
     background: var(--navy-light);
     box-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
   }
+
+  .nav-brand { display: flex; align-items: center; gap: 18px; margin-right: auto; min-width: 0; }
 
   .nav-logo {
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
     font-weight: 600;
+    line-height: 1.15;
     color: var(--white);
     text-decoration: none;
   }
 
   .nav-logo span { color: var(--electric); }
 
-  .nav-links {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 13px;
-    color: var(--ink-soft);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover, .nav-links a.active { color: var(--electric); }
-
-  .nav-links a.nav-submit {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--aurora);
-    border: 1px solid rgba(168, 237, 204, 0.4);
-    background: rgba(168, 237, 204, 0.08);
-    border-radius: 2px;
-    padding: 3px 10px;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-  }
-
-  .nav-links a.nav-submit:hover {
-    color: var(--navy);
-    background: var(--aurora);
-    border-color: var(--aurora);
-  }
-
   .nav-date {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
+    line-height: 1.5;
     letter-spacing: 0.12em;
     color: var(--electric);
     border: 1px solid rgba(79,195,247,0.3);
@@ -113,6 +87,166 @@
     padding: 4px 12px;
     border-radius: 2px;
     white-space: nowrap;
+  }
+
+  /* Agenda e Posters: botões em destaque (os links que mais importam agora) */
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+    background: rgba(79, 195, 247, 0.18);
+    border: 1px solid var(--electric);
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-btn:hover, .nav-btn:focus-visible { color: var(--navy); background: var(--electric); }
+
+  /* Attendee: botão verde */
+  .nav-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--aurora);
+    text-decoration: none;
+    border: 1px solid rgba(168, 237, 204, 0.4);
+    background: rgba(168, 237, 204, 0.08);
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .nav-submit:hover, .nav-submit:focus-visible {
+    color: var(--navy);
+    background: var(--aurora);
+    border-color: var(--aurora);
+  }
+
+  /* Botão ☰ */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    cursor: pointer;
+    color: var(--electric);
+    background: rgba(79, 195, 247, 0.06);
+    border: 1px solid rgba(79, 195, 247, 0.3);
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-toggle:hover, .nav-toggle:focus-visible, nav.open .nav-toggle {
+    color: var(--navy); background: var(--electric); border-color: var(--electric);
+  }
+  .nav-toggle:focus-visible, .nav-btn:focus-visible, .nav-submit:focus-visible { outline: 2px solid var(--aurora); outline-offset: 2px; }
+  .nav-toggle-bars, .nav-toggle-bars::before, .nav-toggle-bars::after {
+    display: block; width: 18px; height: 2px; background: currentColor; border-radius: 1px;
+    transition: transform 0.2s, top 0.2s, background 0.2s;
+  }
+  .nav-toggle-bars { position: relative; }
+  .nav-toggle-bars::before, .nav-toggle-bars::after { content: ''; position: absolute; left: 0; }
+  .nav-toggle-bars::before { top: -6px; }
+  .nav-toggle-bars::after { top: 6px; }
+  nav.open .nav-toggle-bars { background: transparent; }
+  nav.open .nav-toggle-bars::before { top: 0; transform: rotate(45deg); }
+  nav.open .nav-toggle-bars::after { top: 0; transform: rotate(-45deg); }
+
+  /* Lista de links (painel que abre embaixo da barra) */
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: var(--nav-pad);
+    width: 250px;
+    max-height: calc(100vh - 72px);
+    max-height: calc(100dvh - 72px);   /* celular deitado: a lista rola dentro dela */
+    overflow-y: auto;
+    list-style: none;
+    padding: 4px 0 6px;
+    background: var(--navy-light);
+    border: 1px solid var(--border-strong);
+    border-top: 0;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 0.18s, transform 0.18s, visibility 0s 0.18s;
+  }
+  nav.open .nav-links {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: opacity 0.18s, transform 0.18s, visibility 0s;
+  }
+  .nav-links a {
+    display: block;
+    padding: 13px 22px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-top: 1px solid var(--border);
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links li:first-child a { border-top: 0; }
+  .nav-links a:hover { background: rgba(79, 195, 247, 0.06); }
+  .nav-links a:hover, .nav-links a.active { color: var(--electric); }
+
+  /* tablet e celular */
+  @media (max-width: 960px) {
+    nav { --nav-pad: 28px; }
+  }
+  @media (max-width: 640px) {
+    nav { --nav-pad: 16px; padding-top: 8px; padding-bottom: 8px; gap: 8px; }
+    /* data embaixo do logo, para sobrar espaço aos botões */
+    .nav-brand { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .nav-logo { font-size: 21px; }
+    .nav-date { font-size: 9.5px; letter-spacing: 0.06em; padding: 1px 7px; }
+    /* lista ocupa a largura da tela */
+    .nav-links { left: 0; right: 0; width: auto; border-left: 0; border-right: 0; border-radius: 0; }
+    .nav-links a { padding: 14px 20px; font-size: 15px; }
+  }
+  @media (max-width: 440px) {
+    nav { --nav-pad: 12px; gap: 6px; }
+    .nav-logo { font-size: 20px; }
+    .nav-btn { padding: 0 11px; }
+    /* Attendee só com o ícone (o texto continua para leitores de tela / title) */
+    .nav-submit { font-size: 0; width: 40px; padding: 0; justify-content: center; gap: 0; }
+    .nav-submit svg { width: 17px; height: 17px; }
+  }
+  /* celulares estreitos: cabem logo, data, Agenda, Posters, Attendee e ☰ na mesma linha */
+  @media (max-width: 400px) {
+    nav { gap: 5px; }
+    .nav-year { display: none; }                       /* "19–21 Oct" (o ano aparece no topo da página) */
+    .nav-btn { padding: 0 8px; font-size: 12.5px; letter-spacing: 0.02em; }
+  }
+  @media (max-width: 345px) {
+    nav { --nav-pad: 10px; gap: 4px; }
+    .nav-btn { padding: 0 6px; font-size: 12px; letter-spacing: 0; }
+    .nav-submit, .nav-toggle { width: 36px; }
+  }
+  @media (max-width: 299px) {
+    .nav-date { display: none; }
+  }
+
+  /* Venue: tabelas de 2 colunas (transporte e hotéis) viram 1 coluna no celular */
+  @media (max-width: 640px) {
+    .venue-cols { grid-template-columns: 1fr !important; }
+    .venue-cols > div { border-right: 0 !important; min-width: 0; }
+    .venue-cols > div:not(:last-child) { border-bottom: 1px solid var(--border) !important; }
+    .venue-cols div[style*="display:flex"] { flex-wrap: wrap !important; }
   }
 
   .meta-item.meta-date span {
@@ -922,6 +1056,105 @@
   .slot.break-slot .slot-time { color: rgba(168,237,204,0.75); }
   .slot.break-slot:hover { background: rgba(168,237,204,0.09); }
 
+  /* POSTER SESSION (abaixo da agenda)
+     Classes próprias (poster-*), de propósito diferentes de .slot / .day-date / .day-theme,
+     para o gerar_agenda.py não confundir estes cartões com os horários da agenda. */
+  .poster-session { margin-top: 56px; }
+
+  .poster-session h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .poster-session h3 em { font-style: italic; color: var(--electric); }
+
+  .poster-days {
+    --poster-h: 96px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  @media (max-width: 860px) {
+    .poster-days { grid-template-columns: 1fr; }
+  }
+
+  .poster-day { background: var(--navy); }
+
+  .poster-day-head {
+    padding: 14px 20px 16px;
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+  }
+  .poster-day-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .poster-day-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--white);
+  }
+  .poster-day-num em { font-style: normal; color: var(--electric); }
+  .poster-day-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .poster-day-theme {
+    margin-top: 2px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--aurora);
+  }
+
+  .poster-list { display: flex; flex-direction: column; }
+
+  .poster-card {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 10px;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 56px;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .poster-card:last-child { border-bottom: none; }
+  .poster-card:hover { background: var(--navy-mid); }
+
+  .poster-no {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--aurora-dim);
+  }
+  .poster-content { font-size: 12.5px; line-height: 1.38; color: #d8e8f8; min-width: 0; }
+  .poster-content.tbd { color: var(--muted); }
+
+  /* Altura fixa em 3 colunas: o pôster 1 do dia 1 fica alinhado com o 1 dos outros dias.
+     Para ajustar tudo de uma vez, mude --poster-h. */
+  @media (min-width: 861px) {
+    .poster-card { height: var(--poster-h); overflow: hidden; }
+    .poster-card .talk-title {
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
+    }
+  }
+  /* telas largas só um pouco: colunas mais estreitas, título quebra em mais linhas */
+  @media (min-width: 861px) and (max-width: 999px) {
+    .poster-days { --poster-h: 114px; }
+    .poster-card .talk-title { -webkit-line-clamp: 4; line-clamp: 4; }
+  }
+
   .committee-status.confirmed {
     color: var(--aurora);
     border-color: rgba(168, 237, 204, 0.35);
@@ -981,7 +1214,7 @@
 
   .committee-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
@@ -1031,7 +1264,7 @@
   /* INVITED SPEAKERS */
   .speakers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
@@ -1818,6 +2051,8 @@
     letter-spacing: 0.16em; line-height: 1.7; text-transform: uppercase; color: var(--electric);
   }
   .abs-dialog[data-tipo="invited"] .abs-eyebrow { color: var(--gold); }
+  .abs-dialog[data-tipo="poster"] { border-top-color: var(--aurora); }
+  .abs-dialog[data-tipo="poster"] .abs-eyebrow { color: var(--aurora); }
   .abs-title {
     margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-size: 30px;
     font-weight: 600; line-height: 1.2; color: var(--white);
@@ -1850,19 +2085,23 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="workshop_MNS4A.html">MN<span>S</span>4A</a>
-  <ul class="nav-links">
+  <div class="nav-brand">
+    <a class="nav-logo" href="workshop_MNS4A.html">MN<span>S</span>4A</a>
+    <div class="nav-date">19–21 Oct<span class="nav-year"> 2026</span></div>
+  </div>
+  <a class="nav-btn nav-agenda" href="#agenda">Agenda</a>
+  <a class="nav-btn nav-posters" href="#posters">Posters</a>
+  <a class="nav-submit" href="#submit" title="Register as an attendee"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Attendee</a>
+  <button type="button" class="nav-toggle" aria-label="Open menu" title="Menu" aria-expanded="false" aria-controls="nav-links"><span class="nav-toggle-bars" aria-hidden="true"></span></button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#speakers">Speakers</a></li>
     <li><a href="#about" class="active">About</a></li>
     <li><a href="#sessions">Sessions</a></li>
-    <li><a href="#agenda">Agenda</a></li>
     <li><a href="#loc">LOC</a></li>
     <li><a href="#committee">SOC</a></li>
     <li><a href="#venue">Venue</a></li>
     <li><a href="#visa">Visa</a></li>
-    <li><a href="#submit" class="nav-submit" title="Register as an attendee"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Attendee</a></li>
   </ul>
-  <div class="nav-date">19–21 Oct 2026</div>
 </nav>
 
 <header>
@@ -2293,25 +2532,89 @@
           </div>
         </div>
         <div class="time-slots">
-          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
-          <div class="slot"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
-          <div class="slot"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot has-talk"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-233948659" title="INCT GNSS NavAer: History, Contributions, and Applications in Space Weather — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">INCT GNSS NavAer: History, Contributions, and Applications in Space Weather</span><span class="talk-author">Joao Francisco Galera Monico <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260829-232002976" title="New Jicamarca Radar Capabilities: The All-ISR and JULIA MP modes — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">New Jicamarca Radar Capabilities: The All-ISR and JULIA MP modes</span><span class="talk-author">D. Scipion <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-163433451" title="Transient Luminous Event (TLE) Observations with the LEONA Network — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Transient Luminous Event (TLE) Observations with the LEONA Network</span><span class="talk-author">Eliah F. M. T. São Sabbas <em>et al.</em></span></button></span></div>
           <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
           <div class="slot"><span class="slot-meta"><span class="slot-time">10:50–11:10</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
-          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot has-talk"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260927-125803907" title="Distributed Acoustic Sensing (DAS) in Seismology: Advances Over the Past Decade, Offshore Applications, and the Brazilian Perspective. — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Distributed Acoustic Sensing (DAS) in Seismology: Advances Over the Past Decade, Offshore Applications, and the Brazilian Perspective.</span><span class="talk-author">George Sand França <em>et al.</em></span></button></span></div>
           <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
-          <div class="slot"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260626-221123065" title="Development of Low-Cost Meteorological Instrumentation for Science Education and Public Engagement: The INPE Education Program. — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Development of Low-Cost Meteorological Instrumentation for Science Education and Public Engagement: The INPE Education Program.</span><span class="talk-author">Rosemary Aparecida Odorizi Lima <em>et al.</em></span></button></span></div>
           <div class="slot"><span class="slot-meta"><span class="slot-time">14:00–14:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
-          <div class="slot"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260830-005922707" title="J-ARGUS: Expanding Jicamarca&#x27;s Radar Capabilities — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">J-ARGUS: Expanding Jicamarca&#x27;s Radar Capabilities</span><span class="talk-author">Juan Espinoza <em>et al.</em></span></button></span></div>
           <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
-          <div class="slot"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
-          <div class="slot"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260830-234433466" title="Conceptualizing an App for Tracking Aeronomic Conditions over Brazil for Precision Agriculture End-Users — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Conceptualizing an App for Tracking Aeronomic Conditions over Brazil for Precision Agriculture End-Users</span><span class="talk-author">Francisco Meneses <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260920-182109159" title="Temporal Climatology of Ionospheric Scintillation Using Fixed SBAS Links at Low Latitudes — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Temporal Climatology of Ionospheric Scintillation Using Fixed SBAS Links at Low Latitudes</span><span class="talk-author">Sávio Jenner Vianna Silva Rennó <em>et al.</em></span></button></span></div>
           <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">15:40–16:20</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
           <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
           <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
         </div>
       </div>
 
+    </div>
+
+    <!-- POSTER SESSION -->
+    <div class="poster-session" id="posters">
+      <h3>Poster <em>session</em></h3>
+      <p>
+        Each day includes a poster session, following the scientific theme of the day. Posters are numbered P01 to P24; titles and authors will be listed here as the program is finalised.
+      </p>
+      <div class="poster-days">
+      <!-- POSTERS DAY 1 -->
+      <div class="poster-day">
+        <div class="poster-day-head">
+          <div class="poster-day-top"><span class="poster-day-num">Day <em>01</em></span><span class="poster-day-date">19 October</span></div>
+          <div class="poster-day-theme">Modeling</div>
+        </div>
+        <div class="poster-list">
+          <div class="poster-card" data-poster="P01"><span class="poster-no">P01</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P02"><span class="poster-no">P02</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P03"><span class="poster-no">P03</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P04"><span class="poster-no">P04</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P05"><span class="poster-no">P05</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P06"><span class="poster-no">P06</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P07"><span class="poster-no">P07</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P08"><span class="poster-no">P08</span><span class="poster-content tbd">TBD</span></div>
+        </div>
+      </div>
+
+      <!-- POSTERS DAY 2 -->
+      <div class="poster-day">
+        <div class="poster-day-head">
+          <div class="poster-day-top"><span class="poster-day-num">Day <em>02</em></span><span class="poster-day-date">20 October</span></div>
+          <div class="poster-day-theme">Networks</div>
+        </div>
+        <div class="poster-list">
+          <div class="poster-card" data-poster="P09"><span class="poster-no">P09</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P10"><span class="poster-no">P10</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P11"><span class="poster-no">P11</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P12"><span class="poster-no">P12</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P13"><span class="poster-no">P13</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P14"><span class="poster-no">P14</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P15"><span class="poster-no">P15</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P16"><span class="poster-no">P16</span><span class="poster-content tbd">TBD</span></div>
+        </div>
+      </div>
+
+      <!-- POSTERS DAY 3 -->
+      <div class="poster-day">
+        <div class="poster-day-head">
+          <div class="poster-day-top"><span class="poster-day-num">Day <em>03</em></span><span class="poster-day-date">21 October</span></div>
+          <div class="poster-day-theme">Instrumentation</div>
+        </div>
+        <div class="poster-list">
+          <div class="poster-card" data-poster="P17"><span class="poster-no">P17</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P18"><span class="poster-no">P18</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P19"><span class="poster-no">P19</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P20"><span class="poster-no">P20</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P21"><span class="poster-no">P21</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P22"><span class="poster-no">P22</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P23"><span class="poster-no">P23</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P24"><span class="poster-no">P24</span><span class="poster-content tbd">TBD</span></div>
+        </div>
+      </div>
+
+      </div>
     </div>
   <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
   </section>
@@ -2464,7 +2767,7 @@
       <div style="padding:16px 24px; background:rgba(79,195,247,0.04); border-bottom:1px solid var(--border);">
         <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--electric-dim);">From GRU Airport → São José dos Campos</div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr;">
+      <div class="venue-cols" style="display:grid; grid-template-columns:1fr 1fr;">
         <div style="padding:20px 24px; border-right:1px solid var(--border);">
           <div style="font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; color:var(--white); margin-bottom:4px;">Direct Bus</div>
           <div style="font-size:13px; color:var(--muted); line-height:1.6;">Intercity bus from GRU directly to São José dos Campos, approximately 1 hour 30 minutes.</div>
@@ -2492,7 +2795,7 @@
       <div style="padding:16px 24px; background:rgba(168,237,204,0.04); border-bottom:1px solid var(--border);">
         <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--aurora-dim);">Hotels near the conference site</div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr;">
+      <div class="venue-cols" style="display:grid; grid-template-columns:1fr 1fr;">
 
         <div style="padding:16px 24px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);">
           <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Ema Palace Hotel</div>
@@ -2761,7 +3064,15 @@
 "T20260829-233025150":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"14:00","fim":"14:20","titulo":"Multi-Instrument Ground Networks for Equatorial Aeronomy","autores":[{"n":"D. Scipion","m":"1"},{"n":"K. Kuyeng","m":"1"},{"n":"C. De La Jara","m":"1"},{"n":"J. Espinoza","m":"1"},{"n":"C. Valladares","m":"2"},{"n":"F. Rodrigues","m":"3"},{"n":"J. Chau","m":"4"}],"afiliacoes":[{"m":"1","t":"Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú"},{"m":"2","t":"Boston University"},{"m":"3","t":"University of Texas at Dallas"},{"m":"4","t":"Leibniz Institute of Atmospheric Physics"}],"apresentador":"","abstract":["Characterizing atmosphere–ionosphere coupling and low-latitude space weather requires coordinated observations from complementary ground-based sensors. The Jicamarca Geophysical Observatory (JGO) operates active and passive observing systems and coordinates the Low-Latitude Ionospheric Sensor Network (LISN), comprising magnetometers, GNSS receivers, and ionosondes distributed across South America. To address regional coverage gaps, LISN has incorporated low-cost (~US$5,000) portable oblique-sounding receivers based on USRP and GNU Radio. These measurements are complemented by a novel ionospheric inversion methodology that combines ray tracing and Particle Swarm Optimization (PSO) to reconstruct partial ionospheric profiles in near real time. JGO also operates the AMISR-14 array alongside the main radar and supports the SIMONe meteor radar network, with stations in northern and central Peru, to measure mesospheric winds and meteor dynamics. Together, these coordinated networks provide multi-instrument observations in near real time to support the Peruvian Space Weather Monitoring Center, enabling continuous space-weather hazard analysis. They also provide essential datasets for constraining and validating global atmospheric and ionospheric climatological models."]},
 "T20260930-141725462":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"14:20","fim":"14:40","titulo":"The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion","autores":[{"n":"Ângela Machado dos Santos","m":"1"},{"n":"Jonas Rodrigues de Souza","m":"1"},{"n":"Inez Staciarini Batista","m":"1"},{"n":"Robert Kerr","m":"2"},{"n":"Juanita Riccobono","m":"2"},{"n":"Mike Migliozzi","m":"2"},{"n":"Sudha Kapali","m":"2"},{"n":"Patrick Dandenault","m":"3"},{"n":"Rafael Luiz Araujo de Mesquita","m":"4"},{"n":"Alexandre Álvares Pimenta","m":"1"},{"n":"Lucas Vaz Peres","m":"4"},{"n":"Rodrigo Silva","m":"4"},{"n":"Theomar Neves","m":"4"},{"n":"Cristiano Wrasse","m":"1"},{"n":"Chunxiau Yan","m":"5"},{"n":"Zhengkuan Liu","m":"5"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research, São José dos Campos, SP, Brazil"},{"m":"2","t":"Computational Physics Inc., Lowell, MA, USA"},{"m":"3","t":"Johns Hopkins University Applied Physics Laboratory, Laurel, MD, USA"},{"m":"4","t":"Federal University of Western Pará, Santarém, Brazil"},{"m":"5","t":"State Key Laboratory of Space Weather, NSSC/CAS, Beijing, China"}],"apresentador":"","abstract":["Ground-based observations are essential for investigating the electrodynamics and variability of the equatorial and low-latitude ionosphere, particularly during space-weather events. Brazil offers an unique geomagnetic domain for such studies, extending from the low northern latitudes, through the equatorial latitudes, to the low southern latitudes. Here, we present the current status and scientific potential of the Brazilian network of ionosondes and Fabry–Perot interferometers, focusing on ionospheric electrodynamics, atmosphere–ionosphere coupling, and space weather. The Digisonde network comprises stations at Boa Vista (2.82°N, 60.67°W), Santarém (2.44°S, 54.70°W), Fortaleza (3.72°S, 38.52°W), São Luís (2.59°S, 44.21°W), Campo Grande (20.44°S, 54.54°W), Cachoeira Paulista (22.68°S, 45.00°W), Santa Maria (29.69°S, 53.81°W), and Juazeirinho (7.07°S, 36.58°W), providing observations over a broad range of latitudes. Fabry–Perot observations at Cachoeira Paulista and Santarém complement these measurements with thermospheric neutral-wind observations. The combined dataset supports studies of the equatorial ionization anomaly, pre-reversal enhancement, plasma drifts, equatorial plasma bubbles, atmospheric and ionospheric disturbances, and storm-time responses. We also highlight the importance of open data access, collaborative use, long-term maintenance, and network expansion to strengthen Brazilian aeronomy research and foster scientific collaborations."]},
 "T20260930-231819644":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"15:00","fim":"15:20","titulo":"NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection","autores":[{"n":"S. A. Sanchez","m":"1"},{"n":"E. A. Kherani","m":"1"},{"n":"E. Astafyeva","m":"2"},{"n":"B. Maletckii","m":"3"},{"n":"A. P. Almeida","m":"4"},{"n":"R. H. Honda","m":"1"}],"afiliacoes":[{"m":"1","t":"INPE, Brasil"},{"m":"2","t":"IPGP, Paris"},{"m":"3","t":"Earthquake Research Institute of the University of Tokyo, Japan"},{"m":"4","t":"Universidade Presbiteriana Mackenzie, Brasil"}],"apresentador":"Saul A Snnchez","abstract":["NRT-TECPRO is an open, automated platform that combines real-time seismic signals with multi-constellation satellite observations (GPS, GLONASS, Galileo, and BeiDou), delivering processed GNSS metrics with only a 2-to-5-minute latency. Its core engine automatically calculates key ionospheric variations (TEC, dTEC, and ROTI), made instantly available through interactive dashboards and APIs. By correlating ground seismic activity with upper-atmosphere disturbances, NRT-TECPRO transforms complex data streams into critical operational intelligence for tsunami early warning systems, space weather monitoring, and disaster mitigation"]},
-"T20260712-185417959":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"15:20","fim":"15:40","titulo":"Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector","autores":[{"n":"Carolina de Sousa do Carmo","m":"1,3"},{"n":"Lei Dai","m":"2"},{"n":"Cristiano Max Wrasse","m":"3"},{"n":"Diego Barros Silva","m":"3"},{"n":"Hisao Takahashi","m":"3"},{"n":"Joaquim Eduardo Rezende Costa","m":"3"},{"n":"Luiz Fillip Rodrigues Vital","m":"4"},{"n":"Paulo Ricardo Jauer","m":"3"},{"n":"Cesar De La Jara","m":"5"},{"n":"Alexander José Carrasco","m":"6"},{"n":"Cosme Alexandre Oliveira Barros Figueiredo","m":"7"},{"n":"Chi Wang","m":"2"},{"n":"Hui Li","m":"2"},{"n":"Liu Zhengkuan","m":"2"}],"afiliacoes":[{"m":"1","t":"China-Brazil Joint Laboratory for Space Weather (CBJLSW)"},{"m":"2","t":"State Key Laboratory of Space Weather (NSSC/CAS)"},{"m":"3","t":"National Institute for Space Research (INPE)"},{"m":"4","t":"Paraíba State University (UEPB)"},{"m":"5","t":"Instituto Geofísico del Perú"},{"m":"6","t":"University of the Andes (ULA)"},{"m":"7","t":"Federal University of Campina Grande (UFCG)"}],"apresentador":"","abstract":["This study investigates the ionospheric response to the moderate (G2) geomagnetic storm of 7–8 October 2024 over the American sector, with emphasis on the generation and suppression of equatorial plasma bubbles (EPBs). A comprehensive analysis was performed using GNSS-derived total electron content (TEC) and rate of TEC index (ROTI), ionosonde observations from Jicamarca (JICA) and São Luís (SALU), and thermospheric neutral wind measurements from the Fabry–Perot interferometer at Cachoeira Paulista (CHPI). Although the storm produced favorable conditions for EPB development, including a pronounced pre-reversal enhancement (PRE) with vertical plasma drifts exceeding 40 m/s, post-sunset EPBs were unexpectedly suppressed. In addition, post-midnight EPBs developed only over the western side of the Latin American sector, while no plasma irregularities were detected over the eastern sector, revealing a marked longitudinal asymmetry in EPB occurrence. The suppression of post-sunset EPBs and the absence of post-midnight EPBs in the eastern sector may be associated with the combined influence of disturbed meridional winds and enhanced E-region conductivity related to the presence of a sporadic E (Es) layer. These results demonstrate that even moderate geomagnetic storms can produce complex and regionally distinct ionospheric responses, highlighting the important role of local electrodynamic and neutral atmospheric processes in controlling EPB development and suppression."]}
+"T20260712-185417959":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"15:20","fim":"15:40","titulo":"Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector","autores":[{"n":"Carolina de Sousa do Carmo","m":"1,3"},{"n":"Lei Dai","m":"2"},{"n":"Cristiano Max Wrasse","m":"3"},{"n":"Diego Barros Silva","m":"3"},{"n":"Hisao Takahashi","m":"3"},{"n":"Joaquim Eduardo Rezende Costa","m":"3"},{"n":"Luiz Fillip Rodrigues Vital","m":"4"},{"n":"Paulo Ricardo Jauer","m":"3"},{"n":"Cesar De La Jara","m":"5"},{"n":"Alexander José Carrasco","m":"6"},{"n":"Cosme Alexandre Oliveira Barros Figueiredo","m":"7"},{"n":"Chi Wang","m":"2"},{"n":"Hui Li","m":"2"},{"n":"Liu Zhengkuan","m":"2"}],"afiliacoes":[{"m":"1","t":"China-Brazil Joint Laboratory for Space Weather (CBJLSW)"},{"m":"2","t":"State Key Laboratory of Space Weather (NSSC/CAS)"},{"m":"3","t":"National Institute for Space Research (INPE)"},{"m":"4","t":"Paraíba State University (UEPB)"},{"m":"5","t":"Instituto Geofísico del Perú"},{"m":"6","t":"University of the Andes (ULA)"},{"m":"7","t":"Federal University of Campina Grande (UFCG)"}],"apresentador":"","abstract":["This study investigates the ionospheric response to the moderate (G2) geomagnetic storm of 7–8 October 2024 over the American sector, with emphasis on the generation and suppression of equatorial plasma bubbles (EPBs). A comprehensive analysis was performed using GNSS-derived total electron content (TEC) and rate of TEC index (ROTI), ionosonde observations from Jicamarca (JICA) and São Luís (SALU), and thermospheric neutral wind measurements from the Fabry–Perot interferometer at Cachoeira Paulista (CHPI). Although the storm produced favorable conditions for EPB development, including a pronounced pre-reversal enhancement (PRE) with vertical plasma drifts exceeding 40 m/s, post-sunset EPBs were unexpectedly suppressed. In addition, post-midnight EPBs developed only over the western side of the Latin American sector, while no plasma irregularities were detected over the eastern sector, revealing a marked longitudinal asymmetry in EPB occurrence. The suppression of post-sunset EPBs and the absence of post-midnight EPBs in the eastern sector may be associated with the combined influence of disturbed meridional winds and enhanced E-region conductivity related to the presence of a sporadic E (Es) layer. These results demonstrate that even moderate geomagnetic storms can produce complex and regionally distinct ionospheric responses, highlighting the important role of local electrodynamic and neutral atmospheric processes in controlling EPB development and suppression."]},
+"T20260930-233948659":{"tipo":"invited","rotulo":"Invited talk","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"09:00","fim":"09:40","titulo":"INCT GNSS NavAer: History, Contributions, and Applications in Space Weather","autores":[{"n":"Joao Francisco Galera Monico","m":"1"},{"n":"Bruno C Vani","m":"2"},{"n":"Vinicius Amadeo Stuani Pereira","m":"3"}],"afiliacoes":[{"m":"1","t":"Sao Paulo State University - UNESP"},{"m":"2","t":"Federal Institute of Sao Paulo - IFSP at Presidente Epitácio"},{"m":"3","t":"Technical Federal University of Paraná - UTFPR at Santa Helena"}],"apresentador":"","abstract":["Addressing the challenges posed by space weather in satellite-based applications—particularly navigation and positioning—requires ground-based infrastructure to monitor ionospheric conditions and improve our understanding of their effects on technological systems. With this objective, and within the framework of the INCT 16/2014 call, the INCT GNSS NavAer project was proposed and approved in late 2016. However, the deployment of its GNSS receiver network had begun in early 2011, supported by previous projects, and was subsequently expanded and enhanced through the new funding program. Several institutions participated in and contributed to the project. Following the conclusion of the project in 2025, UNESP, Presidente Prudente campus, assumed responsibility for maintaining and continuing the network, as well as preserving the infrastructure and resources developed to date.","We will review the INCT history and evolution, the data and products it provides, and its main scientific and technological contributions, with particular emphasis on the ISMR Query Tool. Several applications will be discussed, including the development of a GBAS prototype and its initial results, the generation of ionospheric-index bulletins, and the mitigation procedures developed to date. Collectively, these activities demonstrate the contribution of INCT GNSS NavAer to space-weather monitoring and to the assessment and mitigation of ionospheric effects on GNSS-based applications."]},
+"T20260829-232002976":{"tipo":"oral","rotulo":"Oral presentation","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"09:40","fim":"10:00","titulo":"New Jicamarca Radar Capabilities: The All-ISR and JULIA MP modes","autores":[{"n":"D. Scipion","m":"1"},{"n":"K. Kuyeng","m":"1"},{"n":"I. Manay","m":"1"},{"n":"J. Espinoza","m":"1"}],"afiliacoes":[{"m":"1","t":"Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú"}],"apresentador":"","abstract":["The Jicamarca Geophysical Observatory (JGO) has implemented major upgrades to enhance remote sensing of the low-latitude ionosphere. This work presents the fully operational Automatic Beam Switching (ABS) system, covering the entire 300 × 300 m² antenna array. The system incorporates renewed RF modules, fiber-optic server connections, and stabilized power supplies, enabling an advanced All-ISR mode. Operational since July 2025, All-ISR digitally switches the full array between directions perpendicular and oblique to the geomagnetic field, enabling near-simultaneous measurements of ionospheric drifts and composition.","In parallel, two new 96-kW solid-state transmitters have been installed, enabling continuous monitoring of equatorial coherent irregularities, including the equatorial electrojet, 150-km echoes, and equatorial spread F. Their integration also supports unattended measurements of vertical and horizontal plasma drifts through the JULIA-MP (Medium Power) mode. Compared with legacy tube transmitters, the solid-state systems reduce maintenance requirements and improve operational continuity. Together, these upgrades expand JGO’s active radar capabilities and provide high-resolution observations for improving equatorial ionospheric climatology, validating plasma-drift models, and monitoring the impacts of space-weather disturbances in real time."]},
+"T20260930-163433451":{"tipo":"oral","rotulo":"Oral presentation","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"10:00","fim":"10:20","titulo":"Transient Luminous Event (TLE) Observations with the LEONA Network","autores":[{"n":"Eliah F. M. T. São Sabbas","m":"1"},{"n":"Caio L. T. F. de Oliveira","m":"1"},{"n":"Kleber P. Naccarato","m":"1"},{"n":"Renato G. Negri","m":"1"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research - INPE"}],"apresentador":"","abstract":["In 2018, during the RELAMPAGO Campaign in Argentina, a severe Mesoscale Convective System (MCS) produced more than 400 Transient Luminous Events (TLEs) that were recorded utilizing the instrumentation of the recently created LEONA Network. LEONA stands for Transient Luminous Event and ThunderstOrm High Energy EmissioN CollAbortive Network (LEONA). Currently with 8 ground TLE stations in Brazil and one in the United States, plus a mobile station to detect neutrons, one of the High Energy Emissions from Thunderstorms (HEETs), the LEONA Network is a unique platform to research TLEs and HEETs. They are the two classes of EFfects SignAlIng the ElectRodynamic CouplIng between the AtmospherE and Space (FAIRIES), i.e. the electrodynamic coupling between all layers of the neutral atmosphere and the ionized regions, Ionosphere and Magnetosphere. We are proposing the acronym FAIRIES to designate them collectively. In this paper we will review the TLEs observed with LEONA and one of the of the severe MCS that originated them. Southern South America is consider to be the region of the world with the most intense and severe thunderstorms, according with satellite based studies, the results of this work may help advance the knowledge on severe storms, TLE production and the electrodynamic coupling of the whole atmospheric system with the space region near the planet."]},
+"T20260927-125803907":{"tipo":"invited","rotulo":"Invited talk","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"11:10","fim":"11:50","titulo":"Distributed Acoustic Sensing (DAS) in Seismology: Advances Over the Past Decade, Offshore Applications, and the Brazilian Perspective.","autores":[{"n":"George Sand França","m":"1"},{"n":"Carlos Alberto Moreno Chaves","m":"1"},{"n":"CLOWN Team","m":"1"}],"afiliacoes":[{"m":"1","t":"Universidade de São Paulo"}],"apresentador":"","abstract":["The use of Distributed Acoustic Sensing (DAS) in seismology has seen intense scientific and technical breakthroughs, particularly in geophysics. It has been applied over the past decade and, more recently, in oceanic (offshore) regions. Researchers worldwide are working to unravel the ocean's structure in a unique way, with numerous international meetings and concrete results from its application. Here, I will present the advances and milestones achieved over the last decade and where the field stands today. I will also address the state of these studies in Brazil, along with a diagnosis of DAS usage there. A notable example of Brazilian-led research is the PROASA project (Tectonic Evolution and Magmatism of the South Atlantic Ocean and Margin), at the University of São Paulo (IAG-USP). This project utilizes DAS alongside seismograph network to investigate the tectonic evolution and magmatism of the South Atlantic Ocean and Margin, with a particular focus on seaward-dipping reflectors, volcanic formations, and the continent-ocean transition zones . The primary objective is to generate high-resolution structural models through an integrated approach combining surface wave tomography, anisotropic analysis, receiver functions, reflected phase analysis, and joint inversion."]},
+"T20260626-221123065":{"tipo":"oral","rotulo":"Oral presentation","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"13:40","fim":"14:00","titulo":"Development of Low-Cost Meteorological Instrumentation for Science Education and Public Engagement: The INPE Education Program.","autores":[{"n":"Rosemary Aparecida Odorizi Lima","m":"1"},{"n":"Antônio Marcos Vianna Campos","m":"1"},{"n":"Dario Gerardo Fantini","m":"1"},{"n":"José Celso Thomaz Júnior","m":"4"},{"n":"Mateus Motta Ribeiro","m":"5"}],"afiliacoes":[{"m":"1","t":"Instituto Nacional de Pesquisas Espaciais"}],"apresentador":"","abstract":["The Education Program – Environmental, Scientific and Technological Educational Extension of the National Institute for Space Research (INPE) develops initiatives aimed at democratizing scientific knowledge through the design and use of low-cost meteorological instrumentation as a tool for education, research, and science outreach. The program seeks to engage students, teachers, and local communities with ation techniques, including 3D printing, and open-source electronic prototyping platforms. The instruments developed include rain gauges, anemometers, wind vanes, radiation shields, temperature, humidity, and atmospheric pressure sensors, as well as educational weather stations, enabling hands-on learning activities in schools and non-formal educational environments. In addition to significantly reducing costs compared with commercial equipment, the initiative promotes project-based learning, scientific inquiry, the maker culture, and environmental education. Data collected by these instruments can be applied in investigative classroom activities, science fairs, local climate monitoring, and citizen science projects, fostering skills in observing, analyzing, and interpreting atmospheric phenomena. Therefore, low-cost meteorological instrumentation represents an innovative strategy to expand access to high-quality science education, strengthen public engagement with science, and inspire the next generation of professionals in Science, Technology, Engineering, and Mathematics."]},
+"T20260830-005922707":{"tipo":"oral","rotulo":"Oral presentation","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"14:20","fim":"14:40","titulo":"J-ARGUS: Expanding Jicamarca's Radar Capabilities","autores":[{"n":"Juan Espinoza","m":"1"},{"n":"Danny Scipion","m":"1"},{"n":"Fabiano Rodriguez","m":"2"},{"n":"Marco Milla","m":"3"},{"n":"David Hysell","m":"4"},{"n":"Jorge Chau","m":"5"},{"n":"Kenneth Obenberger","m":"6"},{"n":"Jorge Florentino","m":"1"}],"afiliacoes":[{"m":"1","t":"Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú"},{"m":"2","t":"University of Texas at Dallas"},{"m":"3","t":"Pontifical Catholic University of Peru"},{"m":"4","t":"Cornell University"},{"m":"5","t":"Leibniz Institute of Atmospheric Physics"},{"m":"6","t":"Air Force Research Laboratory"}],"apresentador":"","abstract":["Continuous remote sensing of equatorial geospace requires advanced radar configurations capable of resolving vector dynamics. A multi-institutional initiative is expanding the capabilities of the Jicamarca Geophysical Observatory (JGO) to a tri-static system for 50-MHz radar observations from its high-power large-aperture array. The system comprises two spatially separated receiving stations: one at the Huancayo Geophysical Observatory, approximately 170 km east of JGO, and another at the Pontifical Catholic University of Peru’s Santa María campus, approximately 50 km south. Both stations operate over a wide 10–80 MHz frequency range and support digital beamforming, enabling flexible passive and active radio observations.","This expanded multi-static capability will enhance studies of low-latitude aeronomy, including mesosphere–lower thermosphere (MLT) dynamics, meteor physics, ionospheric irregularities, and meteor radio afterglows. In addition, each receiving station can operate independently as a passive low-frequency radio telescope for radio astronomy. This flexible architecture bridges active geospace remote sensing and passive cosmic observations, while expanding the spatial coverage and scientific capabilities of JGO’s ionospheric radar."]},
+"T20260830-234433466":{"tipo":"oral","rotulo":"Oral presentation","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"15:00","fim":"15:20","titulo":"Conceptualizing an App for Tracking Aeronomic Conditions over Brazil for Precision Agriculture End-Users","autores":[{"n":"Francisco Meneses","m":"1"},{"n":"Humberto Ferro","m":"1"},{"n":"Tereza Satiko Nishida Pinto","m":"2"},{"n":"Cristiano Wrasse","m":"3"},{"n":"Diego Barros","m":"3"},{"n":"Siomel Sávio","m":"3"},{"n":"Diego Oliveira","m":"4"},{"n":"Esfhan Alam Kherani","m":"3"},{"n":"Octavio Henrique Viana","m":"1"},{"n":"Everaldo Lorensetti","m":"1"},{"n":"Vitor Prestes Luzio","m":"1"}],"afiliacoes":[{"m":"1","t":"Instituto Federal do Paraná (IFPR)"},{"m":"2","t":"Instituto de Economia Agrícola do Estado de São Paulo (IEA)"},{"m":"3","t":"Instituto Nacional de Pesquisas Espaciais (INPE)"},{"m":"4","t":"Harpya Drones"}],"apresentador":"","abstract":["Brazil's agricultural sector, a major economic force in global supply chains, is increasingly adopting Unmanned Aerial Vehicles (UAVs) equipped with GNSS-based positioning for site-specific crop management, reducing environmental impacts and input waste, such as fertilizers and pesticides. However, these operations can be affected by ionospheric scintillations, which may degrade GNSS positioning accuracy and reliability, particularly at nighttime. Furthermore, ionospheric hazards are rarely incorporated into UAV flight-safety protocols or regulations, while regional scintillation seasonality and the suitability of indices for characterizing and nowcasting low-latitude scintillation require further investigation. In light of these challenges, this work proposes the development and evaluation of metrics for ionospheric scintillations tailored to UAV operations in precision agriculture. The nowcast information will be delivered through a mobile application connected to a web API, providing near-real-time warnings. The application will adopt an offline-first approach, caching essential data and synchronizing nowcasts when connectivity is available. Moreover, instrumental observation campaigns are highly desirable for validating this tool under real-world conditions."]},
+"T20260920-182109159":{"tipo":"oral","rotulo":"Oral presentation","dia":3,"data":"21 October","tema":"Instrumentation","inicio":"15:20","fim":"15:40","titulo":"Temporal Climatology of Ionospheric Scintillation Using Fixed SBAS Links at Low Latitudes","autores":[{"n":"Sávio Jenner Vianna Silva Rennó","m":"1"},{"n":"Bruno Augusto Pereira","m":"1,2"},{"n":"Maria Luiza Ribeiro Batista","m":"3"},{"n":"Alison de Oliveira Moraes","m":"3,4"}],"afiliacoes":[{"m":"1","t":"Universidade de Taubaté e Instituto Tecnológico de Aeronáutica"},{"m":"2","t":"Instituto Nacional de Pesquisas Espaciais"},{"m":"3","t":"Universidade de Taubaté"},{"m":"4","t":"Instituto de Aeronáutica e Espaço e Universidade de Taubaté"}],"apresentador":"","abstract":["This work presents an 11-year climatological analysis of ionospheric scintillation from L-band observations of geostationary SBAS satellites over Fortaleza, Brazil, spanning a full solar cycle. Fixed transionospheric links remove ambiguities from satellite motion, so temporal signal variations directly reflect ionospheric irregularity dynamics. Scintillation events were defined as continuous intervals with S4 above 0.2 lasting longer than 8 minutes. Occurrence, duration, and distribution were characterized on nightly, monthly, and interannual timescales. Activity concentrates between September and March, consistent with the Spread-F season at low latitudes, and is negligible from April through August.","Results show that scintillation occurrence decreased during the descending phase of cycle 24, especially near solar minimum (2018-2020), then increased through the ascending phase of cycle 25, confirming previous findings. At higher solar flux, during Spread-F season, typical nights show two to three events, with cumulative durations near 150 minutes. This pattern holds across solar cycle phases, though reduced at minimum. Months with more occurrences also accumulate longer total durations, showing coherence between occurrence rate and signal degradation duration.","The dataset spans long enough to resolve solar cycle effects that shorter campaigns cannot capture, offering insights for refining scintillation models for GNSS systems at low latitudes."]}
 }
 </script>
 <script>
@@ -2778,7 +3089,7 @@
     var t = data[id];
     if (!t) return false;
     dlg.setAttribute('data-tipo', t.tipo);
-    q('.abs-eyebrow').textContent = ['Day ' + t.dia, t.tema, t.data, t.inicio + '\u2013' + t.fim, t.rotulo]
+    q('.abs-eyebrow').textContent = [t.dia ? 'Day ' + t.dia : '', t.tema, t.data, t.inicio ? t.inicio + '\u2013' + t.fim : '', t.rotulo]
       .filter(Boolean).join(' \u00b7 ');
     q('.abs-title').textContent = t.titulo;
     var au = q('.abs-authors');
@@ -2839,6 +3150,26 @@
 })();
 </script>
 <!-- PROGRAMA:MODAL:FIM -->
+
+<script>
+/* Menu (botão ☰): abre/fecha a lista de links */
+(function () {
+  var nav = document.querySelector('nav');
+  var btn = nav && nav.querySelector('.nav-toggle');
+  if (!btn) return;
+  function set(open) {
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  btn.addEventListener('click', function () { set(!nav.classList.contains('open')); });
+  nav.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.nav-links a, .nav-btn, .nav-submit')) set(false); });
+  document.addEventListener('click', function (e) { if (!nav.contains(e.target)) set(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); btn.focus(); }
+  });
+})();
+</script>
 
 </body>
 </html>
