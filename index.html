@@ -129,6 +129,26 @@
     border-color: var(--aurora);
   }
 
+  /* Pin (Venue): botão só com o ícone, entre Posters e Attendee */
+  .nav-pin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    color: var(--gold);
+    text-decoration: none;
+    border: 1px solid rgba(240, 192, 96, 0.4);
+    background: rgba(240, 192, 96, 0.08);
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .nav-pin:hover, .nav-pin:focus-visible { color: var(--navy); background: var(--gold); border-color: var(--gold); }
+  .nav-pin:focus-visible { outline: 2px solid var(--aurora); outline-offset: 2px; }
+  .nav-pin svg { width: 18px; height: 18px; }
+  @media (max-width: 345px) { .nav-pin { width: 36px; } }
+
   /* Botão ☰ */
   .nav-toggle {
     display: inline-flex;
@@ -2085,6 +2105,7 @@
   </div>
   <a class="nav-btn nav-agenda" href="#agenda">Agenda</a>
   <a class="nav-btn nav-posters" href="#posters">Posters</a>
+  <a class="nav-pin" href="#venue" title="Venue" aria-label="Venue"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="2"/></svg></a>
   <a class="nav-submit" href="#submit" title="Register as an attendee"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Attendee</a>
   <button type="button" class="nav-toggle" aria-label="Open menu" title="Menu" aria-expanded="false" aria-controls="nav-links"><span class="nav-toggle-bars" aria-hidden="true"></span></button>
   <ul class="nav-links" id="nav-links">
@@ -2112,16 +2133,18 @@
       <div class="workshop-subtitle">Implications to Natural Hazard Impacts on Aeronomy</div>
 
       <div class="header-cta">
-        <a href="#agenda" class="btn-header-date">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
-            <path d="M3 9h18" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
+        <a href="#venue" class="btn-header-date">
+          <span class="btn-header-icons" style="display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </span>
           <span class="btn-header-inner">
             <span class="btn-header-eyebrow">Workshop</span>
             <span class="btn-header-main">19 – 21 October 2026</span>
             <span class="btn-header-sub">INPE · São José dos Campos</span>
+            <span class="btn-header-sub">Sérgio Sobral de Oliveira Auditorium</span>
           </span>
         </a>
         <a href="#submit" class="btn-header-attend">
@@ -2718,14 +2741,14 @@
     <div class="section-label">Venue &amp; Travel</div>
     <h2 style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
       Getting to <em>São José dos Campos</em>
-      <a href="https://maps.app.goo.gl/jy4VyPabTZRqsths6" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:7px; font-family:'DM Mono',monospace; font-size:11px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:#1a1a1a; background:linear-gradient(135deg,#4285f4,#34a853,#fbbc05,#ea4335); padding:1px; border-radius:4px; text-decoration:none; flex-shrink:0;">
-        <span style="display:inline-flex; align-items:center; gap:6px; background:var(--navy); border-radius:3px; padding:5px 12px; color:var(--white);">
+      <a href="https://maps.app.goo.gl/Qe7wYiVDPJFJpSjw5" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:7px; font-family:'DM Mono',monospace; font-size:13px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:#1a1a1a; background:linear-gradient(135deg,#4285f4,#34a853,#fbbc05,#ea4335); padding:1px; border-radius:4px; text-decoration:none; flex-shrink:0;">
+        <span style="display:inline-flex; align-items:center; gap:8px; background:var(--navy); border-radius:3px; padding:8px 16px; color:var(--white);">
           <!-- Google Maps pin icon -->
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#ea4335"/>
             <circle cx="12" cy="9" r="2.5" fill="#fff"/>
           </svg>
-          <span style="background:linear-gradient(90deg,#4285f4,#34a853,#fbbc05,#ea4335); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-size:11px;">View on Google Maps</span>
+          <span style="background:linear-gradient(90deg,#4285f4,#34a853,#fbbc05,#ea4335); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-size:13px;">View on Google Maps</span>
         </span>
       </a>
     </h2>
@@ -3164,7 +3187,7 @@
     btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
   }
   btn.addEventListener('click', function () { set(!nav.classList.contains('open')); });
-  nav.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.nav-links a, .nav-btn, .nav-submit')) set(false); });
+  nav.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.nav-links a, .nav-btn, .nav-pin, .nav-submit')) set(false); });
   document.addEventListener('click', function (e) { if (!nav.contains(e.target)) set(false); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); btn.focus(); }
