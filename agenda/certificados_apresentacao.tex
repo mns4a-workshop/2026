@@ -1,0 +1,460 @@
+% =====================================================================
+% MNS4A certificate - all text placed over the background image
+%
+% Put the background image (logos, MNS4A header, frame; WITHOUT any of
+% the text below) in the same folder as fundo.jpg (or change \fundo).
+% Compile with: pdflatex certificado_mns4a_texto.tex
+%
+% Usage (one page per certificate):
+%   \certificado{Name}{Paragraph text}
+% Use \\ inside the paragraph for the line break.
+% The fixed texts (title, "This is to certify that", signatories) are
+% defined in the configuration block below.
+% =====================================================================
+\documentclass[a4paper,landscape]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,landscape,margin=0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{helvet}
+\usepackage{mathpazo}   % serif font for the name
+\renewcommand{\familydefault}{\sfdefault}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\definecolor{navy}{HTML}{0B2A5B}
+\definecolor{bluetext}{HTML}{1F4E8C}
+
+% ---------- Configuration ----------
+\newcommand{\fundo}{fundo.jpg}   % background image
+
+% Fixed texts
+\newcommand{\titulo}{CERTIFICATE OF RECOGNITION}
+\newcommand{\certifythat}{This is to certify that}
+
+% Signatories
+\newcommand{\assinanteA}{Dr. Esfhan Alam Kherani}
+\newcommand{\cargoA}{Chair of NMS4A}
+\newcommand{\assinanteB}{Dr. L\'aysa Cristina Araujo Resende Chagas}
+\newcommand{\cargoB}{President of SBGEA}
+
+% Vertical positions (distance from the top of the page) - adjust if needed
+\newcommand{\ytitulo}{8.0cm}
+\newcommand{\ycertify}{9.6cm}
+\newcommand{\ynome}{11.6cm}
+\newcommand{\ycorpo}{14.2cm}
+\newcommand{\yassin}{18.0cm}
+
+% ---------- One certificate ----------
+% #1 name | #2 paragraph text
+\newcommand{\certificado}[2]{%
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture,overlay,shift={(current page.north west)}]
+    \node[anchor=north west,inner sep=0] at (0,0)
+      {\includegraphics[width=\paperwidth,height=\paperheight]{\fundo}};
+    % Title
+    \node[font=\LARGE\color{bluetext}]
+      at (0.5\paperwidth,-\ytitulo) {\titulo};
+    % "This is to certify that"
+    \node[font=\large\color{navy}]
+      at (0.5\paperwidth,-\ycertify) {\certifythat};
+    % Name
+    \node[font=\fontsize{28}{32}\selectfont\bfseries\rmfamily\color{navy}]
+      at (0.5\paperwidth,-\ynome) {#1};
+    % Body
+    \node[font=\Large\color{navy},text width=0.95\paperwidth,align=center]
+      at (0.5\paperwidth,-\ycorpo) {#2};
+    % Signatories
+    \node[align=center,font=\normalsize\color{navy}]
+      at (0.328\paperwidth,-\yassin) {{\bfseries\assinanteA}\\\cargoA};
+    \node[align=center,font=\normalsize\color{navy}]
+      at (0.715\paperwidth,-\yassin) {{\bfseries\assinanteB}\\\cargoB};
+  \end{tikzpicture}%
+  \clearpage}
+
+% ---------- Default texts for presentation certificates ----------
+% #1 presenter name | #2 title of the work | #3 session name
+\newcommand{\localdata}{of the MNS4A Workshop,
+  held in S\~ao Jos\'e dos Campos (SP), Brazil, from 19 to 21 October 2026.}
+
+% Oral presentation
+\newcommand{\oral}[3]{%
+  \certificado{#1}{has presented the oral talk entitled {\bfseries ``#2''}
+    in the Session ``#3'' \localdata}}
+
+% Poster presentation
+\newcommand{\poster}[3]{%
+  \certificado{#1}{has presented the poster entitled {\bfseries ``#2''}
+    in the Session ``#3'' \localdata}}
+
+% Invited talk
+\newcommand{\convidado}[3]{%
+  \certificado{#1}{has presented the invited talk entitled {\bfseries ``#2''}
+    in the Session ``#3'' \localdata}}
+
+% ---------- Default text for attendee (listener) certificates ----------
+% #1 attendee name
+\newcommand{\ouvinte}[1]{{%
+  \renewcommand{\titulo}{CERTIFICATE OF PARTICIPATION}%
+  \certificado{#1}{has attended the MNS4A Workshop,
+    held in S\~ao Jos\'e dos Campos (SP), Brazil, from 19 to 21 October 2026.}}}
+
+\begin{document}
+
+% row 2
+\convidado
+  {Cassiano Antonio Bortolozo}
+  {Geofísica Aplicada A Estudos Ambientais E Desastres Naturais}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 3
+\convidado
+  {Lucie Rolland}
+  {Modeling earthquake- and tsunami-induced ionospheric disturbances: from physical mechanisms to source characterization}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 4
+\convidado
+  {Clezio Marcos Denardini}
+  {The Instruments for the Rise Campaign for Ionospheric Study}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 5
+\oral
+  {Esfhan Alam Kherani}
+  {IONO-DIET with GO-EUREKA: A step towards early warning of catastrophic geohazards}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 6
+\oral
+  {Jonas Rodrigues de Souza}
+  {SUPIM-INPE Model: Some Ionospheric Predictions for Equatorial and Low Latitudes}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 7
+\oral
+  {Luis Eduardo Antunes Vieira}
+  {Physics-Informed Machine Learning for Radiation Belt Dynamics}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 8
+\oral
+  {Oluwasegun Micheal Adebayo}
+  {Earthquake Source Processes Revealed by Dual-Mode Co-Seismic Ionospheric Disturbances}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 9
+\oral
+  {Jose Paulo Marchezi}
+  {Can empirical wave models resolve what drives energetic electron precipitation? A comparison of model-driven and measurement-driven diffusion coefficients}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 10
+\oral
+  {Rogério Hisashi Honda}
+  {A Thunderstorm--Atmosphere--Ionosphere Coupling Model for the Ionospheric Signatures of Acoustic-Gravity Waves}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 11
+\oral
+  {Sophia Rodrigues Laranja}
+  {A Data-Driven Approach to Improving the Representation of Equatorial Vertical Drifts over South America: Preliminary Results on Atmospheric Tides}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 12
+\oral
+  {André Ricardo Fasanaro Martinon}
+  {Real-Time Maps of S4 and $\sigma$$\varphi$ Scintillation Indices Over Brazil}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 13
+\poster
+  {Giorgio Picanço}
+  {Modeling the Topside Ionosphere Using an Ionosonde-Based Assimilative Model}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 14
+\poster
+  {Thiago Moeda Sant Anna}
+  {Modeling the Variability of Relativistic Electron Flux in the Outer Radiation Belt Using LSTM Recurrent Neural Network}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 15
+\poster
+  {Akinbode Oluwasola Olakitan}
+  {Machine Learning Applied For Prediction of Maximum Usable Frequency (MUF) in Brazilian Ionospheric Stations}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 16
+\poster
+  {Atotuomah Eyitope Solomon}
+  {Updating the Studies of Cosmic Noise Absorption Across the SAMA Based on Recent Measurements}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 17
+\poster
+  {Diego Barros Silva}
+  {Asymmetric Evolution of Equatorial Plasma Bubbles at Geomagnetically Conjugate Sites in Brazil}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 18
+\poster
+  {Gowher Rather}
+  {Lead-Time-Dependent Machine Learning Prediction of Equatorial Plasma Bubble Onset over Brazil: Snapshot, Temporal, and Spatial Model}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 19
+\poster
+  {Laura Luiz Trigo}
+  {Development of Computational Tools in MATLAB for GNSS-Based Ionospheric Analysis Using PCA and Time-Distance Diagrams}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 20
+\poster
+  {Laysa Resende}
+  {MUF Index Variability and Its Impacts over Brazilian Stations During a Intense Geomagnetic Storm}
+  {Modeling of Atmosphere and Ionosphere Variabilities}
+
+% row 21
+\convidado
+  {Elvira Astafyeva}
+  {GO-EUREKA: toward near-real-time detection and assessment of natural hazards from the ionosphere}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 22
+\convidado
+  {Maria Graciela Molina}
+  {Machine Learning and Ionospheric Datasets: From Data Preparation to Operational Forecasting}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 23
+\convidado
+  {Michela Ravanelli}
+  {Multi-GNSS Networks for Real-Time Monitoring of Atmosphere--Ionosphere Coupling and Natural Hazards}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 24
+\oral
+  {Alexandre Alvares Pimenta}
+  {Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 25
+\oral
+  {Angela Santos}
+  {The Brazilian Digisonde and Fabry--Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 26
+\oral
+  {Carolina de Sousa do Carmo}
+  {Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7--8 October 2024 Geomagnetic Storm over the American Sector}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 27
+\oral
+  {Danny Scipion}
+  {Multi-Instrument Ground Networks for Equatorial Aeronomy}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 28
+\oral
+  {Gabriel Brando Soares}
+  {Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 29
+\oral
+  {Olufemi Louis Ogunmola}
+  {Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 30
+\oral
+  {Saul A. Sanchez}
+  {NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 31
+\oral
+  {Vania Fatima Andrioli Novaes Silva}
+  {Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 32
+\poster
+  {Anita Jungton Valcorte}
+  {Statistical Analysis of GNSS-Derived Ionospheric Disturbance Indices Over the SAMA Region}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 33
+\poster
+  {Guillermo Caro}
+  {Preliminary results of the study of the long-term effects on the diurnal variation of the geomagnetic field in the SAMA region}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 34
+\poster
+  {Oladayo Olayiwola Afolabi}
+  {From the Equator to Midlatitudes: The Magnetic Footprint of the May 2024 Disturbance Dynamo over South America}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 35
+\poster
+  {Virginia Klausner}
+  {Seismo-Ionospheric Response to the August 22, 2025 Mw 7.5 Drake Passage Earthquake: Spatial Patterns and Propagation Characteristics}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 36
+\poster
+  {Gbadebo Seun Adeniran}
+  {Severe Scintillation Intensification and Large-to-Mesoscale Wave Structures During the 2023 Major Sudden Stratospheric Warming}
+  {Scientific Networks for Atmosphere and Ionospheric Applications}
+
+% row 37
+\convidado
+  {Boris Maletckii}
+  {Understanding Seismo-Atmosphere-Ionosphere Coupling by Analysis of Spatio-Temporal Characteristics of Ionospheric Disturbances}
+  {Scientific Instrumentation and Challenges}
+
+% row 38
+\convidado
+  {George Sand L. A. de França}
+  {Distributed Acoustic Sensing (DAS) in Seismology: Advances Over the Past Decade, Offshore Applications, and the Brazilian Perspective.}
+  {Scientific Instrumentation and Challenges}
+
+% row 39
+\convidado
+  {Joao Francisco Galera Monico}
+  {INCT GNSS NavAer: History, Contributions, and Applications in Space Weather}
+  {Scientific Instrumentation and Challenges}
+
+% row 40
+\oral
+  {Rodolfo de Jesus}
+  {Electrodynamics and ionospheric irregularities during a weak geomagnetic storm of 15 April 2025 and intense storm of 16 April 2025 over Brazil}
+  {Scientific Instrumentation and Challenges}
+
+% row 41
+\oral
+  {Danny Scipión}
+  {New Jicamarca Radar Capabilities: The All-ISR and JULIA MP modes}
+  {Scientific Instrumentation and Challenges}
+
+% row 42
+\oral
+  {Francisco Carlos de Meneses Junior}
+  {Conceptualizing an App for Tracking Aeronomic Conditions over Brazil for Precision Agriculture End-Users}
+  {Scientific Instrumentation and Challenges}
+
+% row 43
+\oral
+  {Cristiano Max Wrasse}
+  {Ground-Based Observations of the Mesosphere and Lower Thermosphere: An Overview of the EMBRACE Monitoring Network}
+  {Scientific Instrumentation and Challenges}
+
+% row 44
+\oral
+  {Juan C. Espinoza}
+  {J-ARGUS: Expanding Jicamarca's Radar Capabilities}
+  {Scientific Instrumentation and Challenges}
+
+% row 45
+\oral
+  {Rosemary Aparecida Odorizi Lima}
+  {Development of Low-Cost Meteorological Instrumentation for Science Education and Public Engagement: The INPE Education Program.}
+  {Scientific Instrumentation and Challenges}
+
+% row 46
+\oral
+  {Sávio Jenner Vianna Silva Rennó}
+  {Temporal Climatology of Ionospheric Scintillation Using Fixed SBAS Links at Low Latitudes}
+  {Scientific Instrumentation and Challenges}
+
+% row 47
+\oral
+  {Eliah F. M. T. São Sabbas}
+  {Transient Luminous Event (TLE) Observations with the LEONA Network}
+  {Scientific Instrumentation and Challenges}
+
+% row 48
+\ouvinte{Adebayo Samuel Sunday}
+
+% row 49
+\ouvinte{Adriano P. Almeida}
+
+% row 50
+\ouvinte{Adriany Rodrigues Barbosa}
+
+% row 51
+\ouvinte{Agri Faturahman}
+
+% row 52
+\ouvinte{Ângela Santos}
+
+% row 53
+\ouvinte{Daiene de Mello Schaefer}
+
+% row 54
+\ouvinte{Dave DELVA}
+
+% row 55
+\ouvinte{Deysi Veronica Cornejo Espinoza}
+
+% row 56
+\ouvinte{Edith Tueros Cuadros}
+
+% row 57
+\ouvinte{Elias de Vargas Becker}
+
+% row 58
+\ouvinte{Emilly Silva Rosa}
+
+% row 59
+\ouvinte{Gbadebo Seun Adeniran}
+
+% row 60
+\ouvinte{Hadassa Raquel Peixoto Jácome}
+
+% row 61
+\ouvinte{Ian Gabriel Oliveira da Silva}
+
+% row 62
+\ouvinte{Igor Gabriel Gonçalves Vicente}
+
+% row 63
+\ouvinte{Inez Staciarini Batista}
+
+% row 64
+\ouvinte{Isela Leonor Vasquez Panduro}
+
+% row 65
+\ouvinte{Jaziel Felipe Braga Campelo}
+
+% row 66
+\ouvinte{Jose Paulo Marchezi}
+
+% row 67
+\ouvinte{Luan Mateus Bocalan Vogás}
+
+% row 68
+\ouvinte{Peter Taiwo Muka}
+
+% row 69
+\ouvinte{Renan Yule Queiroz Ferreira}
+
+% row 70
+\ouvinte{Rochelin YAYO}
+
+% row 71
+\ouvinte{Simbiat Oamen}
+
+% row 72
+\ouvinte{Veera Kumar}
+
+% row 73
+\ouvinte{vinicius deggeroni}
+
+\end{document}

@@ -1,0 +1,244 @@
+\documentclass[10pt]{article}
+\usepackage[paperwidth=105mm, paperheight=148mm, top=0mm, bottom=0mm, left=0mm, right=0mm]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% Background image of the badge
+\newcommand{\backgroundImage}{cracha_colorido_final.png}
+
+% Vertical position of the name (distance from the top of the badge)
+\newcommand{\nameposition}{85mm}
+
+% One badge per page. #1 = name (lines separated by \\) and institution
+\newcommand{\badge}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north west, inner sep=0pt] at (current page.north west)
+      {\includegraphics[width=\paperwidth, height=\paperheight]{\backgroundImage}};
+  \end{tikzpicture}%
+  \vspace*{\nameposition}%
+  \begin{center}
+    \textbf{\fontsize{12}{18}\selectfont #1}
+  \end{center}%
+  \newpage}
+
+\begin{document}
+
+% row 2
+\badge{Cassiano Antonio \\ Bortolozo \\ \vspace{1em} - USP -}
+
+% row 3
+\badge{Lucie Rolland \\ \vspace{1em} - Observatoire de la Côte d'Azur -}
+
+% row 4
+\badge{Clezio Marcos Denardini \\ \vspace{1em} - INPE -}
+
+% row 5
+\badge{E.A. Kherani \\ \vspace{1em} - INPE -}
+
+% row 6
+\badge{Jonas R. Souza \\ \vspace{1em} - INPE -}
+
+% row 7
+\badge{Luis Eduardo Vieira \\ \vspace{1em} - INPE -}
+
+% row 8
+\badge{Mike Adebayo \\ \vspace{1em} - INPE -}
+
+% row 9
+\badge{Jose Paulo Marchezi \\ \vspace{1em} - INPE -}
+
+% row 10
+\badge{Hisashi \\ \vspace{1em} - INPE -}
+
+% row 11
+\badge{Sophia Laranja \\ \vspace{1em} - INPE -}
+
+% row 12
+\badge{André Martinon \\ \vspace{1em} - INPE -}
+
+% row 13
+\badge{Giorgio Picanço \\ \vspace{1em} - UMass Lowell -}
+
+% row 14
+\badge{Sant'Anna, T. \\ \vspace{1em} - National Observatory - ON -}
+
+% row 15
+\badge{Akinbode \\ Oluwasola Olakitan \\ \vspace{1em} - INPE -}
+
+% row 16
+\badge{Atotuomah \\ Eyitope Solomon \\ \vspace{1em} - INPE -}
+
+% row 17
+\badge{Diego Barros \\ \vspace{1em} - INPE -}
+
+% row 18
+\badge{Gowher Rather \\ \vspace{1em} - INPE -}
+
+% row 19
+\badge{Laura L Trigo \\ \vspace{1em} - UNIVAP -}
+
+% row 20
+\badge{Laysa Resende \\ \vspace{1em} - INPE -}
+
+% row 21
+\badge{Elvira Astafyeva \\ \vspace{1em} - IPGP -}
+
+% row 22
+\badge{Maria Graciela Molina}
+
+% row 23
+\badge{Michela Ravanelli}
+
+% row 24
+\badge{Alexandre A. Pimenta \\ \vspace{1em} - National Institute for \\ Space Research - INPE -}
+
+% row 25  <<< REPEATED - check
+\badge{Ângela Santos \\ \vspace{1em} - INPE -}
+
+% row 26
+\badge{Carolina Carmo \\ \vspace{1em} - CBJLSW/INPE -}
+
+% row 27  <<< REPEATED - check
+\badge{Danny Scipion \\ \vspace{1em} - Instituto Geofísico \\ del Perú - Jicamarca \\ Geophysical Observatory -}
+
+% row 28
+\badge{Gabriel Brando \\ \vspace{1em} - Observatório Nacional -}
+
+% row 29
+\badge{Olufemi Louis Ogunmola \\ \vspace{1em} - Universidade do Vale do Paraiba -}
+
+% row 30
+\badge{Saul \\ \vspace{1em} - INPE -}
+
+% row 31
+\badge{Vania F. Andrioli \\ \vspace{1em} - INPE -}
+
+% row 32
+\badge{Anita J. Valcorte \\ \vspace{1em} - INPE -}
+
+% row 33
+\badge{Guillermo Caro \\ \vspace{1em} - INPE -}
+
+% row 34
+\badge{Oladayo \\ Olayiwola Afolabi \\ \vspace{1em} - NASRDA/INPE -}
+
+% row 35
+\badge{Virginia Klausner \\ \vspace{1em} - UNIVAP -}
+
+% row 36
+\badge{Gbadebo Seun Adeniran \\ \vspace{1em} - INPE -}
+
+% row 37
+\badge{Boris Maletckii \\ \vspace{1em} - ERI, University of Tokyo -}
+
+% row 38
+\badge{George Sand \\ \vspace{1em} - IAG/USP -}
+
+% row 39
+\badge{Galera Monico \\ \vspace{1em} - UNESP -}
+
+% row 40
+\badge{Rodolfo de Jesus \\ \vspace{1em} - China-Brazil Joint Laboratory \\ for Space Weather (CBJLSW)-INPE -}
+
+% row 41  <<< REPEATED - check
+\badge{Danny Scipión \\ \vspace{1em} - Instituto Geofísico \\ del Perú - Jicamarca \\ Geophysical Observatory -}
+
+% row 42
+\badge{Xico \\ \vspace{1em} - IFPR -}
+
+% row 43
+\badge{Cristiano Max Wrasse \\ \vspace{1em} - INPE -}
+
+% row 44
+\badge{Juan C. Espinoza \\ \vspace{1em} - Instituto Geofísico \\ del Perú - Jicamarca \\ Geophysical Observatory -}
+
+% row 45
+\badge{Rosemary Odorizi \\ \vspace{1em} - Inpe -}
+
+% row 46
+\badge{Sávio Rennó \\ \vspace{1em} - ITA -}
+
+% row 47
+\badge{Eliah São Sabbas \\ \vspace{1em} - INPE -}
+
+% row 48
+\badge{Samuel Adebayo \\ \vspace{1em} - TZVI VENTURES -}
+
+% row 49
+\badge{Adriano P. Almeida \\ \vspace{1em} - Mackenzie Presbyterian \\ University -}
+
+% row 50
+\badge{Adriany Barbosa \\ \vspace{1em} - INPE -}
+
+% row 51
+\badge{Agri Faturahman \\ \vspace{1em} - National Research and \\ Innovation Agency (BRIN) -}
+
+% row 52  <<< REPEATED - check
+\badge{Ângela Santos \\ \vspace{1em} - INPE -}
+
+% row 53
+\badge{Daiene de Mello Schaefer \\ \vspace{1em} - UTFPR -}
+
+% row 54
+\badge{Dave \\ \vspace{1em} - Poor Children/s Helper -}
+
+% row 55
+\badge{Deysi Cornejo \\ \vspace{1em} - UTP -}
+
+% row 56
+\badge{Edith \\ \vspace{1em} - INPE/CBJLSW/CRAAM -}
+
+% row 57
+\badge{Elias de Vargas Becker \\ \vspace{1em} - INPE -}
+
+% row 58
+\badge{Emilly \\ \vspace{1em} - INPE -}
+
+% row 59
+\badge{Adeniran \\ \vspace{1em} - National Institute for \\ Space Research, Brazil -}
+
+% row 60
+\badge{Hadassa Jácome \\ \vspace{1em} - INPE -}
+
+% row 61
+\badge{Ian Gabriel \\ \vspace{1em} - CTI RENATO ARCHER -}
+
+% row 62
+\badge{Igor Vicente \\ \vspace{1em} - UFSC - Federal University \\ of Santa Catarina -}
+
+% row 63
+\badge{Inez Batista \\ \vspace{1em} - INPE -}
+
+% row 64
+\badge{Isela Vasquez \\ \vspace{1em} - CEMADEN -}
+
+% row 65
+\badge{Jaziel F. B. Campelo \\ \vspace{1em} - INPE -}
+
+% row 66
+\badge{José Marchezi \\ \vspace{1em} - INPE -}
+
+% row 67
+\badge{Luan Vogás \\ \vspace{1em} - INPE -}
+
+% row 68
+\badge{Peter Taiwo Muka \\ \vspace{1em} - Universidade do Vale do Paraíba -}
+
+% row 69
+\badge{Renan Yule Q. Ferreira \\ \vspace{1em} - IFMA -}
+
+% row 70
+\badge{Rochelin \\ \vspace{1em} - Rochelin Yayo -}
+
+% row 71
+\badge{Simbiat Oamen \\ \vspace{1em} - Universidade do Vale do Pariaba -}
+
+% row 72
+\badge{Dr. Veera Kumar \\ Maheswaran \\ \vspace{1em} - IITM-Pune, India -}
+
+% row 73
+\badge{Vinicius Deggeroni \\ \vspace{1em} - INPE -}
+
+\end{document}

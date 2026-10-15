@@ -1,0 +1,960 @@
+% !TEX program = xelatex
+% Gerado por gerar_livro.py 2026-10-06 — não edite à mão (rode o gerador de novo).
+% Compile com XeLaTeX ou LuaLaTeX (recomendado); pdfLaTeX também funciona. Rode 2 vezes para o sumário.
+\documentclass[11pt,a4paper]{article}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage{textcomp}
+  \usepackage{mathpazo}
+  \usepackage[scaled=.92]{helvet}
+\else
+  \usepackage{fontspec}
+  \setmainfont{TeX Gyre Pagella}[Ligatures=TeX]
+  \setsansfont{TeX Gyre Heros}[Ligatures=TeX]
+\fi
+\ifPDFTeX
+  \DeclareRobustCommand{\unichar}[1]{\textbf{[U+#1]}}
+\else
+  \DeclareRobustCommand{\unichar}[1]{\char"#1\relax}
+\fi
+\usepackage[english]{babel}
+\usepackage[a4paper,top=27mm,bottom=24mm,left=22mm,right=22mm,headheight=14pt,headsep=8mm,footskip=11mm]{geometry}
+\usepackage{microtype}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=navy,urlcolor=accent,citecolor=navy,plainpages=false,pdfusetitle,
+            unicode=true,pdfencoding=auto]{hyperref}
+
+\definecolor{navy}{HTML}{14305A}
+\definecolor{accent}{HTML}{1C7F78}
+\definecolor{muted}{HTML}{5C6B7F}
+\definecolor{rule}{HTML}{B8C4D3}
+\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\emergencystretch=2em
+\hypersetup{pdftitle={MNS4A Workshop — Book of Abstracts},pdfsubject={Book of Abstracts}}
+
+% ---- cabeçalho / rodapé
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{muted}MNS4A Workshop \textperiodcentered\ Book of Abstracts}
+\fancyhead[R]{\sffamily\footnotesize\color{muted}\nouppercase{\rightmark}}
+\fancyfoot[C]{\sffamily\footnotesize\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{rule}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\setsession}[1]{\markright{#1}}
+
+% ---- sumário
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\cfttoctitlefont}{\sffamily\bfseries\Huge\color{navy}}
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{14pt}
+\renewcommand{\cftsecfont}{\sffamily\bfseries\color{navy}}
+\renewcommand{\cftsecpagefont}{\sffamily\bfseries\color{navy}}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftbeforesecskip}{12pt}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftsubsecindent}{0pt}
+\setlength{\cftsubsecnumwidth}{3.6em}
+\setlength{\cftbeforesubsecskip}{3pt}
+\renewcommand{\cftsubsecfont}{\small}
+\renewcommand{\cftsubsecpagefont}{\small}
+\renewcommand{\cftsubsecaftersnum}{\hspace{0pt}}
+
+% ---- página de uma entrada
+\newcommand{\EntryKicker}[3]{% tipo, linha de informação, sessão
+  \noindent{\sffamily\bfseries\small\color{accent}\MakeUppercase{#1}}\hfill{\sffamily\small\color{muted}#2}\par
+  \vspace{3pt}{\color{navy}\hrule height 1.1pt}\vspace{4pt}
+  {\sffamily\small\color{muted}#3}\par}
+\newcommand{\EntryTitle}[1]{%
+  \vspace{16pt}{\raggedright\sffamily\bfseries\LARGE\color{navy}\hyphenpenalty=10000\exhyphenpenalty=10000 #1\par}}
+\newcommand{\EntryAuthors}[2][\normalsize]{%
+  \vspace{12pt}{\raggedright #1 #2\par}}
+\newcommand{\Presenter}[1]{\underline{#1}}
+\newcommand{\EntryAffils}[1][\small]{\vspace{8pt}\begingroup #1\color{muted}\raggedright}
+\newcommand{\EndEntryAffils}{\par\endgroup}
+\newcommand{\Affil}[2]{\hangindent=1.1em\hangafter=1\noindent\ifx\relax#1\relax\else\textsuperscript{#1}\,\fi #2\par}
+\newcommand{\AbstractHeading}{%
+  \vspace{16pt}{\sffamily\bfseries\small\color{accent}ABSTRACT}\par\vspace{2pt}{\color{rule}\hrule height 0.5pt}\vspace{8pt}}
+\newenvironment{EntryAbstract}[1][\normalsize]
+  {\begingroup #1 \setlength{\parskip}{0.55em}\sloppy\noindent\ignorespaces}
+  {\par\endgroup}
+\newcommand{\EntryPage}{\clearpage}
+
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------- capa
+\pagenumbering{roman}
+\thispagestyle{empty}
+\begin{titlepage}
+\vspace*{3.2cm}
+{\color{accent}\rule{3.2cm}{3pt}}\par\vspace{1.0cm}
+{\raggedright\sffamily\bfseries\fontsize{40}{44}\selectfont\color{navy} MNS4A Workshop\par}
+\vspace{0.6cm}
+{\raggedright\sffamily\fontsize{24}{28}\selectfont\color{accent} Book of Abstracts\par}
+\vfill
+{\raggedright\sffamily\large\color{muted} 19–21 October 2026 · INPE · São José dos Campos\par}
+\vspace{1.2cm}
+\end{titlepage}
+
+% ---------------------------------------------------------------- sobre
+\clearpage
+\thispagestyle{plain}
+{\sffamily\bfseries\Huge\color{navy} About this book\par}
+\vspace{14pt}
+\noindent This book gathers the abstracts of the invited talks, oral presentations and
+posters of MNS4A Workshop. The talks follow the programme order, day by day; the posters are grouped by
+scientific theme and numbered as on the workshop website. Each contribution has its own page.
+
+\medskip\noindent In the author lists, the numbers refer to the institutions listed below the authors, and the
+presenting author is \Presenter{underlined}. Abstracts are reproduced as submitted by the authors.
+
+\clearpage
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% ---- entrada 1: Modeling earthquake- and tsunami-induced ionospheric disturbances: fro
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{section}{Day 1 · 19 October — Modeling}
+\addcontentsline{toc}{subsection}{\protect\numberline{09:00}Modeling earthquake- and tsunami-induced ionospheric disturbances: from physical mechanisms to source characterization — Rolland, L. \emph{et al.}}
+\label{e-1}
+\EntryKicker{Invited talk}{Day 1 · 19 October · 09:00–09:40}{Session: Modeling}
+\EntryTitle{Modeling earthquake- and tsunami-induced ionospheric disturbances: from physical mechanisms to source characterization}
+\EntryAuthors[\normalsize]{\Presenter{Rolland, L.}\textsuperscript{1}, Mikesell, D.\textsuperscript{2}, Twardzik, C.\textsuperscript{1}, Herrera, G.\textsuperscript{3}, Uribe, F.\textsuperscript{3}, Fuentes, M.\textsuperscript{2}}
+\EntryAffils[\small]
+\Affil{1}{Observatoire de la Côte d’Azur, Université Côte d’Azur, CNRS, IRD, Géoazur, France}
+\Affil{2}{Norwegian Geotechnical Institute (NGI), Norway}
+\Affil{3}{Programa Riesgo Sismico (PRS) - DGF Universidad de Chile, Chile}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Earthquakes, tsunamis, and volcanic eruptions can generate acoustic and gravity waves that propagate through the atmosphere and disturb the ionosphere. Sudden coseismic ground and seafloor motions excite acoustic waves, while propagating tsunamis generate atmospheric internal gravity waves. Even small sea-surface displacements in the open ocean can produce detectable ionospheric signatures, as wave amplitudes increase during upward propagation through an atmosphere of decreasing density. This presentation will review modeling approaches used to describe these processes, from source excitation and atmospheric wave propagation to the ionospheric response and its observation through GNSS-derived total electron content (TEC). Particular attention will be given to the effects of atmospheric stratification, background winds, ionospheric conditions, and satellite-receiver geometry on the timing, amplitude, and spatial structure of the observed disturbances. We will present comparisons between simulations and GNSS observations for selected earthquake and tsunami events, highlighting how observations can constrain models and help distinguish source effects from atmospheric and ionospheric variability. We will then discuss the remaining challenges in using these signatures to infer source location, timing, and spatial extent, including uncertainties in the background atmosphere and gaps in observational coverage. Finally, we will consider how expanded GNSS monitoring networks and the integration of ionospheric, seismic, geodetic, and ocean observations can improve source characterization and support future tsunami warning applications.
+\end{EntryAbstract}
+
+% ---- entrada 2: Can empirical wave models resolve what drives energetic electron preci
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{09:40}Can empirical wave models resolve what drives energetic electron precipitation? A comparison of model-driven and measurement-driven diffusion coefficients — Jose P. Marchezi \emph{et al.}}
+\label{e-2}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 09:40–10:00}{Session: Modeling}
+\EntryTitle{Can empirical wave models resolve what drives energetic electron precipitation? A comparison of model-driven and measurement-driven diffusion coefficients}
+\EntryAuthors[\normalsize]{\Presenter{Jose P. Marchezi}\textsuperscript{1}, Ligia Alves da Silva\textsuperscript{1}, Gislayne Medeiros\textsuperscript{1}, Vinicius Deggeroni\textsuperscript{1}, Karen C. Ferreira\textsuperscript{1}, Luis Antunes Vieira\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Instituto Nacional de Pesquisas Espaciais}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Energetic electron precipitation from the outer radiation belt ionises the mesosphere and upper stratosphere, and its rate is set by the pitch-angle diffusion coefficient, D\_\ensuremath{\alpha}\ensuremath{\alpha}. Calculating D\_\ensuremath{\alpha}\ensuremath{\alpha} requires a description of the whistler-mode chorus waves responsible for the scattering, and that description usually comes from an empirical model parameterised by a geomagnetic index. We compute quasi-linear diffusion coefficients for the same interval in two ways. In the first, the wave properties come from an empirical model driven by Kp. In the second, they are measured directly by the EMFISIS instrument on the Van Allen Probes: wave amplitude, frequency spectrum and wave normal angle, the last from the wave normal survey product. The two differ in a way that is not a matter of accuracy. In the model-driven calculation Kp enters at a single point, the wave amplitude, and the coefficients are exactly proportional to its square. At every L the pitch-angle dependence is therefore a fixed shape scaled up and down by one number, which we verify holds to seven significant figures; and across the whole L range that number takes only two distinct forms, one for each of the wave model’s two L sectors. The measurement-driven calculation carries no such constraint. Comparing two measured records and varying one input at a time, the wave normal angle accounts for six orders of magnitude of the difference between them, while the amplitude accounts for a factor of two. The wave normal angle is also the one quantity the empirical models do not parameterise by activity. The implication is that a diffusion calculation driven by a geomagnetic index cannot represent the variability that dominates the measured waves, however accurate its amplitude. We discuss what this means for precipitation estimates, and what a wave model would need to carry to do better.
+\end{EntryAbstract}
+
+% ---- entrada 3: Physics-Informed Machine Learning for Radiation Belt Dynamics
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{10:00}Physics-Informed Machine Learning for Radiation Belt Dynamics — Luis Eduardo Antunes Vieira \emph{et al.}}
+\label{e-3}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 10:00–10:20}{Session: Modeling}
+\EntryTitle{Physics-Informed Machine Learning for Radiation Belt Dynamics}
+\EntryAuthors[\normalsize]{\Presenter{Luis Eduardo Antunes Vieira}\textsuperscript{1}, José Paulo Marchezi\textsuperscript{1}, Ligia Alves da Silva\textsuperscript{1}, Livia Ribeiro Alves\textsuperscript{1}, Paulo Ricardo Jauer\textsuperscript{1}, Marcos Vinicius Dias Silveira\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Instituto Nacional de Pesquisas Espaciais}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Relativistic electrons in the Earth’s outer radiation belt vary by orders of magnitude within hours to days. Their precipitation into the upper atmosphere couples magnetospheric dynamics to aeronomy, particularly over the South American Magnetic Anomaly. Models of this variability solve a Fokker-Planck equation whose transport, source, and loss terms are usually prescribed by empirical parameterizations, such as the radial diffusion coefficients of Brautigam and Albert (2000) and Ozeke et al. (2014). We review the use of physics-informed machine learning to infer these terms from observations. We summarize the physical framework and examine how physics-informed neural networks embed the governing equation in the training objective, following the one-dimensional demonstration of Camporeale et al. (2022) with Van Allen Probes data, and how conditioning on solar wind and geomagnetic drivers can extend the approach to multiple dimensions. We emphasize the limitations that determine what such models can claim: the ill-posed inverse problem, in which diffusion, source, and loss trade off against one another; the dependence of adiabatic coordinates on the magnetic field model, which degrades during storm main phases; and the sparse sampling provided by one or two spacecraft. We conclude with tests that would distinguish inferred coefficients from empirical parameterizations and with prospects for using inferred loss rates in models of energetic electron precipitation.
+\end{EntryAbstract}
+
+% ---- entrada 4: IONO-DIET with GO-EUREKA: A step towards early warning of catastrophic
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{10:50}IONO-DIET with GO-EUREKA: A step towards early warning of catastrophic geohazards — E.A. Kherani \emph{et al.}}
+\label{e-4}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 10:50–11:10}{Session: Modeling}
+\EntryTitle{IONO-DIET with GO-EUREKA: A step towards early warning of catastrophic geohazards}
+\EntryAuthors[\normalsize]{\Presenter{E.A. Kherani}\textsuperscript{1}, E.Astafyeva\textsuperscript{2}, L.Rolland\textsuperscript{3}, M. Ravanelli\textsuperscript{4}, S.A. Sanchez\textsuperscript{1}, Oluawsegun M. Adebayo\textsuperscript{1}, Rogério H. Hisashi\textsuperscript{1}, Boris Maletckii\textsuperscript{8}}
+\EntryAffils[\small]
+\Affil{1}{INPE, Brasil}
+\Affil{2}{IPGP, Paris}
+\Affil{3}{GeoAzur, Nice}
+\Affil{4}{University of Roma, Italy}
+\Affil{8}{Earthquake Research Institute of the University of Tokyo, Japan}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+I will give a brief overview of the progress made over the past four years within the IONO-DIET project and its collaboration with GO-EUREKA, a collaborative research network. I will highlight the main scientific results, products, and ongoing activities, as well as the successes and challenges encountered in achieving the proposed objectives. Finally, I will discuss the lessons learned and the future directions of the project.
+\end{EntryAbstract}
+
+% ---- entrada 5: Geofísica Aplicada A Estudos Ambientais E Desastres Naturais
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{11:10}Geofísica Aplicada A Estudos Ambientais E Desastres Naturais — Cassiano Antonio Bortolozo}
+\label{e-5}
+\EntryKicker{Invited talk}{Day 1 · 19 October · 11:10–11:50}{Session: Modeling}
+\EntryTitle{Geofísica Aplicada A Estudos Ambientais E Desastres Naturais}
+\EntryAuthors[\normalsize]{\Presenter{Cassiano Antonio Bortolozo}}
+\EntryAffils[\small]
+\Affil{\relax}{To be confirmed}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+To be confirmed
+\end{EntryAbstract}
+
+% ---- entrada 6: Earthquake Source Processes Revealed by Dual-Mode Co-Seismic Ionospher
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{13:40}Earthquake Source Processes Revealed by Dual-Mode Co-Seismic Ionospheric Disturbances — Oluwasegun Adebayo \emph{et al.}}
+\label{e-6}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 13:40–14:00}{Session: Modeling}
+\EntryTitle{Earthquake Source Processes Revealed by Dual-Mode Co-Seismic Ionospheric Disturbances}
+\EntryAuthors[\normalsize]{\Presenter{Oluwasegun Adebayo}\textsuperscript{1}, Alam Kherani\textsuperscript{1}, Lucie Rolland\textsuperscript{2}, Alexandre Pimenta\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research (INPE) Sao Jose dos Campos, SP, Brazil}
+\Affil{2}{Observatoire de la Côte d’Azur, Laboratoire Géoazur - Université de la Côte d’Azur, Nice, France}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Recent advances in ionospheric seismology have demonstrated that the ionosphere can serve as a promising complementary tool for investigating and probing earthquake-related processes. While it is now well established that major earthquakes can generate detectable ionospheric disturbances, the extent to which these disturbances preserve information about the earthquake source process remains poorly understood. In this study, we investigate dual-mode co-seismic ionospheric disturbances using Global Navigation Satellite System (GNSS) total electron content (TEC) observations and simulations. We focus on characterizing both near-field and far-field disturbance features and examining how earthquake source processes influence their evolution and morphology. Using multiple earthquake cases from different geographic regions and with varying magnitudes, we find that, beyond the effects of satellite-receiver line-of-sight geometry and the geomagnetic field, earthquake source processes play a significant role in shaping co-seismic ionospheric disturbances. In particular, localized amplification of surface waves can strongly influence the spatial distribution, evolution, and morphology of the observed ionospheric signatures. These results highlight the potential of co-seismic ionospheric disturbances as a complementary approach for probing earthquake source processes and improving our understanding of lithosphere–atmosphere–ionosphere coupling.
+\end{EntryAbstract}
+
+% ---- entrada 7: A Data-Driven Approach to Improving the Representation of Equatorial V
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{14:00}A Data-Driven Approach to Improving the Representation of Equatorial Vertical Drifts over South America: Preliminary Results on Atmospheric Tides — Sophia R. Laranja \emph{et al.}}
+\label{e-7}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 14:00–14:20}{Session: Modeling}
+\EntryTitle{A Data-Driven Approach to Improving the Representation of Equatorial Vertical Drifts over South America: Preliminary Results on Atmospheric Tides}
+\EntryAuthors[\normalsize]{\Presenter{Sophia R. Laranja}\textsuperscript{1}, Astrid Maute\textsuperscript{2}, Clezio M. Denardini\textsuperscript{1}, Tomoko Matsuo\textsuperscript{3}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research (INPE), Sao Jose Dos Campos, BRA}
+\Affil{2}{Leibniz Institute of Atmospheric Physics at the University of Rostock (IAP), Kühlungsborn, GER}
+\Affil{3}{University of Colorado Boulder (CU Boulder), Ann and H. J. Smead Department of Aerospace Engineering Sciences, Boulder, USA}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Equatorial vertical E x B plasma drifts are a key element of low-latitude ionospheric variability, governing vertical plasma transport and shaping large-scale electrodynamic structure. Over South America, this variability exhibits strong longitudinal organization due to the distinctive geometry and strength of the geomagnetic field. Recent comparisons of vertical plasma drifts from WACCM-X, TIEGCM, and SAMI3 with observations from the Ionospheric Connection Explorer (ICON) and the Jicamarca incoherent scatter radar reveal systematic model-data discrepancies in the magnitude and timing of the drifts, particularly around the prereversal enhancement (PRE). These discrepancies motivate the development of a data-driven approach to improve the representation of equatorial vertical plasma drifts by better characterizing the atmospheric tidal forcing of the ionospheric dynamo. The proposed approach will use magnetic perturbations from a global network of ground-based magnetometers to evaluate the electrodynamic response to modeled tidal winds. This framework aims to improve the representation of equatorial vertical plasma drifts while providing insight into the role of atmospheric tides in their longitudinal variability over South America.
+\end{EntryAbstract}
+
+% ---- entrada 8: Real-Time Maps of S4 and σφ Scintillation Indices Over Brazil
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{14:20}Real-Time Maps of S4 and \texorpdfstring{\ensuremath{\sigma}}{σ}\texorpdfstring{\ensuremath{\varphi}}{φ} Scintillation Indices Over Brazil — André Ricardo Fasanaro Martinon \emph{et al.}}
+\label{e-8}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 14:20–14:40}{Session: Modeling}
+\EntryTitle{Real-Time Maps of S4 and \ensuremath{\sigma}\ensuremath{\varphi} Scintillation Indices Over Brazil}
+\EntryAuthors[\normalsize]{\Presenter{André Ricardo Fasanaro Martinon}\textsuperscript{1}, Stephan Stephany\textsuperscript{1}, Eurico Rodrigues de Paula\textsuperscript{1}, Cristiano Max Wrasse\textsuperscript{1}, Marcelo Banik de Pádua\textsuperscript{1}, Débora Cristina De Azevedo\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+A prototype system for real-time generation of amplitude (S4) and phase (\ensuremath{\sigma}\ensuremath{\varphi}) scintillation maps was developed and tested using Brazil’s INCT GNSS-NavAer station network. Indices are computed for GPS, GLONASS, GALILEO, BEIDOU, and SBAS constellations. The system executes five sequential pipeline steps: data acquisition, preprocessing, spatial interpolation, map rendering, and web dissemination. Dedicated acquisition schemes send real-time S4 and \ensuremath{\sigma}\ensuremath{\varphi} data to a server utilizing a NoSQL database with data-push capabilities, avoiding high-latency queries. Spatial interpolation relies on Gaussian Process Regression with a tailored kernel function alongside specific preprocessing filters. Map quality was evaluated based on smoothness, artifact suppression, and statistical metrics (error and correlation) against ground-truth IPP measurements. The pipeline completes all steps within one minute, delivering real-time web visualization. Finally, streaming indices were validated against post-processed receiver data.
+\end{EntryAbstract}
+
+% ---- entrada 9: SUPIM-INPE Model: Some Ionospheric Predictions for Equatorial and Low 
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:00}SUPIM-INPE Model: Some Ionospheric Predictions for Equatorial and Low Latitudes — Jonas Rodrigues de Souza \emph{et al.}}
+\label{e-9}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 15:00–15:20}{Session: Modeling}
+\EntryTitle{SUPIM-INPE Model: Some Ionospheric Predictions for Equatorial and Low Latitudes}
+\EntryAuthors[\normalsize]{\Presenter{Jonas Rodrigues de Souza}\textsuperscript{1}, Ângela Machado dos Santos\textsuperscript{1}, Adriano Petry\textsuperscript{1}, Manuel Alejandro Bravo Sepúlveda\textsuperscript{2}, Inez Staciarini Batista\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research}
+\Affil{2}{Universidad Adventista de Chile}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The Sheffield University Plasmasphere-Ionosphere Model (SUPIM) is a physical model in which coupled time-dependent equations of continuity, momentum, and energy balance are solved along closed magnetic field lines to calculate values for the densities, field-aligned fluxes, and temperatures of the electrons and of the O+, H+, He+, N2+, O2+, and NO+ ions. SUPIM-INPE is an enhanced version of SUPIM that extends calculations along magnetic field lines to altitudes between 120 and 90 km in both hemispheres, i.e., it includes the ionospheric E-region. This model was developed at INPE. In this work, we present the capabilities of the SUPIM-INPE model to predict the Total Electronic Content (TEC), the Maximum Usable Frequency (MUF), and ionospheric responses during a solar eclipse.
+\end{EntryAbstract}
+
+% ---- entrada 10: A Thunderstorm–Atmosphere–Ionosphere Coupling Model for the Ionospheri
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:20}A Thunderstorm–Atmosphere–Ionosphere Coupling Model for the Ionospheric Signatures of Acoustic-Gravity Waves — Rogério Hisashi Honda \emph{et al.}}
+\label{e-10}
+\EntryKicker{Oral presentation}{Day 1 · 19 October · 15:20–15:40}{Session: Modeling}
+\EntryTitle{A Thunderstorm–Atmosphere–Ionosphere Coupling Model for the Ionospheric Signatures of Acoustic-Gravity Waves}
+\EntryAuthors[\normalsize]{\Presenter{Rogério Hisashi Honda}\textsuperscript{1}, Esfhan Alam Kherani\textsuperscript{1}, Saúl Sánchez Juarez\textsuperscript{1}, Cosme Alexandre O. B. Figueiredo\textsuperscript{1}, Elvira Astafyeva\textsuperscript{2}, Prosper Nyassor\textsuperscript{1}, Kleber Pinheiro Naccarato\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Instituto Nacional de Pesquisas Espaciais}
+\Affil{2}{Institut de Physique du Globe de Paris}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Deep convection can launch acoustic-gravity waves (AGWs) that disturb the ionosphere and generate traveling ionospheric disturbances (TIDs). Yet modeling this chain is hindered by the difficulty of specifying the storm forcing: the cloud-top brightness temperature from GOES-16 lacks the temporal resolution needed for infrasonic AGWs. We present a three-dimensional thunderstorm–atmosphere–ionosphere (TAI) coupling model, adapted from a code previously applied to AGWs generated by tsunamis and earthquakes. In it, the lightning flash rate (LFR) of a cold-topped convective cell, available at second-scale resolution, is used as a proxy for overshooting-top dynamics and sets the amplitude of a vertical-velocity forcing at the cloud top. The model solves the neutral-atmosphere wave equation, derived from the conservation of mass, momentum and energy, coupled to the ion-continuity and hydromagnetic equations of the plasma, in which the neutral wind is the coupling term. Its inputs are the neutral atmosphere (NRLMSISE-00), the horizontal wind (HWM14), the ionosphere (IRI) and the geomagnetic field (IGRF), and the equations are solved with finite differences, the Crank–Nicolson scheme and successive over-relaxation. Being volumetric, the model resolves the vertical structure of AGWs and TIDs and yields residual TEC (dTEC) comparable to GNSS observations. A case study over South America shows that the model captures the main features of the observed TIDs and points to future refinements
+\end{EntryAbstract}
+
+% ---- entrada 11: The Instruments for the Rise Campaign for Ionospheric Study
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:40}The Instruments for the Rise Campaign for Ionospheric Study — Clezio Marcos Denardini \emph{et al.}}
+\label{e-11}
+\EntryKicker{Invited talk}{Day 1 · 19 October · 15:40–16:20}{Session: Modeling}
+\EntryTitle{The Instruments for the Rise Campaign for Ionospheric Study}
+\EntryAuthors[\small]{\Presenter{Clezio Marcos Denardini}\textsuperscript{1}, Siomel Savio Odrizola\textsuperscript{1}, Alexandre Macedo de Oliveira\textsuperscript{2}, Ana Roberta da Silva Paulino\textsuperscript{3}, Carlos Eduardo Quintanilha Vaz de Oliveira\textsuperscript{2}, Francisco Carlos de Meneses\textsuperscript{4}, Giorgio Arlan da Silva Picanço\textsuperscript{5}, Igo Paulino da Silva\textsuperscript{6}, Juliano Moro\textsuperscript{1}, Karen Viviana Espinosa Sarmiento\textsuperscript{1}, Laysa Cristina Araújo Resende\textsuperscript{1}, Leandro Toss Hoffmann\textsuperscript{1}, Marco Antonio Ridenti\textsuperscript{7}, Mauricio José Alves Bolzan\textsuperscript{8}, Sophia Rodrigues Laranja\textsuperscript{1}, Sony Su Chen\textsuperscript{1}}
+\EntryAffils[\scriptsize]
+\Affil{1}{National Institute for Space Research (INPE), Brazil}
+\Affil{2}{Brazilian Space Agency (AEB), Brazil}
+\Affil{3}{State University of Paraíba (UEPB), Brazil}
+\Affil{4}{Federal Institute Paraná (IFPR), Brazil}
+\Affil{5}{Space Science Lab, University of Massachusetts Lowell, Lowell, USA}
+\Affil{6}{Federal University of Campina Grande (UFCG), Brazil}
+\Affil{7}{Aeronautics Institute of Technology (ITA), Brazil}
+\Affil{8}{Federal University of Jataí (UFJ), Brazil}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\footnotesize]
+Late in the 1970s, Brazilian researchers detected sporadic E-layer type “a” in the region of Cachoeira Paulista (SP), close to the South American Magnetic Anomaly (SAMA). Such layers are identified through their signature in ionograms based on characteristics, including the height of observation, shape, and frequency. They were labeled type “a” because they were initially observed close to the auroral region and were associated with particle precipitations during and after interaction of the disturbed solar wind with the Earth’s magnetosphere, leading to an increase in the ionospheric conductivity at the E-region heights. Having this extra ionization available, the physical mechanisms governing their formation and behavior may then act to develop the sporadic layer, which varies with geographic location, particularly latitude and longitude. Among the drivers of such physical mechanisms, it is well known that the neutral wind shear and/or the electric fields can concentrate the electron density (in case of wind shear) or develop plasma irregularities (in case of electric field), respectively. It turns out that our initial model results (submitted for publication), considering neutral winds as the only driving mechanism for developing the sporadic E layers, associated with which we attributed particle precipitation (Esa), revealed that this mechanism is insufficient to develop it alone. Recently, based on a technique for estimating the induction electric field using ground magnetometer measurements, some researchers published a study showing that sudden increases in solar wind dynamic pressure from 1 to 10 nPa, associated with the corresponding compressional flow from 2.5 to 0.3 m/s, may lead to an ionospheric induced electric field of 0.15 to 0.015 mV/m. In summary, their results indicated that the induction electric field can locally constitute tens of percent of the total electric field. Based on the evidence mentioned above, we are confident in stating that the complete description of the physical mechanisms governing the formation of the Anomalous Es layers (Es-A) observed in low latitudes close to the SAMA is an open question. Additionally, we are interested in investigating the presence of plasma irregularities caused by either winds or electric fields, which may be associated with the detection of these sporadic layers. Finally, since the E region of the ionosphere can only be explored remotely or, in the case of in situ measurements, with suborbital rocket launches, we would also aim to provide in situ data to assist the development of numerical modeling; data from the various ionospheric regions need to be collected. For the upper regions, we have several satellites in LEO orbit that can be used in these model constructions. Thus, this document presents some of the scientific instruments for this scientific mission to study such Anomalous Es layers and their associated plasma irregularities.
+\end{EntryAbstract}
+
+% ---- entrada 12: Multi-GNSS Networks for Real-Time Monitoring of Atmosphere–Ionosphere 
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{section}{Day 2 · 20 October — Networks}
+\addcontentsline{toc}{subsection}{\protect\numberline{09:00}Multi-GNSS Networks for Real-Time Monitoring of Atmosphere–Ionosphere Coupling and Natural Hazards — Michela RAVANELLI \emph{et al.}}
+\label{e-12}
+\EntryKicker{Invited talk}{Day 2 · 20 October · 09:00–09:40}{Session: Networks}
+\EntryTitle{Multi-GNSS Networks for Real-Time Monitoring of Atmosphere–Ionosphere Coupling and Natural Hazards}
+\EntryAuthors[\normalsize]{\Presenter{Michela RAVANELLI}\textsuperscript{1,2}, Valentino CONSTANTINOU\textsuperscript{3}, Elvira ASTAFYEVA\textsuperscript{4}, Lucie ROLLAND\textsuperscript{1}, Augusto Mazzoni\textsuperscript{2}}
+\EntryAffils[\footnotesize]
+\Affil{1}{GeoAzur, Observatoire Cote d’Azur - Université Cote d’Azur, France}
+\Affil{2}{Sapienza University of Rome, Italy}
+\Affil{3}{Infactory, USA}
+\Affil{4}{IPGP,Université Paris Cité, France}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\small]
+Earthquakes, volcanic eruptions, and tsunami-generating processes produce atmospheric acoustic and gravity waves that can propagate upward and perturb the ionospheric plasma. These disturbances can be detected through GNSS-derived Total Electron Content (TEC) measurements, providing a powerful means of probing atmosphere–ionosphere coupling and investigating rapid geophysical processes across multiple spatial and temporal scales. The increasing availability of dense, multi-GNSS networks offers new opportunities to develop coordinated, real-time observing systems for atmospheric applications and natural-hazard monitoring. A striking example is the 2022 Hunga Tonga–Hunga Ha‘apai eruption, which generated a strong atmospheric pressure wave (Lamb wave) accompanied by exceptionally large ionospheric perturbations. The event highlighted both the sensitivity of the ionosphere to atmospheric forcing and the remaining uncertainties in the temporal and physical mechanisms governing wave–ionosphere coupling. In particular, observations indicate delays of approximately 12–20 minutes between the passage of the atmospheric disturbance and the ionospheric response, providing an opportunity to investigate the dynamics of energy and momentum transfer through the atmosphere–ionosphere system. The event also generated a non-seismic tsunami, illustrating the limitations of conventional hazard-monitoring approaches for atmospheric and volcanic sources and the potential value of ionospheric observations as an additional sensing layer. To exploit the capabilities of distributed GNSS observations, we developed a deep-learning framework for the automatic detection of tsunami-related ionospheric disturbances from realtime GNSS-TEC measurements. The approach combines VARION-based TEC estimates, Gramian Angular Difference Fields (GADF), and convolutional neural networks (CNNs). Trained using several major Pacific earthquakes and validated on independent events, the model achieves an F1-score of 91.7\% and a recall of 84.6\%, demonstrating the potential of GNSS networks for robust, scalable, and near-real-time detection of traveling ionospheric disturbances (TIDs). Current developments focus on extending the framework toward the classification and attribution of TIDs produced by different physical mechanisms, including earthquakes, volcanic eruptions, atmospheric forcing, and space-weather activity. These developments form part of the ALTRUIST (totAL variomeTry foR tsUnamI hazard eStimaTion) project, which integrates real-time ground-motion estimation using VADASE with ionospheric TEC monitoring using VARION within a unified multi-GNSS processing chain. This framework provides a scalable testbed for combining complementary observations, enabling coordinated monitoring of natural hazards and atmosphere–ionosphere coupling. The results demonstrate the potential of GNSS receiver networks not only as a distributed source of high-resolution ionospheric observations, but also as a component of integrated scientific observing systems. By combining real-time GNSS measurements, multi-instrument observations, and data-driven methods, such networks can help address current observational gaps, improve characterization of atmosphere–ionosphere coupling, and provide new opportunities for coordinated monitoring of rapid geophysical and space-weather processes.
+\end{EntryAbstract}
+
+% ---- entrada 13: The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scien
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{09:40}The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion — Ângela Machado dos Santos \emph{et al.}}
+\label{e-13}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 09:40–10:00}{Session: Networks}
+\EntryTitle{The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion}
+\EntryAuthors[\normalsize]{\Presenter{Ângela Machado dos Santos}\textsuperscript{1}, Jonas Rodrigues de Souza\textsuperscript{1}, Inez Staciarini Batista\textsuperscript{1}, Robert Kerr\textsuperscript{2}, Juanita Riccobono\textsuperscript{2}, Mike Migliozzi\textsuperscript{2}, Sudha Kapali\textsuperscript{2}, Patrick Dandenault\textsuperscript{3}, Rafael Luiz Araujo de Mesquita\textsuperscript{4}, Alexandre Álvares Pimenta\textsuperscript{1}, Lucas Vaz Peres\textsuperscript{4}, Rodrigo Silva\textsuperscript{4}, Theomar Neves\textsuperscript{4}, Cristiano Wrasse\textsuperscript{1}, Chunxiau Yan\textsuperscript{5}, Zhengkuan Liu\textsuperscript{5}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research, São José dos Campos, SP, Brazil}
+\Affil{2}{Computational Physics Inc., Lowell, MA, USA}
+\Affil{3}{Johns Hopkins University Applied Physics Laboratory, Laurel, MD, USA}
+\Affil{4}{Federal University of Western Pará, Santarém, Brazil}
+\Affil{5}{State Key Laboratory of Space Weather, NSSC/CAS, Beijing, China}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Ground-based observations are essential for investigating the electrodynamics and variability of the equatorial and low-latitude ionosphere, particularly during space-weather events. Brazil offers an unique geomagnetic domain for such studies, extending from the low northern latitudes, through the equatorial latitudes, to the low southern latitudes. Here, we present the current status and scientific potential of the Brazilian network of ionosondes and Fabry–Perot interferometers, focusing on ionospheric electrodynamics, atmosphere–ionosphere coupling, and space weather. The Digisonde network comprises stations at Boa Vista (2.82°N, 60.67°W), Santarém (2.44°S, 54.70°W), Fortaleza (3.72°S, 38.52°W), São Luís (2.59°S, 44.21°W), Campo Grande (20.44°S, 54.54°W), Cachoeira Paulista (22.68°S, 45.00°W), Santa Maria (29.69°S, 53.81°W), and Juazeirinho (7.07°S, 36.58°W), providing observations over a broad range of latitudes. Fabry–Perot observations at Cachoeira Paulista and Santarém complement these measurements with thermospheric neutral-wind observations. The combined dataset supports studies of the equatorial ionization anomaly, pre-reversal enhancement, plasma drifts, equatorial plasma bubbles, atmospheric and ionospheric disturbances, and storm-time responses. We also highlight the importance of open data access, collaborative use, long-term maintenance, and network expansion to strengthen Brazilian aeronomy research and foster scientific collaborations.
+\end{EntryAbstract}
+
+% ---- entrada 14: Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Lati
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{10:00}Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation — Olufemi L. Ogunmola \emph{et al.}}
+\label{e-14}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 10:00–10:20}{Session: Networks}
+\EntryTitle{Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation}
+\EntryAuthors[\normalsize]{\Presenter{Olufemi L. Ogunmola}\textsuperscript{1}, Marcio T. A. H. Muella\textsuperscript{1}, Paulo R. Fagundes\textsuperscript{1}, Valdir G. Pillat\textsuperscript{1}, Peter T. Muka\textsuperscript{1}, Thiago A. M. Mancilla\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Universidade do Vale do Paraíba (IP\&D – Laboratório de Física e Astronomia), São José dos Campos, SP - Brasil}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+This study investigates the characteristic behavior of cusp-type sporadic E (Es\textsubscript{c} ) layers over the Brazilian sector using ionosonde observations from São José dos Campos (23.2\textsuperscript{°} S,45.8\textsuperscript{°} W,dip lat.: 21.0\textsuperscript{°} S) and Palmas (10.3\textsuperscript{°} S,48.3\textsuperscript{°} W,dip lat.:09.03\textsuperscript{°} S) during December 2008 to November 2009. Measurements were obtained using Canadian Advanced Digital Ionosonde (CADI) systems and analyzed on a seasonal basis. At the São José dos Campos and Palmas stations, Es layers were morphologically classified, with Es\textsubscript{c} treated as a distinct subclass from other Es morphologies. The Es\textsubscript{c} morphology exhibited two characteristic trace signatures: symmetric and asymmetric. Symmetric cusp traces generally occurred at mean virtual heights of approximately 100 – 105 km, whereas asymmetric cusps tended to occur at higher altitudes. The higher-altitude occurrence of asymmetric cusps may indicate the downward progression of higher-type Es layers, typically observed at approximately 120 – 140 km, toward the lower-altitude asymmetric cusp morphology. Wavelet and spectral analyses of the Es parameters at São José dos Campos and Palmas revealed periodicities ranging from 3 to 24 h, consistent with modulation by atmospheric tides. Enhanced power at periods shorter than 12 h was observed at São José dos Campos, while 6 – 8 h oscillations were particularly evident at Palmas during autumn, winter, and spring.
+\end{EntryAbstract}
+
+% ---- entrada 15: Multi-Instrument Ground Networks for Equatorial Aeronomy
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{10:50}Multi-Instrument Ground Networks for Equatorial Aeronomy — D. Scipion \emph{et al.}}
+\label{e-15}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 10:50–11:10}{Session: Networks}
+\EntryTitle{Multi-Instrument Ground Networks for Equatorial Aeronomy}
+\EntryAuthors[\normalsize]{\Presenter{D. Scipion}\textsuperscript{1}, K. Kuyeng\textsuperscript{1}, C. De La Jara\textsuperscript{1}, J. Espinoza\textsuperscript{1}, C. Valladares\textsuperscript{2}, F. Rodrigues\textsuperscript{3}, J. Chau\textsuperscript{4}}
+\EntryAffils[\small]
+\Affil{1}{Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú}
+\Affil{2}{Boston University}
+\Affil{3}{University of Texas at Dallas}
+\Affil{4}{Leibniz Institute of Atmospheric Physics}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Characterizing atmosphere–ionosphere coupling and low-latitude space weather requires coordinated observations from complementary ground-based sensors. The Jicamarca Geophysical Observatory (JGO) operates active and passive observing systems and coordinates the Low-Latitude Ionospheric Sensor Network (LISN), comprising magnetometers, GNSS receivers, and ionosondes distributed across South America. To address regional coverage gaps, LISN has incorporated low-cost (\textasciitilde{}US\$5,000) portable oblique-sounding receivers based on USRP and GNU Radio. These measurements are complemented by a novel ionospheric inversion methodology that combines ray tracing and Particle Swarm Optimization (PSO) to reconstruct partial ionospheric profiles in near real time. JGO also operates the AMISR-14 array alongside the main radar and supports the SIMONe meteor radar network, with stations in northern and central Peru, to measure mesospheric winds and meteor dynamics. Together, these coordinated networks provide multi-instrument observations in near real time to support the Peruvian Space Weather Monitoring Center, enabling continuous space-weather hazard analysis. They also provide essential datasets for constraining and validating global atmospheric and ionospheric climatological models.
+\end{EntryAbstract}
+
+% ---- entrada 16: Machine Learning and Ionospheric Datasets: From Data Preparation to Op
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{11:10}Machine Learning and Ionospheric Datasets: From Data Preparation to Operational Forecasting — Maria Graciela Molina}
+\label{e-16}
+\EntryKicker{Invited talk}{Day 2 · 20 October · 11:10–11:50}{Session: Networks}
+\EntryTitle{Machine Learning and Ionospheric Datasets: From Data Preparation to Operational Forecasting}
+\EntryAuthors[\normalsize]{\Presenter{Maria Graciela Molina}\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Universidad Nacional de Tucumán (UNT), Facultad de Ciencias Exactas y Tecnología (FACET), Departamento de Ciencias de la Computación, Tucumán, Argentina}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Traditionally, researchers have characterized and modeled ionospheric conditions using physics-based models and empirical approaches. More recently, machine learning (ML) has emerged as a powerful tool for understanding, characterizing, and predicting the occurrence and evolution of ionospheric phenomena. In addition to the inherent complexity of the underlying physical processes, the application of ML to ionospheric research presents several challenges, including the development of suitable datasets (in particular those resulting from combining multiple-instruments), limitations in data availability, size and resolution, feature engineering and selection, and the design and selection of appropriate model architectures. In this talk, we present our group’s latest results on the application of ML to global and regional ionospheric forecasting under both quiet and disturbed conditions, using a range of relevant parameters and focusing on the datasets. We discuss different techniques and stages of model development, including feature engineering and selection, hyperparameter optimization, explainable artificial intelligence (XAI), Bayesian analysis, and the deployment of ML models in operational environments. In addition, we review recent advances in the literature and discuss emerging challenges, future research directions, and recommendations for advancing the use of ML in ionospheric research.
+\end{EntryAbstract}
+
+% ---- entrada 17: Bolide Explosions and Climate Change in the Upper Atmosphere: Possible
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{13:40}Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris — Alexandre Alvares Pimenta}
+\label{e-17}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 13:40–14:00}{Session: Networks}
+\EntryTitle{Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris}
+\EntryAuthors[\normalsize]{\Presenter{Alexandre Alvares Pimenta}\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research - INPE}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The upper atmosphere responds to natural disturbances and climate-driven forcing over a broad range of temporal and spatial scales. Understanding these responses is increasingly important because variations in atmospheric temperature and neutral density may affect satellite in Very Low Earth Orbit (VLEO) and Low Earth Orbit (LEO). A remarkable example of an impulsive natural disturbance was the super-bolide observed over southeastern Brazil on 25 May 2023. The event released an estimated energy equivalent to approximately 21 kilotons of TNT, with the main explosion occurring at approximately 96–99 km altitude. The observations indicate that energetic bolide explosions can be associated with measurable upper-atmospheric perturbations and raise the possibility that sufficiently intense events may temporarily modify the aerodynamic environment encountered by objects in very low orbits. At much longer timescales, increasing atmospheric CO\ensuremath{_{2}} can enhance radiative cooling in the mesosphere and lower thermosphere (MLT). Integrating ground-based and space-based observations with atmospheric modeling is therefore essential for quantifying these responses and assessing their implications for VLEO/LEO satellite operations, orbital decay, and the long-term persistence of space debris.
+\end{EntryAbstract}
+
+% ---- entrada 18: Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{14:00}Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption — Vania F Andrioli \emph{et al.}}
+\label{e-18}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 14:00–14:20}{Session: Networks}
+\EntryTitle{Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption}
+\EntryAuthors[\normalsize]{\Presenter{Vania F Andrioli}\textsuperscript{1}, Saul Alejandro Sanches Juarez\textsuperscript{1}, Paulo P. Batista\textsuperscript{1}, Alexandre Pimenta\textsuperscript{1}, Hisao Takahashi\textsuperscript{1}, Esfhan Alam Kherani\textsuperscript{1}, Maria Paulete Martins\textsuperscript{1}, Femi Olajide-Owoyomi\textsuperscript{1}, Rodolfo de Jesus\textsuperscript{1,2,3}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research (INPE), São José dos Campos, SP, Brazil}
+\Affil{2}{State Key Laboratory for Space Weather, National Space Science Center, Chinese Academy of Sciences, Beijing, China}
+\Affil{3}{China-Brazil Joint Laboratory for Space Weather, NSSC/INPE, São José dos Campos, SP, Brazil}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The eruption of the Hunga Tonga–Hunga Ha’apai volcano on 15 January 2022 generated one of the most intense atmospheric disturbances observed in recent decades, producing a global-scale Lamb wave that propagated through the atmosphere. In this study, we investigate the detection of the atmospheric response to the eruption using meteor radar observations from Cachoeira Paulista (22.7°S, 45.0°W), Brazil. Horizontal winds in the mesosphere and lower thermosphere (MLT) region were analyzed to identify perturbations associated with the passage of the Lamb wave over South America. The observations revealed a coherent disturbance in the mesospheric winds following the eruption, with characteristics consistent with the propagation of the Lamb wave. This study demonstrates the capability of meteor radar systems to detect and characterize atmospheric disturbances generated by major natural hazards, highlighting the importance of continuous ground-based observations for monitoring the coupling between the lower and upper atmosphere. The results also emphasize the value of long-term meteor radar networks for investigating the atmospheric impacts of extreme geophysical events and improving our understanding of vertical coupling processes in the Earth’s atmosphere.
+\end{EntryAbstract}
+
+% ---- entrada 19: Modernization, Structure and Applications of the Observatório Nacional
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{14:20}Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network — Gabriel Brando \emph{et al.}}
+\label{e-19}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 14:20–14:40}{Session: Networks}
+\EntryTitle{Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network}
+\EntryAuthors[\normalsize]{\Presenter{Gabriel Brando}\textsuperscript{1}, Plinio Jaqueto\textsuperscript{1}, Edwin Camacho\textsuperscript{1}, José Alejandro Alfonzo\textsuperscript{1}, André Wiermann\textsuperscript{1}, Luiz Benyosef\textsuperscript{1}, Fábio Vieira\textsuperscript{1}, Cristiano Mendel\textsuperscript{2}, Jürgen Matzka\textsuperscript{3}, Marcos Vinicius da Silva\textsuperscript{3}}
+\EntryAffils[\small]
+\Affil{1}{Observatório Nacional, Brazil}
+\Affil{2}{Universidade Federal do Pará, Brazil}
+\Affil{3}{GFZ Helmholtz Centre for Geosciences, Germany}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Observatório Nacional (ON) is a Brazilian research institute that has been performing magnetic measurements since its creation nearly 200 years ago. Historically, ON is in charge of specific geomagnetic networks in Brazil, including geomagnetic observatories (Vassouras and Tatuoca) and repeat stations (over 175 stations). The presentation will be structured in three parts. In the first part, we will highlight some recent efforts implemented to modernize ON’s geomagnetic network, going through instrumentation, best practices of operations and data processing. As a consequence, we will also demonstrate how the modernization led to new applications of the data, which includes geomagnetic modeling, industry applications and research about ionospheric processes. In the second part of the presentation, we will focus on the motivation, concept and applications of the 5-years old Macapá magnetic station installed in the equatorial region of Brazil through a cooperation with Universidade Federal do Pará (Brazil) and GFZ Helmholtz Centre for Geosciences (Germany). The third part will deal with the near future planning for ON’s network and our recent developments on magnetic sensor manufacturing.
+\end{EntryAbstract}
+
+% ---- entrada 20: NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Haz
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:00}NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection — S. A. Sanchez \emph{et al.}}
+\label{e-20}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 15:00–15:20}{Session: Networks}
+\EntryTitle{NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection}
+\EntryAuthors[\normalsize]{\Presenter{S. A. Sanchez}\textsuperscript{1}, E. A. Kherani\textsuperscript{1}, E. Astafyeva\textsuperscript{2}, B. Maletckii\textsuperscript{3}, A. P. Almeida\textsuperscript{4}, R. H. Honda\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{INPE, Brasil}
+\Affil{2}{IPGP, Paris}
+\Affil{3}{Earthquake Research Institute of the University of Tokyo, Japan}
+\Affil{4}{Universidade Presbiteriana Mackenzie, Brasil}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+NRT-TECPRO is an open, automated platform that combines real-time seismic signals with multi-constellation satellite observations (GPS, GLONASS, Galileo, and BeiDou), delivering processed GNSS metrics with only a 2-to-5-minute latency. Its core engine automatically calculates key ionospheric variations (TEC, dTEC, and ROTI), made instantly available through interactive dashboards and APIs. By correlating ground seismic activity with upper-atmosphere disturbances, NRT-TECPRO transforms complex data streams into critical operational intelligence for tsunami early warning systems, space weather monitoring, and disaster mitigation
+\end{EntryAbstract}
+
+% ---- entrada 21: Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:20}Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector — Carolina de Sousa do Carmo \emph{et al.}}
+\label{e-21}
+\EntryKicker{Oral presentation}{Day 2 · 20 October · 15:20–15:40}{Session: Networks}
+\EntryTitle{Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector}
+\EntryAuthors[\normalsize]{\Presenter{Carolina de Sousa do Carmo}\textsuperscript{1,3}, Lei Dai\textsuperscript{2}, Cristiano Max Wrasse\textsuperscript{3}, Diego Barros Silva\textsuperscript{3}, Hisao Takahashi\textsuperscript{3}, Joaquim Eduardo Rezende Costa\textsuperscript{3}, Luiz Fillip Rodrigues Vital\textsuperscript{4}, Paulo Ricardo Jauer\textsuperscript{3}, Cesar De La Jara\textsuperscript{5}, Alexander José Carrasco\textsuperscript{6}, Cosme Alexandre Oliveira Barros Figueiredo\textsuperscript{7}, Chi Wang\textsuperscript{2}, Hui Li\textsuperscript{2}, Liu Zhengkuan\textsuperscript{2}}
+\EntryAffils[\small]
+\Affil{1}{China-Brazil Joint Laboratory for Space Weather (CBJLSW)}
+\Affil{2}{State Key Laboratory of Space Weather (NSSC/CAS)}
+\Affil{3}{National Institute for Space Research (INPE)}
+\Affil{4}{Paraíba State University (UEPB)}
+\Affil{5}{Instituto Geofísico del Perú}
+\Affil{6}{University of the Andes (ULA)}
+\Affil{7}{Federal University of Campina Grande (UFCG)}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+This study investigates the ionospheric response to the moderate (G2) geomagnetic storm of 7–8 October 2024 over the American sector, with emphasis on the generation and suppression of equatorial plasma bubbles (EPBs). A comprehensive analysis was performed using GNSS-derived total electron content (TEC) and rate of TEC index (ROTI), ionosonde observations from Jicamarca (JICA) and São Luís (SALU), and thermospheric neutral wind measurements from the Fabry–Perot interferometer at Cachoeira Paulista (CHPI). Although the storm produced favorable conditions for EPB development, including a pronounced pre-reversal enhancement (PRE) with vertical plasma drifts exceeding 40 m/s, post-sunset EPBs were unexpectedly suppressed. In addition, post-midnight EPBs developed only over the western side of the Latin American sector, while no plasma irregularities were detected over the eastern sector, revealing a marked longitudinal asymmetry in EPB occurrence. The suppression of post-sunset EPBs and the absence of post-midnight EPBs in the eastern sector may be associated with the combined influence of disturbed meridional winds and enhanced E-region conductivity related to the presence of a sporadic E (Es) layer. These results demonstrate that even moderate geomagnetic storms can produce complex and regionally distinct ionospheric responses, highlighting the important role of local electrodynamic and neutral atmospheric processes in controlling EPB development and suppression.
+\end{EntryAbstract}
+
+% ---- entrada 22: GO-EUREKA: toward near-real-time detection and assessment of natural h
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:40}GO-EUREKA: toward near-real-time detection and assessment of natural hazards from the ionosphere — E. Astafyeva \emph{et al.}}
+\label{e-22}
+\EntryKicker{Invited talk}{Day 2 · 20 October · 15:40–16:20}{Session: Networks}
+\EntryTitle{GO-EUREKA: toward near-real-time detection and assessment of natural hazards from the ionosphere}
+\EntryAuthors[\normalsize]{\Presenter{E. Astafyeva}\textsuperscript{1}, L. Rolland\textsuperscript{2}, M. Ravanelli\textsuperscript{3}, T.D. Mikesell\textsuperscript{4}, E.A. Kherani\textsuperscript{5}, Q. Brissaud\textsuperscript{6}, B. Maletckii\textsuperscript{7}, S.A. Sanchez Juarez\textsuperscript{5}, I.D. Ouar\textsuperscript{1}, G. Guerin\textsuperscript{2}, E. Munaibari\textsuperscript{2}, M. G. Crespi\textsuperscript{3}, S. J. Gibbons\textsuperscript{4}, C. Maréchal\textsuperscript{1}, C. Saliby\textsuperscript{2}, G. Herrera\textsuperscript{8}, O.M. Adebayo\textsuperscript{5}, R. H. Honda\textsuperscript{5}, R. K. Barad\textsuperscript{1}, P. Lognonné\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Université Paris Cité, Institut de physique du globe de Paris (IPGP), CNRS UMR 7154, Paris}
+\Affil{2}{GéoAzur, Université de la Cote d’Azur, Valbonne, France}
+\Affil{3}{Sapienza Università di Roma, Rome, Italy}
+\Affil{4}{Norwegian Geotechnical Institute (NGI), Oslo, Norway}
+\Affil{5}{Instituto Nacional de Pesquisas Espaciais (INPE) Sao Paolo, Brazil}
+\Affil{6}{Norwegian Seismic Array (NORSAR), Kjeller, Norway}
+\Affil{7}{Earthquake Research Institute, University of Tokyo, Tokyo, Japan}
+\Affil{8}{University of Chile, Santiago, Chile}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+GO-EUREKA (GNSS-observations based European system for earthquake and tsunami hazard assessment in near-real-time) is a system that is currently being developed by researchers from France, Norway, Italy, Brazil, Japan and Chile. The main aim of GO-EUREKA is to detect earthquakes and tsunamis, and to assess hazards related to them, by using ionospheric data from dual-frequency GNSS receivers. Besides, our system is also able to detect ionospheric disturbances associated with other natural hazards, such as volcanic eruptions, tornadoes, anthropogenic events, (e.g., rocket launches and explosions), and disturbances related to space weather phenomena (e.g., solar flares, geomagnetic storms). The possibility to detect ionospheric disturbances of multiple origins makes it useful for NRT ionosphere monitoring in general and for Space Weather applications, since it will detect ionospheric disturbances and irregularities that can severely disrupt radio-wave propagation and communication \url{https://www.preventionweb.net/understanding-disaster-risk/terminology/hips/et0102}. On the other hand, because of the natural sensitivity of the ionosphere to different solar, geophysical and anthropogenic activities, special attention is paid to identification of the source of a detected ionospheric disturbance. This contribution will present recent developments within the GO-EUREKA consortium
+\end{EntryAbstract}
+
+% ---- entrada 23: INCT GNSS NavAer: History, Contributions, and Applications in Space We
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{section}{Day 3 · 21 October — Instrumentation}
+\addcontentsline{toc}{subsection}{\protect\numberline{09:00}INCT GNSS NavAer: History, Contributions, and Applications in Space Weather — Joao Francisco Galera Monico \emph{et al.}}
+\label{e-23}
+\EntryKicker{Invited talk}{Day 3 · 21 October · 09:00–09:40}{Session: Instrumentation}
+\EntryTitle{INCT GNSS NavAer: History, Contributions, and Applications in Space Weather}
+\EntryAuthors[\normalsize]{\Presenter{Joao Francisco Galera Monico}\textsuperscript{1}, Bruno C. Vani\textsuperscript{2}, Vinicius Amadeo Stuani Pereira\textsuperscript{3}}
+\EntryAffils[\small]
+\Affil{1}{Sao Paulo State University - UNESP}
+\Affil{2}{Federal Institute of Sao Paulo - IFSP at Presidente Epitácio}
+\Affil{3}{Technical Federal University of Paraná - UTFPR at Santa Helena}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Addressing the challenges posed by space weather in satellite-based applications—particularly navigation and positioning—requires ground-based infrastructure to monitor ionospheric conditions and improve our understanding of their effects on technological systems. With this objective, and within the framework of the INCT 16/2014 call, the INCT GNSS NavAer project was proposed and approved in late 2016. However, the deployment of its GNSS receiver network had begun in early 2011, supported by previous projects, and was subsequently expanded and enhanced through the new funding program. Several institutions participated in and contributed to the project. Following the conclusion of the project in 2025, UNESP, Presidente Prudente campus, assumed responsibility for maintaining and continuing the network, as well as preserving the infrastructure and resources developed to date.
+
+We will review the INCT history and evolution, the data and products it provides, and its main scientific and technological contributions, with particular emphasis on the ISMR Query Tool. Several applications will be discussed, including the development of a GBAS prototype and its initial results, the generation of ionospheric-index bulletins, and the mitigation procedures developed to date. Collectively, these activities demonstrate the contribution of INCT GNSS NavAer to space-weather monitoring and to the assessment and mitigation of ionospheric effects on GNSS-based applications.
+\end{EntryAbstract}
+
+% ---- entrada 24: New Jicamarca Radar Capabilities: The All-ISR and JULIA MP modes
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{09:40}New Jicamarca Radar Capabilities: The All-ISR and JULIA MP modes — D. Scipion \emph{et al.}}
+\label{e-24}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 09:40–10:00}{Session: Instrumentation}
+\EntryTitle{New Jicamarca Radar Capabilities: The All-ISR and JULIA MP modes}
+\EntryAuthors[\normalsize]{\Presenter{D. Scipion}\textsuperscript{1}, K. Kuyeng\textsuperscript{1}, I. Manay\textsuperscript{1}, J. Espinoza\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The Jicamarca Geophysical Observatory (JGO) has implemented major upgrades to enhance remote sensing of the low-latitude ionosphere. This work presents the fully operational Automatic Beam Switching (ABS) system, covering the entire 300 \ensuremath{\times} 300 m\ensuremath{^{2}} antenna array. The system incorporates renewed RF modules, fiber-optic server connections, and stabilized power supplies, enabling an advanced All-ISR mode. Operational since July 2025, All-ISR digitally switches the full array between directions perpendicular and oblique to the geomagnetic field, enabling near-simultaneous measurements of ionospheric drifts and composition. In parallel, two new 96-kW solid-state transmitters have been installed, enabling continuous monitoring of equatorial coherent irregularities, including the equatorial electrojet, 150-km echoes, and equatorial spread F. Their integration also supports unattended measurements of vertical and horizontal plasma drifts through the JULIA-MP (Medium Power) mode. Compared with legacy tube transmitters, the solid-state systems reduce maintenance requirements and improve operational continuity. Together, these upgrades expand JGO’s active radar capabilities and provide high-resolution observations for improving equatorial ionospheric climatology, validating plasma-drift models, and monitoring the impacts of space-weather disturbances in real time.
+\end{EntryAbstract}
+
+% ---- entrada 25: Transient Luminous Event (TLE) Observations with the LEONA Network
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{10:00}Transient Luminous Event (TLE) Observations with the LEONA Network — Eliah F. M. T. São Sabbas \emph{et al.}}
+\label{e-25}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 10:00–10:20}{Session: Instrumentation}
+\EntryTitle{Transient Luminous Event (TLE) Observations with the LEONA Network}
+\EntryAuthors[\normalsize]{\Presenter{Eliah F. M. T. São Sabbas}\textsuperscript{1}, Caio L. T. F. de Oliveira\textsuperscript{1}, Kleber P. Naccarato\textsuperscript{1}, Renato G. Negri\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research - INPE}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+In 2018, during the RELAMPAGO Campaign in Argentina, a severe Mesoscale Convective System (MCS) produced more than 400 Transient Luminous Events (TLEs) that were recorded utilizing the instrumentation of the recently created LEONA Network. LEONA stands for Transient Luminous Event and ThunderstOrm High Energy EmissioN CollAbortive Network (LEONA). Currently with 8 ground TLE stations in Brazil and one in the United States, plus a mobile station to detect neutrons, one of the High Energy Emissions from Thunderstorms (HEETs), the LEONA Network is a unique platform to research TLEs and HEETs. They are the two classes of EFfects SignAlIng the ElectRodynamic CouplIng between the AtmospherE and Space (FAIRIES), i.e. the electrodynamic coupling between all layers of the neutral atmosphere and the ionized regions, Ionosphere and Magnetosphere. We are proposing the acronym FAIRIES to designate them collectively. In this paper we will review the TLEs observed with LEONA and one of the of the severe MCS that originated them. Southern South America is consider to be the region of the world with the most intense and severe thunderstorms, according with satellite based studies, the results of this work may help advance the knowledge on severe storms, TLE production and the electrodynamic coupling of the whole atmospheric system with the space region near the planet.
+\end{EntryAbstract}
+
+% ---- entrada 26: Electrodynamics and ionospheric irregularities during a weak geomagnet
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{10:50}Electrodynamics and ionospheric irregularities during a weak geomagnetic storm of 15 April 2025 and intense storm of 16 April 2025 over Brazil — R. de Jesus \emph{et al.}}
+\label{e-26}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 10:50–11:10}{Session: Instrumentation}
+\EntryTitle{Electrodynamics and ionospheric irregularities during a weak geomagnetic storm of 15 April 2025 and intense storm of 16 April 2025 over Brazil}
+\EntryAuthors[\normalsize]{\Presenter{R. de Jesus}\textsuperscript{1,2,3}, G. Yang\textsuperscript{1}, A.A. Pimenta\textsuperscript{3}, A.J. de Abreu\textsuperscript{3,4}, G.A.S. Picanço\textsuperscript{5}, A.M. Santos\textsuperscript{2,3}, L.C.A. Resende\textsuperscript{2,3}, C.S. Carmo\textsuperscript{1,2,3}, L.F.R. Vital\textsuperscript{1,2,3}, I.S. Batista\textsuperscript{3}, J.R. Souza\textsuperscript{3}, K. Venkatesh\textsuperscript{6}, P.R. Fagundes\textsuperscript{7}, V.F. Andrioli\textsuperscript{2,3}, P.P. Batista\textsuperscript{3}, C. Wang\textsuperscript{1}, H. Li\textsuperscript{1}, Z. Liu\textsuperscript{1}, R.B. Kerr\textsuperscript{8}, L.V. Peres\textsuperscript{9}, R. da Silva\textsuperscript{9}}
+\EntryAffils[\small]
+\Affil{1}{State Key Laboratory of Space Weather, National Space Science Center/Chinese Academy of Sciences, Beijing, China}
+\Affil{2}{China-Brazil Joint Laboratory for Space Weather, National Space Science Center, São José dos Campos, Brazil}
+\Affil{3}{National Institute for Space Research (INPE), São José dos Campos, Brazil}
+\Affil{4}{Instituto Tecnológico de Aeronáutica (ITA), Divisão de Ciências Fundamentais, São José dos Campos, SP, Brazil}
+\Affil{5}{Space Science Laboratory, University of Massachusetts Lowell, Lowell, MA, USA}
+\Affil{6}{Physical Research Laboratory, Ahmedabad, India}
+\Affil{7}{Universidade do Vale do Paraíba /IP \& D, São José dos Campos, SP, Brazil}
+\Affil{8}{Computational Physics Inc., Lowell, MA, US}
+\Affil{9}{Universidade Federal do Oeste do Pará (UFOPA), Santarém, Pará, Brazil}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+In this investigation, we present and discuss the ionospheric F-region observations in the equatorial and low-latitude regions over Brazil during a weak followed by an intense geomagnetic storm that occurred in April 2025. During these geomagnetic storms, the Dst index reached a minimum of -33 nT on 15 April and -138 nT on 16 April. For this study, we analyzed (a) the ionospheric sounding observations obtained at Belém (BELE; 1.4ºS, 48.5ºW) and Cachoeira Paulista (CHPI; 22.7ºS, 45.0ºW), (b) Fabry-Perot interferometer (FPI) data obtained at CHPI, and (c) the vertical total electron content (VTEC) observations obtained from Global Navigation Satellite System (GNSS) in the equatorial and low-latitude region. Also, Global-scale Observation of the Limb and Disk (GOLD) and O/N2 ratio data are presented. Several prompt penetration electric fields (PPEFs) events were reported during both geomagnetic storms. The pre-reversal enhancement in the equatorial region was suppressed by the westward PPEF that occurred in the recovery phase of the intense storm. This phenomenon inhibited the formation of equatorial plasma bubbles (EPBs) during this storm. During the recovery phase of the storms, changes in the O/N2 ratio led to the occurrence of negative ionospheric storms on the low-latitudes over Brazil. During main and recovery phases, positive ionospheric storms occurred due to the equatorward thermospheric winds and eastward PPEF.
+\end{EntryAbstract}
+
+% ---- entrada 27: Distributed Acoustic Sensing (DAS) in Seismology: Advances Over the Pa
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{11:10}Distributed Acoustic Sensing (DAS) in Seismology: Advances Over the Past Decade, Offshore Applications, and the Brazilian Perspective. — George Sand França \emph{et al.}}
+\label{e-27}
+\EntryKicker{Invited talk}{Day 3 · 21 October · 11:10–11:50}{Session: Instrumentation}
+\EntryTitle{Distributed Acoustic Sensing (DAS) in Seismology: Advances Over the Past Decade, Offshore Applications, and the Brazilian Perspective.}
+\EntryAuthors[\normalsize]{\Presenter{George Sand França}\textsuperscript{1}, Carlos Alberto Moreno Chaves\textsuperscript{1}, CLOWN Team\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Universidade de São Paulo}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The use of Distributed Acoustic Sensing (DAS) in seismology has seen intense scientific and technical breakthroughs, particularly in geophysics. It has been applied over the past decade and, more recently, in oceanic (offshore) regions. Researchers worldwide are working to unravel the ocean’s structure in a unique way, with numerous international meetings and concrete results from its application. Here, I will present the advances and milestones achieved over the last decade and where the field stands today. I will also address the state of these studies in Brazil, along with a diagnosis of DAS usage there. A notable example of Brazilian-led research is the PROASA project (Tectonic Evolution and Magmatism of the South Atlantic Ocean and Margin), at the University of São Paulo (IAG-USP). This project utilizes DAS alongside seismograph network to investigate the tectonic evolution and magmatism of the South Atlantic Ocean and Margin, with a particular focus on seaward-dipping reflectors, volcanic formations, and the continent-ocean transition zones . The primary objective is to generate high-resolution structural models through an integrated approach combining surface wave tomography, anisotropic analysis, receiver functions, reflected phase analysis, and joint inversion.
+\end{EntryAbstract}
+
+% ---- entrada 28: Development of Low-Cost Meteorological Instrumentation for Science Edu
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{13:40}Development of Low-Cost Meteorological Instrumentation for Science Education and Public Engagement: The INPE Education Program. — Rosemary Aparecida Odorizi Lima \emph{et al.}}
+\label{e-28}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 13:40–14:00}{Session: Instrumentation}
+\EntryTitle{Development of Low-Cost Meteorological Instrumentation for Science Education and Public Engagement: The INPE Education Program.}
+\EntryAuthors[\normalsize]{\Presenter{Rosemary Aparecida Odorizi Lima}\textsuperscript{1}, Antônio Marcos Vianna Campos\textsuperscript{1}, Dario Gerardo Fantini\textsuperscript{1}, José Celso Thomaz Júnior\textsuperscript{1}, Mateus Motta Ribeiro\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Instituto Nacional de Pesquisas Espaciais}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The Education Program – Environmental, Scientific and Technological Educational Extension of the National Institute for Space Research (INPE) develops initiatives aimed at democratizing scientific knowledge through the design and use of low-cost meteorological instrumentation as a tool for education, research, and science outreach. The program seeks to engage students, teachers, and local communities with ation techniques, including 3D printing, and open-source electronic prototyping platforms. The instruments developed include rain gauges, anemometers, wind vanes, radiation shields, temperature, humidity, and atmospheric pressure sensors, as well as educational weather stations, enabling hands-on learning activities in schools and non-formal educational environments. In addition to significantly reducing costs compared with commercial equipment, the initiative promotes project-based learning, scientific inquiry, the maker culture, and environmental education. Data collected by these instruments can be applied in investigative classroom activities, science fairs, local climate monitoring, and citizen science projects, fostering skills in observing, analyzing, and interpreting atmospheric phenomena. Therefore, low-cost meteorological instrumentation represents an innovative strategy to expand access to high-quality science education, strengthen public engagement with science, and inspire the next generation of professionals in Science, Technology, Engineering, and Mathematics.
+\end{EntryAbstract}
+
+% ---- entrada 29: Ground-Based Observations of the Mesosphere and Lower Thermosphere: An
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{14:00}Ground-Based Observations of the Mesosphere and Lower Thermosphere: An Overview of the EMBRACE Monitoring Network — Cristiano M. Wrasse \emph{et al.}}
+\label{e-29}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 14:00–14:20}{Session: Instrumentation}
+\EntryTitle{Ground-Based Observations of the Mesosphere and Lower Thermosphere: An Overview of the EMBRACE Monitoring Network}
+\EntryAuthors[\normalsize]{\Presenter{Cristiano M. Wrasse}\textsuperscript{1}, Prosper K. Nyassor\textsuperscript{1}, Diego Barros\textsuperscript{1}, Juliano Moro\textsuperscript{1}, Joaquim E. R. Costa\textsuperscript{1}, Jonas R. Souza\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The EMBRACE Program of the National Institute for Space Research (INPE) operates a coordinated ground-based observational network dedicated to monitoring the Mesosphere and Lower Thermosphere (MLT) across South America and Antarctica. This network integrates all-sky imagers, GNSS receivers, and riometers strategically distributed over the Brazilian territory. Together, these facilities provide continuous high-resolution measurements of atmospheric gravity waves and ionospheric irregularities, enabling the characterization of their spatial and temporal evolution, propagation patterns, and interactions with different atmospheric layers. The EMBRACE ground-based network plays a central role in advancing regional MLT research, supporting space weather monitoring, and improving the understanding of coupling processes between the lower and upper atmosphere.
+\end{EntryAbstract}
+
+% ---- entrada 30: J-ARGUS: Expanding Jicamarca's Radar Capabilities
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{14:20}J-ARGUS: Expanding Jicamarca’s Radar Capabilities — Juan Espinoza \emph{et al.}}
+\label{e-30}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 14:20–14:40}{Session: Instrumentation}
+\EntryTitle{J-ARGUS: Expanding Jicamarca’s Radar Capabilities}
+\EntryAuthors[\normalsize]{\Presenter{Juan Espinoza}\textsuperscript{1}, Danny Scipion\textsuperscript{1}, Fabiano Rodriguez\textsuperscript{2}, Marco Milla\textsuperscript{3}, David Hysell\textsuperscript{4}, Jorge Chau\textsuperscript{5}, Kenneth Obenberger\textsuperscript{6}, Jorge Florentino\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú}
+\Affil{2}{University of Texas at Dallas}
+\Affil{3}{Pontifical Catholic University of Peru}
+\Affil{4}{Cornell University}
+\Affil{5}{Leibniz Institute of Atmospheric Physics}
+\Affil{6}{Air Force Research Laboratory}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Continuous remote sensing of equatorial geospace requires advanced radar configurations capable of resolving vector dynamics. A multi-institutional initiative is expanding the capabilities of the Jicamarca Geophysical Observatory (JGO) to a tri-static system for 50-MHz radar observations from its high-power large-aperture array. The system comprises two spatially separated receiving stations: one at the Huancayo Geophysical Observatory, approximately 170 km east of JGO, and another at the Pontifical Catholic University of Peru’s Santa María campus, approximately 50 km south. Both stations operate over a wide 10–80 MHz frequency range and support digital beamforming, enabling flexible passive and active radio observations.
+
+This expanded multi-static capability will enhance studies of low-latitude aeronomy, including mesosphere–lower thermosphere (MLT) dynamics, meteor physics, ionospheric irregularities, and meteor radio afterglows. In addition, each receiving station can operate independently as a passive low-frequency radio telescope for radio astronomy. This flexible architecture bridges active geospace remote sensing and passive cosmic observations, while expanding the spatial coverage and scientific capabilities of JGO’s ionospheric radar.
+\end{EntryAbstract}
+
+% ---- entrada 31: Conceptualizing an App for Tracking Aeronomic Conditions over Brazil f
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:00}Conceptualizing an App for Tracking Aeronomic Conditions over Brazil for Precision Agriculture End-Users — Francisco Meneses \emph{et al.}}
+\label{e-31}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 15:00–15:20}{Session: Instrumentation}
+\EntryTitle{Conceptualizing an App for Tracking Aeronomic Conditions over Brazil for Precision Agriculture End-Users}
+\EntryAuthors[\normalsize]{\Presenter{Francisco Meneses}\textsuperscript{1}, Humberto Ferro\textsuperscript{1}, Tereza Satiko Nishida Pinto\textsuperscript{2}, Cristiano Wrasse\textsuperscript{3}, Diego Barros\textsuperscript{3}, Siomel Sávio\textsuperscript{3}, Diego Oliveira\textsuperscript{4}, Esfhan Alam Kherani\textsuperscript{3}, Octavio Henrique Viana\textsuperscript{1}, Everaldo Lorensetti\textsuperscript{1}, Vitor Prestes Luzio\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Instituto Federal do Paraná (IFPR)}
+\Affil{2}{Instituto de Economia Agrícola do Estado de São Paulo (IEA)}
+\Affil{3}{Instituto Nacional de Pesquisas Espaciais (INPE)}
+\Affil{4}{Harpya Drones}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Brazil’s agricultural sector, a major economic force in global supply chains, is increasingly adopting Unmanned Aerial Vehicles (UAVs) equipped with GNSS-based positioning for site-specific crop management, reducing environmental impacts and input waste, such as fertilizers and pesticides. However, these operations can be affected by ionospheric scintillations, which may degrade GNSS positioning accuracy and reliability, particularly at nighttime. Furthermore, ionospheric hazards are rarely incorporated into UAV flight-safety protocols or regulations, while regional scintillation seasonality and the suitability of indices for characterizing and nowcasting low-latitude scintillation require further investigation. In light of these challenges, this work proposes the development and evaluation of metrics for ionospheric scintillations tailored to UAV operations in precision agriculture. The nowcast information will be delivered through a mobile application connected to a web API, providing near-real-time warnings. The application will adopt an offline-first approach, caching essential data and synchronizing nowcasts when connectivity is available. Moreover, instrumental observation campaigns are highly desirable for validating this tool under real-world conditions.
+\end{EntryAbstract}
+
+% ---- entrada 32: Temporal Climatology of Ionospheric Scintillation Using Fixed SBAS Lin
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:20}Temporal Climatology of Ionospheric Scintillation Using Fixed SBAS Links at Low Latitudes — Sávio Jenner Vianna Silva Rennó \emph{et al.}}
+\label{e-32}
+\EntryKicker{Oral presentation}{Day 3 · 21 October · 15:20–15:40}{Session: Instrumentation}
+\EntryTitle{Temporal Climatology of Ionospheric Scintillation Using Fixed SBAS Links at Low Latitudes}
+\EntryAuthors[\normalsize]{\Presenter{Sávio Jenner Vianna Silva Rennó}\textsuperscript{1}, Bruno Augusto Pereira\textsuperscript{1,2}, Maria Luiza Ribeiro Batista\textsuperscript{3}, Alison de Oliveira Moraes\textsuperscript{3,4}}
+\EntryAffils[\small]
+\Affil{1}{Universidade de Taubaté e Instituto Tecnológico de Aeronáutica}
+\Affil{2}{Instituto Nacional de Pesquisas Espaciais}
+\Affil{3}{Universidade de Taubaté}
+\Affil{4}{Instituto de Aeronáutica e Espaço e Universidade de Taubaté}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+This work presents an 11-year climatological analysis of ionospheric scintillation from L-band observations of geostationary SBAS satellites over Fortaleza, Brazil, spanning a full solar cycle. Fixed transionospheric links remove ambiguities from satellite motion, so temporal signal variations directly reflect ionospheric irregularity dynamics. Scintillation events were defined as continuous intervals with S4 above 0.2 lasting longer than 8 minutes. Occurrence, duration, and distribution were characterized on nightly, monthly, and interannual timescales. Activity concentrates between September and March, consistent with the Spread-F season at low latitudes, and is negligible from April through August. Results show that scintillation occurrence decreased during the descending phase of cycle 24, especially near solar minimum (2018-2020), then increased through the ascending phase of cycle 25, confirming previous findings. At higher solar flux, during Spread-F season, typical nights show two to three events, with cumulative durations near 150 minutes. This pattern holds across solar cycle phases, though reduced at minimum. Months with more occurrences also accumulate longer total durations, showing coherence between occurrence rate and signal degradation duration. The dataset spans long enough to resolve solar cycle effects that shorter campaigns cannot capture, offering insights for refining scintillation models for GNSS systems at low latitudes.
+\end{EntryAbstract}
+
+% ---- entrada 33: Understanding Seismo-Atmosphere-Ionosphere Coupling by Analysis of Spa
+\EntryPage
+\setsession{Instrumentation}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{15:40}Understanding Seismo-Atmosphere-Ionosphere Coupling by Analysis of Spatio-Temporal Characteristics of Ionospheric Disturbances — Boris Maletckii \emph{et al.}}
+\label{e-33}
+\EntryKicker{Invited talk}{Day 3 · 21 October · 15:40–16:20}{Session: Instrumentation}
+\EntryTitle{Understanding Seismo-Atmosphere-Ionosphere Coupling by Analysis of Spatio-Temporal Characteristics of Ionospheric Disturbances}
+\EntryAuthors[\normalsize]{\Presenter{Boris Maletckii}\textsuperscript{1}, Elvira Astafyeva\textsuperscript{2}, Esfhan Alam Kherani\textsuperscript{3}, Saúl Sánchez Juarez\textsuperscript{3}, Rogério Hisashi Honda\textsuperscript{3}, Ines Dahlia Ouar\textsuperscript{2}, Clélia Maréchal\textsuperscript{2}, Lucie Rolland\textsuperscript{4}, Osamu Sandanbata\textsuperscript{1}, Shingo Watada\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Earthquake Research Institute of the University of Tokyo}
+\Affil{2}{- Université Paris Cité, Institut de physique du globe de Paris (IPGP), CNRS UMR 7154, Paris}
+\Affil{3}{- Instituto Nacional de Pesquisas Espaciais (INPE) Sao Paolo, Brazil}
+\Affil{4}{- Observatoire de la Côte d’Azur, Université Côte d’Azur, CNRS, IRD, Géoazur, France}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The ionosphere is characterized by a large number of disturbances generated in response to a wide range of phenomena, including natural hazards, space weather and man-made events. Identification of the origin of ionospheric disturbances (ID) is an extremely difficult task, and it is one of the most interesting fundamental scientific questions. In this contribution, a spatio-temporal analysis approach is presented which allows to automatically detect and to recognize the source of ionospheric disturbances in time series of total electron content (TEC) measured by Global Navigation Satellite Systems. The main idea is (a) to analyze the main characteristics (such as spatio-temporal features and frequency content) of ID generated by known sources, and (b) to examine ID’s features and, based on this information, recognize their source. Currently, the database contains TEC data series with responses to earthquakes, volcanic eruptions, tornadoes, explosions, rocket launches, equatorial plasma bubbles and geomagnetic storms. An application of this spatio-temporal approach is demonstrated on examples of Co-Seismic and Co-Tsunamic Ionospheric Disturbances due to recent events: the 2024 Noto and 2025 Miyako earthquakes, and the 2025 Kamchatka tsunami. The discussion is focused not only on the identification task, but also on current challenges in understanding and estimating source characteristics, as well as the complex nature of interactions between different ionospheric phenomena.
+\end{EntryAbstract}
+
+% ---- entrada 34: Machine Learning Applied For Prediction of Maximum Usable Frequency (M
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{section}{Poster session — Modeling}
+\addcontentsline{toc}{subsection}{\protect\numberline{P01}Machine Learning Applied For Prediction of Maximum Usable Frequency (MUF) in Brazilian Ionospheric Stations — Oluwasola Olakitan Akinbode \emph{et al.}}
+\label{e-34}
+\EntryKicker{Poster P01}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{Machine Learning Applied For Prediction of Maximum Usable Frequency (MUF) in Brazilian Ionospheric Stations}
+\EntryAuthors[\normalsize]{\Presenter{Oluwasola Olakitan Akinbode}\textsuperscript{1}, Clezio Marcos Denardini\textsuperscript{1}, Laysa Cristina Araujo Resende\textsuperscript{1}, Eyitope Solomon Atotuomah\textsuperscript{1}, Sony Su Chen\textsuperscript{1}, Juliano Moro\textsuperscript{1}, Lais Maria Guizelli\textsuperscript{1}, Sophia Laranja\textsuperscript{1}, Jaziel Campelo\textsuperscript{1}, Anita Jungton Valcorte\textsuperscript{1}, Giorgio Arlan da Silva Picanço.\textsuperscript{2}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research (INPE)}
+\Affil{2}{Space Science Lab, University of Massachusetts Lowell}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The Brazilian ionospheric sector is particularly complex due to the influence of the Equatorial Ionization Anomaly (EIA) and the South American Magnetic Anomaly (SAMA). Also, the large declination angle of the magnetic field and phenomena like disturbed electric fields and plasma irregularities can produce significant spatial and temporal variations in radio communications. Thus, the Maximum Usable Frequency (MUF) may be a key parameter for high-frequency (HF) radio-wave propagation studies, since it represents the highest frequency that can support reliable HF communication over a specified path. Accurate MUF prediction is essential for frequency management, communication planning, aviation, maritime operations, and other HF-dependent systems. Thus, this research aims to characterize MUF variability over Brazil and develop a machine-learning-based framework for short-term prediction under quiet and disturbed ionospheric conditions. Initially, ionosonde observations from Cachoeira Paulista and Boa Vista will be used to investigate regional MUF behavior. The analysis will subsequently be expanded to other Brazilian stations to identify the main physical and geophysical drivers of MUF variability and quantify its response to geomagnetic disturbances. The expected outcome is a validated and regionally adapted prediction framework that contributes to improved HF propagation assessment, space-weather monitoring, and operational ionospheric forecasting over Brazil.
+\end{EntryAbstract}
+
+% ---- entrada 35: Updating the Studies of Cosmic Noise Absorption Across the SAMA Based 
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P02}Updating the Studies of Cosmic Noise Absorption Across the SAMA Based on Recent Measurements — Eyitope Solomon Atotuomah \emph{et al.}}
+\label{e-35}
+\EntryKicker{Poster P02}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{Updating the Studies of Cosmic Noise Absorption Across the SAMA Based on Recent Measurements}
+\EntryAuthors[\normalsize]{\Presenter{Eyitope Solomon Atotuomah}\textsuperscript{1}, Clezio Marcos Denardini\textsuperscript{1}, Juliano Moro\textsuperscript{1}, Laysa Resende\textsuperscript{1}, Sony Su Chen\textsuperscript{1}, Oluwasola Akinbode\textsuperscript{1}, Lais Maria Guizelli\textsuperscript{1}, Jaziel Campelo\textsuperscript{1}, Anita Jungton Valcorte\textsuperscript{1}, Guillermo Caro Lillo\textsuperscript{1}, Sophia Laranja\textsuperscript{1}, Giorgio Picanço\textsuperscript{2}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research (INPE)}
+\Affil{2}{Space Science Lab at the University of Massachusetts Lowell}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The South American Magnetic Anomaly (SAMA) evolves in terms of the location of Earth’s magnetic field’s weakest point, its span, and its intensity while remaining the region of weakest magnetic-field intensity. This makes it particularly suitable for examining the coupling between magnetospheric forcing and the lower ionosphere. Previous observations show that cosmic noise absorption (CNA) varies with latitude across the SAMA, but it remains unclear if this pattern reflects the regional magnetic-field configuration or the storm-time forcing linked with individual disturbances. Earlier studies showed this spatial variation but did not isolate local geomagnetic effects from external forcing using multi-station observations. New measurements from an expanded riometer network may now allow this question to be examined across multiple disturbances. Simultaneous observations from stations across and beyond the SAMA will be analyzed for selected geomagnetic disturbances and solar events. CNA onset, maximum amplitude, duration, and integrated absorption will be quantified and related to geographic and geomagnetic latitude, magnetic-field intensity and configuration, and solar-wind and geomagnetic drivers. Event-by-event and multi-station analyses will test whether the latitudinal pattern persists across disturbances or reflects event-specific particle precipitation. Supporting ionosonde observations will also be used to examine whether enhanced CNA is accompanied by ionogram blackout
+\end{EntryAbstract}
+
+% ---- entrada 36: Asymmetric Evolution of Equatorial Plasma Bubbles at Geomagnetically C
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P03}Asymmetric Evolution of Equatorial Plasma Bubbles at Geomagnetically Conjugate Sites in Brazil — Diego Barros \emph{et al.}}
+\label{e-36}
+\EntryKicker{Poster P03}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{Asymmetric Evolution of Equatorial Plasma Bubbles at Geomagnetically Conjugate Sites in Brazil}
+\EntryAuthors[\normalsize]{\Presenter{Diego Barros}\textsuperscript{1}, Cristiano Max Wrasse\textsuperscript{1}, Hisao Takahashi\textsuperscript{1}, Cosme A. O. B. Figueiredo\textsuperscript{2}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research}
+\Affil{2}{Federal University of Campina Grande}
+\Affil{3}{University of the Andes}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+GNSS receivers located along the same magnetic meridian in Brazil were used to investigate the meridional development of Equatorial Plasma Bubbles (EPBs), based on dTEC data from 655 nights between 2012 and 2016. Approximately 70\% of the EPBs showed symmetry with respect to the geomagnetic equator, while the remaining 30\% exhibited asymmetries, with displacements either northward or southward. These asymmetries showed seasonal variation, being more frequent northward between December and January, and southward between March–April and September–October. Analyses of meridional wind and numerical simulations indicate that trans-equatorial winds may be associated with these displacements.
+\end{EntryAbstract}
+
+% ---- entrada 37: Development of Computational Tools in MATLAB for GNSS-Based Ionospheri
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P04}Development of Computational Tools in MATLAB for GNSS-Based Ionospheric Analysis Using PCA and Time-Distance Diagrams — Laura Luiz Trigo \emph{et al.}}
+\label{e-37}
+\EntryKicker{Poster P04}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{Development of Computational Tools in MATLAB for GNSS-Based Ionospheric Analysis Using PCA and Time-Distance Diagrams}
+\EntryAuthors[\normalsize]{\Presenter{Laura Luiz Trigo}\textsuperscript{1}, Virginia Klausner de Oliveira\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{UNIVAP}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+This work presents the development of computational tools for the analysis of ionospheric variability using GNSS observations. The study initially focused on Total Electron Content (TEC) data and the application of Principal Component Analysis (PCA) to identify dominant spatial patterns in ionospheric observations. Based on this initial implementation, the analysis is being extended to GNSS data in CMN format, with the development of algorithms for data processing and analysis using both PCA and Time-Distance (TTD) diagrams. The computational routines include data organization and normalization, selection of stations, periods and satellite PRNs, statistical analysis, and spatial-temporal visualization of the resulting parameters. Graphical interfaces are being progressively developed in MATLAB to facilitate the application of these algorithms to different types of GNSS data. The proposed tools are intended to support the investigation of ionospheric disturbances associated with geophysical events, providing a computational basis for the analysis of their spatial and temporal variability through complementary techniques.
+\end{EntryAbstract}
+
+% ---- entrada 38: Lead-Time-Dependent Machine Learning Prediction of Equatorial Plasma B
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P05}Lead-Time-Dependent Machine Learning Prediction of Equatorial Plasma Bubble Onset over Brazil: Snapshot, Temporal, and Spatial Model — G. Rather \emph{et al.}}
+\label{e-38}
+\EntryKicker{Poster P05}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{Lead-Time-Dependent Machine Learning Prediction of Equatorial Plasma Bubble Onset over Brazil: Snapshot, Temporal, and Spatial Model}
+\EntryAuthors[\normalsize]{\Presenter{G. Rather}\textsuperscript{1}, F. Guedes\textsuperscript{1}, S. Patra\textsuperscript{2}, C. Candido\textsuperscript{1}, E. Kherani\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research (INPE)}
+\Affil{2}{University of New Brunswick, Fredericton, NB, Canada}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Equatorial plasma bubbles (EPBs) cause severe ionospheric scintillation disrupting GNSS signals across Brazil. Predicting EPB onset at 15–60 minute lead times remains challenging, as prior machine learning approaches were often limited to single stations or lacked systematic lead-time evaluations. Here, we compare XGBoost (snapshot), LSTM (temporal), and graph neural networks (GNN, spatial) for EPB onset prediction at Sao Luis using 1-minute ROTI observations from four GNSS stations. Training on 2014 (solar maximum) and testing on 2019 (solar minimum) across five lead times (5–60 min), all models outperform persistence and climatology. We identify a 15-minute crossover: below this, XGBoost achieves peak single-station accuracy (AUC = 0.970 at 5 min); above it, LSTM excels (AUC = 0.922 at 15 min, 0.883 at 30 min, 0.802 at 60 min). The GNN secures highest multi-station accuracy (macro AUC = 0.963 at 5 min, 0.823 at 30 min) and proves advantageous at remote stations (AUC = 0.914 at Santa Maria, 0.826 at Santarem at 30 min). This 15-minute threshold aligns with the physical timescale of pre-reversal enhancements and Rayleigh–Taylor instability growth. Feature analysis reveals local ROTI dominates (56\% weight), with secondary contributions from multi-station TEC and geomagnetic indices. Ultimately, model selection should match operational lead times: snapshot models for short-term nowcasting, and temporal or spatial architectures for medium-term forecasting.
+\end{EntryAbstract}
+
+% ---- entrada 39: MUF Index Variability and Its Impacts over Brazilian Stations During a
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P06}MUF Index Variability and Its Impacts over Brazilian Stations During a Intense Geomagnetic Storm — Laysa C. A. Resende \emph{et al.}}
+\label{e-39}
+\EntryKicker{Poster P06}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{MUF Index Variability and Its Impacts over Brazilian Stations During a Intense Geomagnetic Storm}
+\EntryAuthors[\normalsize]{\Presenter{Laysa C. A. Resende}\textsuperscript{1}, Ronan A. J. Chagas\textsuperscript{2}, Clezio M. Denardini\textsuperscript{3}, Joaquim R. Costa\textsuperscript{4}, Giorgio A. Picanço\textsuperscript{5}}
+\EntryAffils[\small]
+\Affil{1}{Instituto Nacional de Pesquisas Espaciais, São José dos Campos, Brazil}
+\Affil{2}{Space Science Laboratory, University of Massachusetts Lowell, USA}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The Maximum Usable Frequency (MUF) is an important ionospheric parameter for high-frequency (HF) radio communications and is commonly used to assess disturbances during geomagnetic storms. MUF-based indices derived from real-time ionosonde observations are also operationally applied in aviation advisories within the International Civil Aviation Organization (ICAO) framework. However, the Brazilian sector presents distinct ionospheric characteristics associated with the South American Magnetic Anomaly (SAMA), plasma bubbles, and intense sporadic E (Es) layers, which may limit the applicability of global MUF indices. This study investigates the behavior of a MUF index derived from the F-region critical frequency (foF2) during the main and recovery phases of the intense May 2024 geomagnetic storm. The results show significant MUF variability, particularly during the recovery phase, when disturbed electric fields and thermospheric dynamics produced negative ionospheric storm effects and substantial reductions in electron density. A 30-min-ahead MUF forecast was also evaluated. MUF variations over Brazil differed from those observed at other low- and mid-latitude regions, emphasizing the role of regional ionospheric processes. These results highlight the need to incorporate Brazilian ionospheric characteristics into MUF models to improve regional and global forecasting accuracy.
+\end{EntryAbstract}
+
+% ---- entrada 40: Modeling the Variability of Relativistic Electron Flux in the Outer Ra
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P07}Modeling the Variability of Relativistic Electron Flux in the Outer Radiation Belt Using LSTM Recurrent Neural Network — Thiago Moeda Sant’Anna \emph{et al.}}
+\label{e-40}
+\EntryKicker{Poster P07}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{Modeling the Variability of Relativistic Electron Flux in the Outer Radiation Belt Using LSTM Recurrent Neural Network}
+\EntryAuthors[\normalsize]{\Presenter{Thiago Moeda Sant’Anna}\textsuperscript{1}, Livia Ribeiro Alves\textsuperscript{2}, Luiz Benyosef\textsuperscript{1}, Ligia Alves da Silva\textsuperscript{2}, José Paulo Marchezi\textsuperscript{2}, Vinicius Deggeroni\textsuperscript{2}}
+\EntryAffils[\small]
+\Affil{1}{National Observatory -ON}
+\Affil{2}{National Institute for Space Research - INPE}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The main factors governing the variability of high-energy outer radiation belt electron flux are well established in the literature and are driven by external physical mechanisms, such as interplanetary coronal mass ejections and high-speed solar wind streams. These processes are associated with low-energy electron flux injections and also with wave-particle interactions, in which electrons can be accelerated to relativistic energies. In this work, we present a novel approach to predict and explain the dynamics of high-energy electron flux (1.6-2.0 MeV) enhancement and loss effects during disturbed periods using the LSTM designed with an attention mechanism on data unseen by the model. The models are trained using electron flux data from the Radiation Belt Storm Probe; solar wind data from the Advanced Composition Explorer satellite; and global geomagnetic indices. The goal is to evaluate the input features importance contribution that were considered models with high-resolution predictions accuracy with the loss below 0.1 for the baseline model defined. Additionally, we conduct an incipient experiment to integrate exogenous data related to one solar cycle ahead of the Van Allen Probes era. Thus, we guide a study for the prediction of the geomagnetic storm at the beginning of July 2026. Finally, by comparing the results of feature importance for distinct geomagnetic storm morphologies, we found indications of a coherent process related to the adiabatic invariant theory.
+\end{EntryAbstract}
+
+% ---- entrada 41: Modeling the Topside Ionosphere Using an Ionosonde-Based Assimilative 
+\EntryPage
+\setsession{Modeling}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P08}Modeling the Topside Ionosphere Using an Ionosonde-Based Assimilative Model — Giorgio Picanço \emph{et al.}}
+\label{e-41}
+\EntryKicker{Poster P08}{On display every day}{Poster session · Theme: Modeling}
+\EntryTitle{Modeling the Topside Ionosphere Using an Ionosonde-Based Assimilative Model}
+\EntryAuthors[\normalsize]{\Presenter{Giorgio Picanço}\textsuperscript{1}, Ivan Galkin\textsuperscript{1}, Fabricio Prol\textsuperscript{2}, Ana Christovam\textsuperscript{2,3}, Marcio Muella\textsuperscript{3}, Laysa Resende\textsuperscript{4}, Sophia Laranja\textsuperscript{4}}
+\EntryAffils[\small]
+\Affil{1}{Space Science Laboratory, University of Massachusetts Lowell}
+\Affil{2}{Finnish Geospatial Research Institute, National Land Survey of Finland}
+\Affil{3}{Research and Development Institute, University of Paraíba Valley}
+\Affil{4}{National Institute for Space Research}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+In this work, we introduce the Topside Ionosphere Assimilative Model (TIAM), which represents the ionospheric electron density (Ne) above the F2-layer peak using a varying-scale-height Chapman (Vary-Chap) formulation. In its current implementation, TIAM extends ionosonde-based data assimilation into the topside ionosphere by using bottomside electron density specifications provided by the International Reference Ionosphere (IRI)-based Real-Time Assimilative Model (IRTAM), which incorporates observations from a global ionosonde network. A smooth transition between the assimilated bottomside and the modeled topside is achieved by anchoring the Vary-Chap solution at the ionosonde-derived F2-layer peak and accounting for the peak density transition interval derived from the IRTAM profile shape. Initial results demonstrate that TIAM reproduces physically consistent latitudinal, longitudinal, and temporal variability in the topside electron density, showing good agreement with independent COSMIC-2 radio occultation observations.
+\end{EntryAbstract}
+
+% ---- entrada 42: Statistical Analysis of GNSS-Derived Ionospheric Disturbance Indices O
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{section}{Poster session — Networks}
+\addcontentsline{toc}{subsection}{\protect\numberline{P09}Statistical Analysis of GNSS-Derived Ionospheric Disturbance Indices Over the SAMA Region — Anita Jungton Valcorte \emph{et al.}}
+\label{e-42}
+\EntryKicker{Poster P09}{On display every day}{Poster session · Theme: Networks}
+\EntryTitle{Statistical Analysis of GNSS-Derived Ionospheric Disturbance Indices Over the SAMA Region}
+\EntryAuthors[\normalsize]{\Presenter{Anita Jungton Valcorte}\textsuperscript{1}, Clezio Marcos Denardini\textsuperscript{1}, Juliano Moro\textsuperscript{1}, Giorgio Arlan da Silva Picanço\textsuperscript{2}, Laysa Cristina Araujo Resende\textsuperscript{1}, Sony Su Chen\textsuperscript{1}, Lais Maria Guizelli\textsuperscript{1}, Jaziel Felipe Braga Campelo\textsuperscript{1}, Sophia Rodrigues Laranja\textsuperscript{1}, Guillermo Caro\textsuperscript{1}, Oluwasola Akinbode\textsuperscript{1}, Eyitope Solomon Atotuomah.\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{National Institute for Space Research (INPE)}
+\Affil{2}{Space Science Lab at the University of Massachusetts Lowell}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The ionosphere is a highly dynamic region of the Earth’s upper atmosphere, strongly influenced by solar and geomagnetic activity. Variations in electron density caused by space weather phenomena can affect radio wave propagation and satellite-based navigation systems. Using Global Navigation Satellite System (GNSS) data, ionospheric disturbance indices can be derived to quantify and analyze ionospheric variability.
+
+This study presents a climatological statistical analysis of the Total Electron Content variation (\ensuremath{\Delta}TEC), Rate of TEC Index (ROTI), and Sudden Ionospheric Disturbance Index (SIDX), calculated from GNSS data using the Open Advanced System for Ionospheric Studies (OASIS) platform (Picanço et al., 2025).
+
+The indices are analyzed under different solar and geomagnetic conditions to investigate their variability and sensitivity, contributing to the development of an ionospheric disturbance scale. The analysis focuses on regions influenced by the South American Magnetic Anomaly (SAMA), where enhanced energetic particle precipitation can affect the ionospheric environment. This study aims to improve the use of ionospheric disturbance indices for monitoring variability and understanding ionospheric responses to different space weather conditions.
+\end{EntryAbstract}
+
+% ---- entrada 43: Preliminary results of the study of the long-term effects on the diurn
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P10}Preliminary results of the study of the long-term effects on the diurnal variation of the geomagnetic field in the SAMA region — Guillermo Caro \emph{et al.}}
+\label{e-43}
+\EntryKicker{Poster P10}{On display every day}{Poster session · Theme: Networks}
+\EntryTitle{Preliminary results of the study of the long-term effects on the diurnal variation of the geomagnetic field in the SAMA region}
+\EntryAuthors[\normalsize]{\Presenter{Guillermo Caro}\textsuperscript{1}, Clezio Marcos Denardini\textsuperscript{1}, Sony Su Chen\textsuperscript{1}, Juliano Moro\textsuperscript{1}, Laysa Cristina Araujo Resende\textsuperscript{1}, Lais Maria Guizelli\textsuperscript{1}, Giorgio Arlan da Silva Picanço\textsuperscript{2}, Sophia Laranja\textsuperscript{1}, Jaziel Campelo\textsuperscript{1}, Anita Jungton Valcorte\textsuperscript{1}, Oluwasola Akinbode\textsuperscript{1}, Eyitope Solomon Atotuomah\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Instituto Nacional de Pesquisas Espaciais}
+\Affil{2}{University of Massachusetts Lowell}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The ionospheric current systems responsible for the diurnal variation of the geomagnetic field are progressively modified by its secular variations. Nevertheless, this coupling has not yet been systematically quantified in the South American Magnetic Anomaly (SAMA) region. Thus, this study aims to investigate the long-term effects on the diurnal variation of the geomagnetic field by examining the coupling between the main field and the ionospheric current systems. The methodology is based on a comparative analysis of magnetic stations located in the SAMA region, using data from the Estudo e Monitoramento Brasileiro do Clima Espacial Magnetometer Network (EMBRACE MagNet) and the International Real-time Magnetic Observatory Network (INTERMAGNET). Spectral analysis and correlation techniques are employed to quantify the relationship between secular and diurnal geomagnetic variations in the SAMA region. The expected results include quantifying the influence of long-term variation on the amplitude and phase of the diurnal variation, identifying the characteristic time scales of the coupling, and developing predictive empirical models applicable to space weather studies. By advancing the fundamental understanding of regional geomagnetic-ionospheric coupling and improving diurnal variation models, this research has potential applications in geomagnetic monitoring and space weather forecasting.
+\end{EntryAbstract}
+
+% ---- entrada 44: From the Equator to Midlatitudes: The Magnetic Footprint of the May 20
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P11}From the Equator to Midlatitudes: The Magnetic Footprint of the May 2024 Disturbance Dynamo over South America — Oladay Afolabi \emph{et al.}}
+\label{e-44}
+\EntryKicker{Poster P11}{On display every day}{Poster session · Theme: Networks}
+\EntryTitle{From the Equator to Midlatitudes: The Magnetic Footprint of the May 2024 Disturbance Dynamo over South America}
+\EntryAuthors[\normalsize]{\Presenter{Oladay Afolabi}\textsuperscript{1}, C-Amory Mazaudier\textsuperscript{2}, F-Becker Guedes\textsuperscript{3}}
+\EntryAffils[\small]
+\Affil{1}{National Space Research and Development Agency, Nigeria}
+\Affil{2}{Laboratoire de Physique des Plasmas (LPP), Sorbonne Universite´, Ecole Polytechnique, Institut Polytechnique de Paris, Universite´ Paris Saclay, Observatoire de Paris, CNRS, 75005 Paris, France}
+\Affil{3}{Instituto Nacional de Pesquisas Espaciais, Brazil}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+This study investigates the magnetic signature of the disturbance dynamo over Brazil, Chile, and Argentina during the intense geomagnetic storm of 10–11 May 2024. One-minute magnetic disturbances from eight stations were examined together with IMF Bz, solar-wind speed, interplanetary electric field, AE, SME, SYM-H, SMR, and ASYM-H indices. A coherent bipolar disturbance was observed across the Brazilian and Chilean stations, characterized by an initial negative excursion followed by a broad positive response. The largest negative disturbance, \ensuremath{-}137.36 nT, occurred at JAT, while RGA in Argentina displayed a later and more complex response. AE and SME were strongly correlated (r = 0.924), whereas SYM-H and SMR showed near-identical storm evolution (r = 0.991). Zero-lag correlations between auroral activity and the station disturbances were weak. However, after temporal smoothing and lag analysis, SME showed clearer correlations with the Brazilian and Chilean stations at delays of approximately 8.5–9.5 hours. These results reveal a spatially coherent but latitude-dependent disturbance-dynamo response across South America, with SME providing a better description of its delayed evolution than AE.
+\end{EntryAbstract}
+
+% ---- entrada 45: Seismo-Ionospheric Response to the August 22, 2025 Mw 7.5 Drake Passag
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P12}Seismo-Ionospheric Response to the August 22, 2025 Mw 7.5 Drake Passage Earthquake: Spatial Patterns and Propagation Characteristics — Virginia Klausner \emph{et al.}}
+\label{e-45}
+\EntryKicker{Poster P12}{On display every day}{Poster session · Theme: Networks}
+\EntryTitle{Seismo-Ionospheric Response to the August 22, 2025 Mw 7.5 Drake Passage Earthquake: Spatial Patterns and Propagation Characteristics}
+\EntryAuthors[\normalsize]{\Presenter{Virginia Klausner}\textsuperscript{1}, Laura Luiz Trigoa\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{University of the Vale of Paraiba}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+Seismo-ionospheric disturbances associated with large earthquakes provide an opportunity to investigate lithosphere-atmosphere-ionosphere (LAI) coupling. We investigate the ionospheric response to the shallow Mw 7.5 strike-slip earthquake that occurred in the Drake Passage on August 22, 2025, using GNSS-derived Total Electron Content (TEC), Principal Component Analysis (PCA), and Travel-Time Diagrams (TTDs). Geomagnetic and interplanetary conditions are examined to assess external forcing. PCA reveals a marked redistribution of TEC variance during the four hours after the earthquake, with localized spatial structure near the epicentral region. Residual TEC and TTD analyses show coherent disturbances over Argentina about 8--32 min after onset. Two propagation regimes are identified: a fast Rayleigh-coupled mode with apparent horizontal velocities of 2.5--4.0 km/s, consistent with surface Rayleigh-wave propagation, and a slower mode of 0.8--1.5 km/s, consistent with an epicentral acoustic response generated by vertical ground motion.
+\end{EntryAbstract}
+
+% ---- entrada 46: Severe Scintillation Intensification and Large-to-Mesoscale Wave Struc
+\EntryPage
+\setsession{Networks}
+\phantomsection\addcontentsline{toc}{subsection}{\protect\numberline{P13}Severe Scintillation Intensification and Large-to-Mesoscale Wave Structures During the 2023 Major Sudden Stratospheric Warming — Gbadebo Seun Adeniran \emph{et al.}}
+\label{e-46}
+\EntryKicker{Poster P13}{On display every day}{Poster session · Theme: Networks}
+\EntryTitle{Severe Scintillation Intensification and Large-to-Mesoscale Wave Structures During the 2023 Major Sudden Stratospheric Warming}
+\EntryAuthors[\normalsize]{\Presenter{Gbadebo Seun Adeniran}\textsuperscript{1}, Angela Machado Santos\textsuperscript{1}, Esfhan Alam Kherani\textsuperscript{1}, Olusegun Folarin Jonah\textsuperscript{1}, Eurico Rodrigues da Paula\textsuperscript{1}, Cesar E. Valladares\textsuperscript{2}, Saul Alejandro Sanchez\textsuperscript{1}}
+\EntryAffils[\small]
+\Affil{1}{Heliophysics, Planetary Science and Aeronomy Division, National Institute for Space Research (INPE), Sao Jose dos Campos, Brazil}
+\Affil{2}{Institute for Scientific Research, Boston College, Chestnut Hill, MA, USA}
+\EndEntryAffils
+\AbstractHeading
+\begin{EntryAbstract}[\normalsize]
+The variability of equatorial ionospheric scintillation during sudden stratospheric warmings (SSWs) is intriguing because previous reports have found both suppression and intensification. This study investigates amplitude scintillation over S\unichar{2DC}ao Lu´ıs, Brazil, during the 2023 Northern Hemisphere (NH) major SSW, with a main focus on scintillation variability during the evolving phases of the SSW, namely Pre-SSW, Early-SSW, Mature-SSW, and Post-SSW. The study counts the number of amplitude scintillation events exceeding 0.8 in each phase. The results show that the number oscillates across the SSW phases, being lower during Pre-SSW and highest during Mature-SSW, while the intermediate phases register intermediate activity levels. Interestingly, the prereversal vertical drift (Vzp) derived from Digisonde measurements exhibits a phase-to-phase oscillatory variation, with its mean value being higher during Pre-SSW than Mature SSW . This behavior reveals a misalignment between the intensification of scintillation and Vzp. The Digisonde measurements further reveal changes in large-to-meso scale wave structure (LSWS) organization across the SSW phases, with the organized structure occurring during Mature-SSW, in alignment with the phase of intensified severe scintillation. The alignment of intensified severe scintillation with organized LSWS perturbations high lights the importance of mesoscale structure in determining scintillation variability during the different phases of SSWs
+\end{EntryAbstract}
+\end{document}

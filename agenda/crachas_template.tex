@@ -1,0 +1,25 @@
+\documentclass[10pt]{article}
+\usepackage[paperwidth=105mm, paperheight=148mm, top=0mm, bottom=0mm, left=0mm, right=0mm]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% Background image of the badge
+\newcommand{\backgroundImage}{cracha_colorido_final.png}
+
+% Vertical position of the name (distance from the top of the badge)
+\newcommand{\nameposition}{85mm}
+
+% One badge per page. #1 = name (lines separated by \\) and institution
+\newcommand{\badge}[1]{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north west, inner sep=0pt] at (current page.north west)
+      {\includegraphics[width=\paperwidth, height=\paperheight]{\backgroundImage}};
+  \end{tikzpicture}%
+  \vspace*{\nameposition}%
+  \begin{center}
+    \textbf{\fontsize{12}{18}\selectfont #1}
+  \end{center}%
+  \newpage}
+

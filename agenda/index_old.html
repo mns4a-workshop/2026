@@ -1,0 +1,3165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNS4A Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f2040;
+    --navy-light: #172a50;
+    --electric: #4fc3f7;
+    --electric-dim: #1a8fbf;
+    --aurora: #a8edcc;
+    --aurora-dim: #3db87a;
+    --gold: #f0c060;
+    --lavender: #b9a8f0;
+    --white: #f0eff8;
+    --muted: #8aa0c0;
+    --border: rgba(79, 195, 247, 0.15);
+    --border-strong: rgba(79, 195, 247, 0.3);
+
+    /* Aliases used in this file */
+    --cream: #0a1628;
+    --cream-light: #0f2040;
+    --cream-dark: #172a50;
+    --ink: #f0eff8;
+    --ink-soft: #c0cfe8;
+    --orange: #4fc3f7;
+    --orange-deep: #a8edcc;
+    --border-warm: rgba(79, 195, 247, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; } /* a barra fixa não cobre o título ao clicar num link do menu */
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV — barra única em todas as telas:  logo + data · botão Agenda · Attendee · ☰
+     O botão ☰ abre a lista com os demais links (Speakers, About, Sessions, LOC, SOC, Venue, Visa).
+     Para tirar/pôr um link da lista, edite os <li> dentro de <ul class="nav-links">. */
+  nav {
+    /* telas largas: o conteúdo da barra fica alinhado com a coluna da página (936px), não nas pontas */
+    --nav-pad: max(48px, calc((100% - 936px) / 2));
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-strong);
+    padding: 12px var(--nav-pad);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy-light);
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-brand { display: flex; align-items: center; gap: 18px; margin-right: auto; min-width: 0; }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--electric); }
+
+  .nav-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: 0.12em;
+    color: var(--electric);
+    border: 1px solid rgba(79,195,247,0.3);
+    background: rgba(79,195,247,0.06);
+    padding: 4px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* Agenda e Posters: botões em destaque (os links que mais importam agora) */
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+    background: rgba(79, 195, 247, 0.18);
+    border: 1px solid var(--electric);
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-btn:hover, .nav-btn:focus-visible { color: var(--navy); background: var(--electric); }
+
+  /* Attendee: botão verde */
+  .nav-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--aurora);
+    text-decoration: none;
+    border: 1px solid rgba(168, 237, 204, 0.4);
+    background: rgba(168, 237, 204, 0.08);
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .nav-submit:hover, .nav-submit:focus-visible {
+    color: var(--navy);
+    background: var(--aurora);
+    border-color: var(--aurora);
+  }
+
+  /* Botão ☰ */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    cursor: pointer;
+    color: var(--electric);
+    background: rgba(79, 195, 247, 0.06);
+    border: 1px solid rgba(79, 195, 247, 0.3);
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-toggle:hover, .nav-toggle:focus-visible, nav.open .nav-toggle {
+    color: var(--navy); background: var(--electric); border-color: var(--electric);
+  }
+  .nav-toggle:focus-visible, .nav-btn:focus-visible, .nav-submit:focus-visible { outline: 2px solid var(--aurora); outline-offset: 2px; }
+  .nav-toggle-bars, .nav-toggle-bars::before, .nav-toggle-bars::after {
+    display: block; width: 18px; height: 2px; background: currentColor; border-radius: 1px;
+    transition: transform 0.2s, top 0.2s, background 0.2s;
+  }
+  .nav-toggle-bars { position: relative; }
+  .nav-toggle-bars::before, .nav-toggle-bars::after { content: ''; position: absolute; left: 0; }
+  .nav-toggle-bars::before { top: -6px; }
+  .nav-toggle-bars::after { top: 6px; }
+  nav.open .nav-toggle-bars { background: transparent; }
+  nav.open .nav-toggle-bars::before { top: 0; transform: rotate(45deg); }
+  nav.open .nav-toggle-bars::after { top: 0; transform: rotate(-45deg); }
+
+  /* Lista de links (painel que abre embaixo da barra) */
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: var(--nav-pad);
+    width: 250px;
+    max-height: calc(100vh - 72px);
+    max-height: calc(100dvh - 72px);   /* celular deitado: a lista rola dentro dela */
+    overflow-y: auto;
+    list-style: none;
+    padding: 4px 0 6px;
+    background: var(--navy-light);
+    border: 1px solid var(--border-strong);
+    border-top: 0;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 0.18s, transform 0.18s, visibility 0s 0.18s;
+  }
+  nav.open .nav-links {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: opacity 0.18s, transform 0.18s, visibility 0s;
+  }
+  .nav-links a {
+    display: block;
+    padding: 13px 22px;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-top: 1px solid var(--border);
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links li:first-child a { border-top: 0; }
+  .nav-links a:hover { background: rgba(79, 195, 247, 0.06); }
+  .nav-links a:hover, .nav-links a.active { color: var(--electric); }
+
+  /* tablet e celular */
+  @media (max-width: 960px) {
+    nav { --nav-pad: 28px; }
+  }
+  @media (max-width: 640px) {
+    nav { --nav-pad: 16px; padding-top: 8px; padding-bottom: 8px; gap: 8px; }
+    /* data embaixo do logo, para sobrar espaço aos botões */
+    .nav-brand { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .nav-logo { font-size: 21px; }
+    .nav-date { font-size: 9.5px; letter-spacing: 0.06em; padding: 1px 7px; }
+    /* lista ocupa a largura da tela */
+    .nav-links { left: 0; right: 0; width: auto; border-left: 0; border-right: 0; border-radius: 0; }
+    .nav-links a { padding: 14px 20px; font-size: 15px; }
+  }
+  @media (max-width: 440px) {
+    nav { --nav-pad: 12px; gap: 6px; }
+    .nav-logo { font-size: 20px; }
+    .nav-btn { padding: 0 11px; }
+    /* Attendee só com o ícone (o texto continua para leitores de tela / title) */
+    .nav-submit { font-size: 0; width: 40px; padding: 0; justify-content: center; gap: 0; }
+    .nav-submit svg { width: 17px; height: 17px; }
+  }
+  /* celulares estreitos: cabem logo, data, Agenda, Posters, Attendee e ☰ na mesma linha */
+  @media (max-width: 400px) {
+    nav { gap: 5px; }
+    .nav-year { display: none; }                       /* "19–21 Oct" (o ano aparece no topo da página) */
+    .nav-btn { padding: 0 8px; font-size: 12.5px; letter-spacing: 0.02em; }
+  }
+  @media (max-width: 345px) {
+    nav { --nav-pad: 10px; gap: 4px; }
+    .nav-btn { padding: 0 6px; font-size: 12px; letter-spacing: 0; }
+    .nav-submit, .nav-toggle { width: 36px; }
+  }
+  @media (max-width: 299px) {
+    .nav-date { display: none; }
+  }
+
+  /* Venue: tabelas de 2 colunas (transporte e hotéis) viram 1 coluna no celular */
+  @media (max-width: 640px) {
+    .venue-cols { grid-template-columns: 1fr !important; }
+    .venue-cols > div { border-right: 0 !important; min-width: 0; }
+    .venue-cols > div:not(:last-child) { border-bottom: 1px solid var(--border) !important; }
+    .venue-cols div[style*="display:flex"] { flex-wrap: wrap !important; }
+  }
+
+  .meta-item.meta-date span {
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .dot-gold {
+    background: rgba(240,192,96,0.8) !important;
+  }
+
+  /* HEADER DATE DISPLAY */
+  .header-date {
+    margin: 22px 0 20px;
+  }
+
+  .header-when {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--muted);
+    margin: 18px 0 20px;
+    line-height: 1.6;
+  }
+
+  .header-when-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--electric);
+    letter-spacing: 0.04em;
+  }
+
+  .header-when-place {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .header-date-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(79,195,247,0.06);
+    border: 1px solid rgba(79,195,247,0.35);
+    border-radius: 4px;
+    padding: 12px 20px;
+  }
+
+  .header-date-icon {
+    color: var(--electric);
+    opacity: 0.9;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-date-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .header-date-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(79,195,247,0.45);
+    margin-bottom: 2px;
+  }
+
+  .header-date-range {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--electric);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .header-date-place {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    color: rgba(79,195,247,0.6);
+    text-transform: uppercase;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 52px 32px;
+    display: flex;
+    align-items: center;
+    gap: 52px;
+  }
+
+  @media (max-width: 680px) {
+    .header-inner { flex-direction: column; text-align: center; gap: 32px; }
+    .meta-row { justify-content: center; }
+  }
+
+  /* LOGO */
+  .logo-wrap {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--cream-light);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .logo-placeholder {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .header-text { flex: 1; }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--electric);
+    border: 1px solid var(--border-strong);
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    background: rgba(79, 195, 247, 0.04);
+  }
+
+  .acronym {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 90px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .acronym span { color: var(--electric); }
+
+  .workshop-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .workshop-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 4px 10px;
+  }
+
+  .meta-chip svg {
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .meta-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--aurora-dim);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  /* SECTION */
+  section { margin-top: 72px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--white);
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--electric);
+  }
+
+  h2 .date-highlight {
+    font-style: normal;
+    color: var(--electric);
+    font-size: 0.78em;
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    border: 1px solid rgba(79,195,247,0.35);
+    background: rgba(79,195,247,0.06);
+    padding: 2px 12px;
+    border-radius: 2px;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
+  }
+
+  h2 .tbc-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5em;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+
+  p {
+    font-size: 15px;
+    color: #c0cfe8;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  .objective-box {
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--electric);
+    padding: 28px 32px;
+    margin-top: 28px;
+    background: rgba(79, 195, 247, 0.04);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .objective-box p {
+    font-size: 16px;
+    font-style: italic;
+    color: #d8e8f8;
+    line-height: 1.85;
+  }
+
+  /* SESSIONS */
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 28px;
+  }
+
+  @media (max-width: 640px) {
+    .sessions-grid { grid-template-columns: 1fr; }
+  }
+
+  .session-card {
+    background: var(--navy);
+    padding: 32px 28px;
+    transition: background 0.2s;
+  }
+
+  .session-card:hover { background: var(--navy-mid); }
+
+  .session-card.full { grid-column: 1 / -1; }
+
+  .session-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--electric-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+
+  .session-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .session-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .topics { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+
+  .topic-tag {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 3px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+    color: var(--electric);
+    background: rgba(79,195,247,0.05);
+    white-space: nowrap;
+  }
+
+  .topic-tag.aurora {
+    color: var(--aurora);
+    border-color: rgba(168, 237, 204, 0.25);
+    background: rgba(168,237,204,0.04);
+  }
+
+  .topic-tag.gold {
+    color: var(--gold);
+    border-color: rgba(240,192,96,0.25);
+    background: rgba(240,192,96,0.04);
+  }
+
+  .project-highlight { display: grid; grid-template-columns: 3px 1fr; gap: 24px; margin-top: 28px; }
+
+  .project-bar {
+    background: linear-gradient(to bottom, var(--aurora), var(--electric));
+    border-radius: 2px;
+  }
+
+  .project-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--aurora);
+    margin-bottom: 10px;
+  }
+
+  .communities { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+  .community-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--navy-mid);
+  }
+
+  .community-pill .icon { width: 8px; height: 8px; border-radius: 50%; }
+
+  .community-pill span { font-size: 13px; color: #c0cfe8; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 40px 32px;
+  }
+
+  footer p { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+
+  /* INSTITUTION LOGOS */
+  .logos-strip {
+    margin: 36px 0 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .logos-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .logos-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .logo-item {
+    width: 150px;
+    height: 80px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+  }
+
+  .logo-item:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+
+  .logo-item img {
+    max-height: 72px;
+    max-width: 114px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: opacity(0.9);
+    transition: filter 0.2s;
+  }
+
+  .logo-item img.logo-wide {
+    max-width: 140px;
+    max-height: 44px;
+  }
+
+  .logo-item:hover img { filter: opacity(1); }
+  .logo-fallback {
+    display: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .logo-item:hover .logo-fallback { color: var(--ink-soft); }
+
+  h2 .tbc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.42em;
+    font-style: normal;
+    font-weight: 400;
+    color: #ff6b6b;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    vertical-align: middle;
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    background: rgba(255, 107, 107, 0.08);
+    padding: 2px 10px;
+    border-radius: 2px;
+    position: relative;
+    top: -3px;
+  }
+
+  /* ORCID */
+  .orcid-link {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 5px;
+    opacity: 1;
+    position: relative;
+    top: -1px;
+  }
+
+  .orcid-icon {
+    width: 15px;
+    height: 15px;
+    display: block;
+  }
+
+  .fapesp-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 12px;
+    border: 1px solid rgba(168,237,204,0.3);
+    color: var(--aurora);
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    margin-top: 12px;
+  }
+
+  /* SESSION CHAIRS */
+  .session-chairs {
+    margin-top: 20px;
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--electric-dim);
+    background: rgba(79, 195, 247, 0.03);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .chair-row {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    padding: 3px 0;
+    font-size: 12.5px;
+  }
+
+  .chair-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+  }
+
+  .session-card.aurora-card .session-chairs { border-left-color: var(--aurora-dim); background: rgba(168, 237, 204, 0.03); }
+  .session-card.aurora-card .chair-label { color: var(--aurora-dim); }
+
+  .session-card.gold-card .session-chairs { border-left-color: rgba(240, 192, 96, 0.55); background: rgba(240, 192, 96, 0.03); }
+  .session-card.gold-card .chair-label { color: rgba(240, 192, 96, 0.85); }
+
+  .chair-name { color: #d8e8f8; }
+  .chair-name .affil { color: var(--muted); font-size: 11.5px; }
+
+  /* INVITED SPEAKERS LIST */
+  .invited-list {
+    margin-top: 4px;
+    margin-bottom: 18px;
+  }
+
+  .invited-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .invited-list ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .invited-list li {
+    font-size: 12.5px;
+    color: #d8e8f8;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .invited-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--electric-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .session-card.aurora-card .invited-list li::before { color: var(--aurora-dim); }
+  .session-card.gold-card .invited-list li::before { color: rgba(240, 192, 96, 0.7); }
+
+  .invited-list .affil { color: var(--muted); font-size: 11.5px; }
+
+  /* AGENDA */
+  .agenda-days {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 28px;
+  }
+
+  @media (max-width: 860px) {
+    .agenda-days { grid-template-columns: 1fr; }
+  }
+
+  .agenda-day {
+    background: var(--navy);
+  }
+
+  .day-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--navy-mid);
+    container-type: inline-size;
+  }
+
+  .day-header .day-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .day-header .day-num em {
+    font-style: normal;
+    color: var(--electric);
+  }
+
+  .day-header .day-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .day-header .day-theme {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-size: clamp(28px, 14cqw, 46px);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--aurora);
+    margin-top: 4px;
+    line-height: 1.1;
+  }
+
+  .day-header .day-theme .tbd {
+    font-style: italic;
+  }
+
+  .day-chairs {
+    margin-top: 12px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .day-chairs .chair-group + .chair-group {
+    margin-top: 8px;
+  }
+
+  .day-chairs .chair-role {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    margin-bottom: 2px;
+  }
+
+  .day-chairs .chair-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .day-chairs .chair-list li {
+    color: #c0cfe8;
+    line-height: 1.55;
+  }
+
+  .time-slots {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slot {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .slot:last-child { border-bottom: none; }
+  .slot:hover { background: var(--navy-mid); }
+
+  .slot .slot-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--electric-dim);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .slot .slot-content {
+    font-size: 12.5px;
+    color: #d8e8f8;
+    line-height: 1.35;
+  }
+
+  .slot .slot-content .type-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-bottom: 2px;
+  }
+
+  .type-badge.invited {
+    color: var(--gold);
+    border: 1px solid rgba(240,192,96,0.35);
+    background: rgba(79,195,247,0.06);
+  }
+
+  .slot.invited-slot {
+    min-height: 111px;
+    align-items: center;
+    background: rgba(240,192,96,0.03);
+    border-left: 2px solid rgba(240,192,96,0.25);
+  }
+
+  .slot.invited-slot:hover { background: rgba(240,192,96,0.06); }
+
+  .slot.invited-slot .slot-time { color: rgba(240,192,96,0.7); }
+
+  .type-badge.talk {
+    color: var(--electric);
+    border: 1px solid var(--border-strong);
+    background: rgba(79,195,247,0.05);
+  }
+
+  .type-badge.round {
+    color: var(--lavender);
+    border: 1px solid rgba(185,168,240,0.35);
+    background: rgba(185,168,240,0.06);
+  }
+
+  .slot.round-slot {
+    background: rgba(185,168,240,0.05);
+    border-left: 2px solid rgba(185,168,240,0.3);
+    min-height: 150px;
+    align-items: center;
+  }
+  .slot.round-slot:hover { background: rgba(185,168,240,0.09); }
+  .slot.round-slot .slot-time { color: rgba(185,168,240,0.75); }
+
+  .slot.break-slot {
+    background: rgba(168,237,204,0.05);
+    border-left: 2px solid rgba(168,237,204,0.3);
+  }
+  .slot.break-slot .slot-content { color: var(--aurora); font-style: italic; font-size: 12px; }
+  .slot.break-slot .slot-time { color: rgba(168,237,204,0.75); }
+  .slot.break-slot:hover { background: rgba(168,237,204,0.09); }
+
+  /* POSTER SESSION (abaixo da agenda)
+     Classes próprias (poster-*), de propósito diferentes de .slot / .day-date / .day-theme,
+     para o gerar_agenda.py não confundir estes cartões com os horários da agenda. */
+  .poster-session { margin-top: 56px; }
+
+  .poster-session h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .poster-session h3 em { font-style: italic; color: var(--electric); }
+
+  .poster-days {
+    --poster-h: 96px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  @media (max-width: 860px) {
+    .poster-days { grid-template-columns: 1fr; }
+  }
+
+  .poster-day { background: var(--navy); }
+
+  .poster-day-head {
+    padding: 14px 20px 16px;
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+  }
+  .poster-day-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .poster-day-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--white);
+  }
+  .poster-day-num em { font-style: normal; color: var(--electric); }
+  .poster-day-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .poster-day-theme {
+    margin-top: 2px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--aurora);
+  }
+
+  .poster-list { display: flex; flex-direction: column; }
+
+  .poster-card {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 10px;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 56px;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .poster-card:last-child { border-bottom: none; }
+  .poster-card:hover { background: var(--navy-mid); }
+
+  .poster-no {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--aurora-dim);
+  }
+  .poster-content { font-size: 12.5px; line-height: 1.38; color: #d8e8f8; min-width: 0; }
+  .poster-content.tbd { color: var(--muted); }
+
+  /* Altura fixa em 3 colunas: o pôster 1 do dia 1 fica alinhado com o 1 dos outros dias.
+     Para ajustar tudo de uma vez, mude --poster-h. */
+  @media (min-width: 861px) {
+    .poster-card { height: var(--poster-h); overflow: hidden; }
+    .poster-card .talk-title {
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
+    }
+  }
+  /* telas largas só um pouco: colunas mais estreitas, título quebra em mais linhas */
+  @media (min-width: 861px) and (max-width: 999px) {
+    .poster-days { --poster-h: 114px; }
+    .poster-card .talk-title { -webkit-line-clamp: 4; line-clamp: 4; }
+  }
+
+  .committee-status.confirmed {
+    color: var(--aurora);
+    border-color: rgba(168, 237, 204, 0.35);
+    background: rgba(168, 237, 204, 0.06);
+  }
+
+  .pulse-green {
+    background: var(--aurora) !important;
+    box-shadow: 0 0 0 0 rgba(168, 237, 204, 0.5) !important;
+    animation: pulse-green 2.2s infinite !important;
+  }
+
+  @keyframes pulse-green {
+    0%   { box-shadow: 0 0 0 0 rgba(168, 237, 204, 0.55); }
+    70%  { box-shadow: 0 0 0 7px rgba(168, 237, 204, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(168, 237, 204, 0); }
+  }
+
+  .marker-green {
+    background: rgba(168, 237, 204, 0.7) !important;
+  }
+
+  .loc-member:hover { background: var(--navy-mid); }
+
+  /* COMMITTEE */
+  .committee-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(240, 192, 96, 0.3);
+    background: rgba(240, 192, 96, 0.05);
+    padding: 5px 12px;
+    border-radius: 2px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+  }
+
+  .committee-status .pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 0 rgba(240, 192, 96, 0.5);
+    animation: pulse 2.2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(240, 192, 96, 0.55); }
+    70% { box-shadow: 0 0 0 7px rgba(240, 192, 96, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(240, 192, 96, 0); }
+  }
+
+  .committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .committee-member {
+    background: var(--navy);
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: background 0.15s;
+  }
+
+  .committee-member:hover { background: var(--navy-mid); }
+
+  .committee-member .marker {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(240, 192, 96, 0.55);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .committee-member .member-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .committee-member .member-name {
+    font-size: 13.5px;
+    color: #d8e8f8;
+    line-height: 1.4;
+  }
+
+  .committee-member .member-affil {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* INVITED SPEAKERS */
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .speaker-card {
+    background: var(--navy);
+    padding: 26px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: background 0.15s;
+  }
+
+  .speaker-card:hover { background: var(--navy-mid); }
+
+  .speaker-photo {
+    display: block;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(79, 195, 247, 0.35);
+    background: var(--navy-mid);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .speaker-card:hover .speaker-photo { border-color: rgba(79, 195, 247, 0.6); }
+
+  .speaker-avatar {
+    display: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--navy);
+    background: linear-gradient(135deg, var(--electric) 0%, var(--aurora) 100%);
+    border: 2px solid rgba(79, 195, 247, 0.35);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: border-color 0.15s;
+  }
+
+  .speaker-card:hover .speaker-avatar { border-color: rgba(79, 195, 247, 0.6); }
+
+  .speaker-info { flex: 1; min-width: 0; }
+
+  .speaker-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16.5px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.35;
+  }
+
+  .speaker-field {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    margin-top: 7px;
+  }
+
+  .speaker-affil {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.55;
+  }
+
+  .speaker-bio {
+    font-size: 12px;
+    color: #a8bcdc;
+    margin-top: 8px;
+    line-height: 1.55;
+  }
+
+  .speaker-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 7px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(79, 195, 247, 0.35);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .speaker-source:hover {
+    color: var(--electric);
+    border-bottom-color: var(--electric);
+  }
+
+  .speaker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin-top: 9px;
+  }
+
+  .speaker-badge .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .speaker-badge.online {
+    color: var(--lavender);
+    border: 1px solid rgba(185, 168, 240, 0.3);
+    background: rgba(185, 168, 240, 0.06);
+  }
+  .speaker-badge.online .dot { background: var(--lavender); }
+
+  .speaker-badge.onsite {
+    color: var(--aurora);
+    border: 1px solid rgba(168, 237, 204, 0.3);
+    background: rgba(168, 237, 204, 0.06);
+  }
+  .speaker-badge.onsite .dot { background: var(--aurora); }
+
+  /* ── SUBMIT ABSTRACT BUTTON ── */
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--navy);
+    background: linear-gradient(135deg, var(--aurora) 0%, var(--electric) 100%);
+    border: none;
+    border-radius: 4px;
+    padding: 13px 28px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow:
+      0 0 0 1px rgba(168, 237, 204, 0.5),
+      0 4px 20px rgba(79, 195, 247, 0.35),
+      0 0 40px rgba(168, 237, 204, 0.15);
+  }
+
+  .btn-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 60%);
+    pointer-events: none;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px rgba(168, 237, 204, 0.7),
+      0 8px 28px rgba(79, 195, 247, 0.5),
+      0 0 60px rgba(168, 237, 204, 0.25);
+  }
+
+  .btn-submit:active { transform: translateY(0); }
+
+  .btn-submit svg { flex-shrink: 0; }
+
+  .pill-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--electric);
+    text-decoration: none;
+    border: 1px solid rgba(79,195,247,0.25);
+    background: rgba(79,195,247,0.05);
+    border-radius: 3px;
+    padding: 7px 14px;
+    transition: background 0.18s, border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+  }
+  .pill-link:hover {
+    background: rgba(79,195,247,0.13);
+    border-color: rgba(79,195,247,0.55);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(79,195,247,0.2);
+  }
+  .pill-link:active { transform: translateY(0); }
+
+  /* Header CTA wrapper */
+  .header-cta-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 6px;
+  }
+
+  /* Inline section CTA */
+  .section-cta {
+    margin-top: 28px;
+    background: linear-gradient(135deg, rgba(168,237,204,0.05) 0%, rgba(79,195,247,0.03) 100%);
+    border: 1px solid rgba(168,237,204,0.2);
+    border-left: 3px solid var(--aurora);
+    border-radius: 0 4px 4px 0;
+    overflow: hidden;
+  }
+
+  .scta-header {
+    padding: 28px 32px 24px;
+  }
+
+  .scta-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .scta-heading .section-label {
+    margin-bottom: 0;
+  }
+
+  .scta-heading strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.15;
+  }
+
+  .scta-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .scta-divider {
+    height: 1px;
+    background: rgba(168, 237, 204, 0.12);
+    margin: 0 32px;
+  }
+
+  .scta-footer {
+    padding: 20px 32px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .scta-conditions { flex: 1; min-width: 240px; }
+
+  .scta-conditions-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+  }
+
+  .scta-notice {
+    margin-top: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+    color: rgba(240,192,96,0.9);
+    line-height: 1.5;
+    font-weight: 500;
+    background: rgba(240,192,96,0.06);
+    border: 1px solid rgba(240,192,96,0.3);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 3px 3px 0;
+    padding: 10px 14px;
+  }
+
+  /* Floating sticky bar */
+  .sticky-cta {
+    position: fixed;
+    bottom: 28px;
+    right: 32px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy-mid);
+    border: 1px solid rgba(168,237,204,0.3);
+    border-radius: 6px;
+    padding: 10px 10px 10px 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(168,237,204,0.1);
+    animation: floatIn 0.5s ease 0.8s both;
+  }
+
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .sticky-cta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--aurora);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .btn-submit.btn-sm {
+    font-size: 12px;
+    padding: 9px 18px;
+    gap: 7px;
+  }
+
+  /* Ghost / discrete variant — scrolls to section */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--aurora);
+    background: rgba(168, 237, 204, 0.06);
+    border: 1px solid rgba(168, 237, 204, 0.25);
+    border-radius: 4px;
+    padding: 9px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(168, 237, 204, 0.12);
+    border-color: rgba(168, 237, 204, 0.45);
+    color: #d8f8ec;
+  }
+
+  .btn-ghost.btn-ghost-sm {
+    font-size: 12px;
+    padding: 7px 14px;
+    gap: 6px;
+  }
+  .free-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .free-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--aurora);
+    background: rgba(168, 237, 204, 0.07);
+    border: 1px solid rgba(168, 237, 204, 0.2);
+    border-radius: 2px;
+    padding: 3px 9px;
+  }
+
+  @media (max-width: 520px) {
+    .sticky-cta { right: 16px; bottom: 16px; }
+    .sticky-cta-label { display: none; }
+  }
+  /* ── IONO-DIET FOOTER BLOCK ── */
+  .ionodiet-block {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .ionodiet-block { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .ionodiet-left {
+    text-align: center;
+    border-right: 1px solid var(--border);
+    padding-right: 40px;
+  }
+
+  @media (max-width: 640px) {
+    .ionodiet-left {
+    text-align: center; border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; padding-bottom: 20px; }
+  }
+
+  .ionodiet-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--electric-dim);
+    margin-bottom: 12px;
+  }
+
+  .ionodiet-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--aurora);
+    margin-bottom: 20px;
+  }
+
+  .ionodiet-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ionodiet-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    padding: 4px 10px;
+    border: 1px solid rgba(168,237,204,0.2);
+    border-radius: 2px;
+    color: var(--aurora);
+    background: rgba(168,237,204,0.04);
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .ionodiet-desc {
+    font-size: 13.5px;
+    color: #c0cfe8;
+    line-height: 1.75;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .ionodiet-pis {
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--aurora-dim);
+    background: rgba(168,237,204,0.03);
+    border-radius: 0 3px 3px 0;
+    text-align: center;
+  }
+
+  .ionodiet-pi-label {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--aurora-dim);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .ionodiet-pi-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ionodiet-pi {
+    font-size: 13px;
+    color: #d8e8f8;
+  }
+
+  .ionodiet-pi-inst {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .ionodiet-pi-sep {
+    color: var(--border-strong);
+  }
+
+  .ionodiet-partners {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ionodiet-partner-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .ionodiet-partners-list {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  .ionodiet-partner-link {
+    color: var(--electric);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .ionodiet-partner-link:hover {
+    color: var(--aurora);
+  }
+
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    background: rgba(240, 192, 96, 0.06);
+    border: 1px solid rgba(240, 192, 96, 0.3);
+    border-radius: 3px;
+    padding: 8px 16px;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .back-to-top:hover {
+    background: rgba(240, 192, 96, 0.13);
+    border-color: rgba(240, 192, 96, 0.55);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost.btn-ghost-deadline {
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .btn-ghost-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .btn-ghost-label {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-ghost-deadline-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: rgba(168, 237, 204, 0.6);
+    text-transform: uppercase;
+  }
+
+  .btn-ghost:hover .btn-ghost-deadline-text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .btn-ghost-free-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(168, 237, 204, 0.4);
+    text-transform: uppercase;
+    margin-top: 1px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(168, 237, 204, 0.12);
+  }
+
+  .btn-ghost:hover .btn-ghost-free-text {
+    color: rgba(255, 255, 255, 0.5);
+    border-top-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Header pair buttons */
+  .header-cta {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn-header-date,
+  .btn-header-submit,
+  .btn-header-attend {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 16px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 0.18s, border-color 0.18s;
+    align-self: flex-start;
+  }
+
+  .btn-header-date {
+    color: var(--electric);
+    background: rgba(79, 195, 247, 0.06);
+    border: 1px solid rgba(79, 195, 247, 0.25);
+  }
+
+  .btn-header-date:hover {
+    background: rgba(79, 195, 247, 0.12);
+    border-color: rgba(79, 195, 247, 0.45);
+  }
+
+  .btn-header-submit {
+    color: var(--aurora);
+    background: rgba(168, 237, 204, 0.06);
+    border: 1px solid rgba(168, 237, 204, 0.25);
+  }
+
+  .btn-header-submit:hover {
+    background: rgba(168, 237, 204, 0.12);
+    border-color: rgba(168, 237, 204, 0.45);
+  }
+
+  .btn-header-attend {
+    color: var(--lavender);
+    background: rgba(185, 168, 240, 0.06);
+    border: 1px solid rgba(185, 168, 240, 0.25);
+  }
+
+  .btn-header-attend:hover {
+    background: rgba(185, 168, 240, 0.12);
+    border-color: rgba(185, 168, 240, 0.45);
+  }
+
+  .btn-header-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .btn-header-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .btn-header-main {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-header-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    text-transform: uppercase;
+  }
+
+  /* PROGRAMA:CSS:INICIO — gerado por gerar_agenda.py; não edite à mão */
+  /* ── Agenda com apresentações ── */
+  html.abs-open { overflow: hidden; }
+
+  /* Coluna da esquerda: horário + selo (Talk / Invited / Coffee break / Round table), empilhados
+     e centralizados na vertical dentro do cartão. */
+  .slot { align-items: center; }
+  .slot:not(.break-slot):not(.round-slot) { padding-top: 11px; padding-bottom: 11px; }
+  .slot-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .slot-meta .slot-time { padding: 0; }
+  .slot-meta .type-badge {
+    display: inline-block; font-family: 'DM Mono', monospace; font-size: 8.5px; line-height: 1.5;
+    letter-spacing: 0.14em; text-transform: uppercase; padding: 1px 6px; border-radius: 2px;
+  }
+  .slot.break-slot, .slot.round-slot {
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px;
+  }
+  .slot.break-slot .slot-time, .slot.round-slot .slot-time { padding: 0; }
+  .slot.round-slot .slot-content .type-badge { margin-bottom: 0; }
+  .slot-content.tbd { color: var(--muted); }
+
+  .talk-link {
+    display: block; width: 100%; margin: 0; padding: 0; border: 0;
+    background: none; font: inherit; color: inherit; text-align: left; cursor: default;
+  }
+  button.talk-link { cursor: pointer; }
+  .talk-title {
+    display: block; font-size: 12.5px; font-weight: 500; line-height: 1.38;
+    color: #f0f6ff; transition: color 0.15s;
+  }
+  .talk-author { display: block; margin-top: 3px; font-size: 11.5px; line-height: 1.4; color: var(--muted); }
+  .talk-author em { font-style: italic; }
+  /* o "+" fica na linha do autor, que nunca é cortada (o título pode ser) */
+  button.talk-link .talk-author::after {
+    content: "\00a0\00a0+"; font-family: 'DM Mono', monospace; font-size: 11px; font-style: normal;
+    color: var(--electric-dim); transition: color 0.15s;
+  }
+  button.talk-link:hover .talk-title,
+  button.talk-link:focus-visible .talk-title,
+  button.talk-link:hover .talk-author::after,
+  button.talk-link:focus-visible .talk-author::after { color: var(--aurora); }
+  button.talk-link:focus-visible { outline: 2px solid var(--electric); outline-offset: 4px; border-radius: 2px; }
+
+  /* Altura fixa (3 colunas): todos os cartões de apresentação (oral e convidado) têm o mesmo tamanho,
+     então a mesma linha fica alinhada nos três dias. Para ajustar tudo de uma vez, mude --slot-h.
+     Título maior que o cartão é cortado com "…" (o título completo aparece ao clicar).
+     A coluna do horário é mais estreita aqui para sobrar mais largura para o título. */
+  @media (min-width: 861px) {
+    .agenda-days { --slot-h: 152px; }
+    .slot:not(.break-slot):not(.round-slot) {
+      box-sizing: border-box; height: var(--slot-h); overflow: hidden;
+      grid-template-columns: 78px 1fr; column-gap: 8px; padding-right: 12px;
+    }
+    .slot .talk-title {
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; line-clamp: 6; overflow: hidden;
+    }
+  }
+  /* telas largas só um pouco: colunas mais estreitas, título quebra em mais linhas */
+  @media (min-width: 861px) and (max-width: 999px) {
+    .agenda-days { --slot-h: 184px; }
+    .slot .talk-title { -webkit-line-clamp: 7; line-clamp: 7; }
+  }
+
+  .demo-banner {
+    margin: 22px 0 0; padding: 10px 16px; border: 1px dashed rgba(255, 107, 107, 0.6);
+    background: rgba(255, 107, 107, 0.07); color: #ff9c9c; border-radius: 3px;
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  /* Janela do abstract */
+  .abs-dialog {
+    margin: auto; padding: 0; width: min(720px, calc(100vw - 24px)); max-width: none;
+    max-height: min(88vh, 780px); overflow: hidden; color: var(--ink);
+    background: var(--navy-mid); border: 1px solid var(--border-strong);
+    border-top: 3px solid var(--electric); border-radius: 6px;
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.6);
+  }
+  .abs-dialog[data-tipo="invited"] { border-top-color: var(--gold); }
+  .abs-dialog::backdrop { background: rgba(4, 10, 24, 0.74); backdrop-filter: blur(3px); }
+  .abs-card { position: relative; max-height: min(88vh, 780px); overflow-y: auto; padding: 34px 40px 36px; }
+  .abs-close {
+    position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; padding: 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    color: var(--ink-soft); background: rgba(79, 195, 247, 0.06);
+    border: 1px solid var(--border-strong); border-radius: 50%;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .abs-close:hover, .abs-close:focus-visible { color: var(--navy); background: var(--aurora); border-color: var(--aurora); }
+  .abs-eyebrow {
+    margin: 0 44px 14px 0; font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.16em; line-height: 1.7; text-transform: uppercase; color: var(--electric);
+  }
+  .abs-dialog[data-tipo="invited"] .abs-eyebrow { color: var(--gold); }
+  .abs-title {
+    margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-size: 30px;
+    font-weight: 600; line-height: 1.2; color: var(--white);
+  }
+  .abs-authors { font-size: 15px; line-height: 1.6; color: #d8e8f8; }
+  .abs-affils { margin-top: 6px; font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+  .abs-authors sup, .abs-affils sup {
+    font-family: 'DM Mono', monospace; font-size: 0.68em; line-height: 0; color: var(--electric); margin-left: 1px;
+  }
+  .abs-affils sup { margin: 0 3px 0 0; }
+  .abs-presenter {
+    margin-top: 10px; font-family: 'DM Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--aurora);
+  }
+  .abs-label {
+    display: flex; align-items: center; gap: 12px; margin: 26px 0 14px;
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--electric-dim);
+  }
+  .abs-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .abs-body p { margin: 0 0 14px; font-size: 15px; line-height: 1.8; color: #c0cfe8; }
+  .abs-body p:last-child { margin-bottom: 0; }
+  @media (max-width: 560px) {
+    .abs-card { padding: 28px 22px; }
+    .abs-title { font-size: 24px; }
+  }
+  /* PROGRAMA:CSS:FIM */
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <a class="nav-logo" href="workshop_MNS4A.html">MN<span>S</span>4A</a>
+    <div class="nav-date">19–21 Oct<span class="nav-year"> 2026</span></div>
+  </div>
+  <a class="nav-btn nav-agenda" href="#agenda">Agenda</a>
+  <a class="nav-btn nav-posters" href="#posters">Posters</a>
+  <a class="nav-submit" href="#submit" title="Register as an attendee"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Attendee</a>
+  <button type="button" class="nav-toggle" aria-label="Open menu" title="Menu" aria-expanded="false" aria-controls="nav-links"><span class="nav-toggle-bars" aria-hidden="true"></span></button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#speakers">Speakers</a></li>
+    <li><a href="#about" class="active">About</a></li>
+    <li><a href="#sessions">Sessions</a></li>
+    <li><a href="#loc">LOC</a></li>
+    <li><a href="#committee">SOC</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="#visa">Visa</a></li>
+  </ul>
+</nav>
+
+<header>
+  <div class="header-inner">
+    <!-- LOGO -->
+    <div class="logo-wrap">
+      <img src="img/logo.jpeg" alt="MNS4A Workshop Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;logo-placeholder&quot;>LOGO<br>HERE</div>'">
+    </div>
+
+    <div class="header-text">
+      <div class="tag">International Scientific Workshop</div>
+      <div class="acronym">MN<span>S</span>4A</div>
+      <div class="workshop-title">Modeling · Networks · Scientific Instrumentation for Aeronomy</div>
+      <div class="workshop-subtitle">Implications to Natural Hazard Impacts on Aeronomy</div>
+
+      <div class="header-cta">
+        <a href="#agenda" class="btn-header-date">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9h18" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span class="btn-header-inner">
+            <span class="btn-header-eyebrow">Workshop</span>
+            <span class="btn-header-main">19 – 21 October 2026</span>
+            <span class="btn-header-sub">INPE · São José dos Campos</span>
+          </span>
+        </a>
+        <a href="#submit" class="btn-header-attend">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="btn-header-inner">
+            <span class="btn-header-eyebrow">Not Presenting?</span>
+            <span class="btn-header-main">Register as an Attendee</span>
+            <span class="btn-header-sub">Free · No Abstract Needed</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="meta-row" style="margin-top:20px;">
+        <span class="meta-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>FAPESP</span>
+        <span class="meta-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>IONO-DIET</span>
+        <span class="meta-chip"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/></svg>International Forum</span>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section id="speakers">
+    <div class="section-label">Invited Speakers &amp; Keynotes</div>
+    <h2>Leading voices and <em>keynotes</em></h2>
+    <p>
+      MNS4A opens with an internationally recognized lineup — CNRS research directors, institute leaders, and the pioneers behind the very methods now used worldwide to detect earthquakes, tsunamis, and space weather from GNSS and ionospheric data. Their work sets the tone for three days of discussion on modeling, networks, and instrumentation in aeronomy and its links to natural hazards.
+    </p>
+
+    <div class="committee-status confirmed">
+      <span class="pulse pulse-green"></span>
+      <span>Confirmed</span>
+    </div>
+
+    <div class="speakers-grid">
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/aislan-greca.jpg" alt="Aislan Greca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">AG</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Aislan Greca</div>
+          <div class="speaker-field">Data Science &amp; AI</div>
+          <div class="speaker-affil">Petrobras</div>
+          <div class="speaker-bio">Data scientist and AI lead at Petrobras and professor at Universidade Petrobras, bridging communication, data governance and organizational transformation.</div>
+          <a href="https://www.linkedin.com/in/aislan-greca-comunicacao/" target="_blank" rel="noopener" class="speaker-source">Source: LinkedIn ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/boris-maletckii.jpg" alt="Boris Maletckii" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">BM</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Boris Maletckii</div>
+          <div class="speaker-field">Ionospheric Seismology</div>
+          <div class="speaker-affil">University of Tokyo, Japan</div>
+          <div class="speaker-bio">Develops near-real-time methods to detect ionospheric signatures of earthquakes, tsunamis and volcanic eruptions, including the 2022 Hunga Tonga eruption.</div>
+          <a href="https://scholar.google.com/citations?user=uL2aczIAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" rel="noopener" class="speaker-source">Source: Google Scholar ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/cassiano-bortolozo.jpg" alt="Cassiano Antonio Bortolozo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">CB</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Cassiano Antonio Bortolozo</div>
+          <div class="speaker-field">Natural Disasters</div>
+          <div class="speaker-affil">USP</div>
+          <div class="speaker-bio">Researcher at Cemaden and USP's IAG, combining geophysical surveys with geotechnical data to map landslide risk in Brazilian hillside communities.</div>
+          <a href="https://bv.fapesp.br/en/pesquisador/65844/URL" target="_blank" rel="noopener" class="speaker-source">Source: FAPESP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/elvira-astafyeva.jpg" alt="Elvira Astafyeva" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">EA</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Elvira Astafyeva</div>
+          <div class="speaker-field">Ionospheric Seismology</div>
+          <div class="speaker-affil">IPGP, France</div>
+          <div class="speaker-bio">CNRS Research Director at IPGP and principal investigator of IONO-DIET, pioneering the use of ionospheric GNSS data to detect earthquakes and tsunamis in near-real time.</div>
+          <a href="https://www.ipgp.fr/~astafyeva/" target="_blank" rel="noopener" class="speaker-source">Source: IPGP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/george-franca.jpg" alt="George Sand Leão Araújo de França" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">GF</div>
+        <div class="speaker-info">
+          <div class="speaker-name">George Sand Leão Araújo de França</div>
+          <div class="speaker-field">Seismology</div>
+          <div class="speaker-affil">USP</div>
+          <div class="speaker-bio">Seismologist trained at USP's IAG, studying Brazil's crustal structure and natural and reservoir-triggered seismicity.</div>
+          <a href="https://www.iag.usp.br/en/pos-graduacao/geofisica" target="_blank" rel="noopener" class="speaker-source">Source: IAG-USP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/joao-monico.jpg" alt="João Francisco Galera Monico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">JM</div>
+        <div class="speaker-info">
+          <div class="speaker-name">João Francisco Galera Monico</div>
+          <div class="speaker-field">Aeronomy</div>
+          <div class="speaker-affil">UNESP</div>
+          <div class="speaker-bio">Professor at UNESP Presidente Prudente and leader of the GEGE research group, a longtime reference in GNSS geodesy and ionosphere monitoring in Brazil.</div>
+          <a href="https://bv.fapesp.br/en/pesquisador/935/URL" target="_blank" rel="noopener" class="speaker-source">Source: FAPESP ↗</a>
+          <div class="speaker-badge onsite"><span class="dot"></span>On-site</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/lucie-rolland.jpg" alt="Lucie Rolland" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">LR</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Lucie Rolland</div>
+          <div class="speaker-field">Ionospheric Seismology</div>
+          <div class="speaker-affil">GeoAzur, France</div>
+          <div class="speaker-bio">Researcher at Géoazur (CNRS / Côte d'Azur Observatory), developing coseismic ionospheric signals to speed up tsunami early-warning systems.</div>
+          <a href="https://cv.archives-ouvertes.fr/lucie-rolland" target="_blank" rel="noopener" class="speaker-source">Source: HAL/CNRS ↗</a>
+          <div class="speaker-badge online"><span class="dot"></span>Online</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/michela-ravanelli.jpg" alt="Michela Ravanelli" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">MR</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Michela Ravanelli</div>
+          <div class="speaker-field">Geodesy and Geomatics</div>
+          <div class="speaker-affil">Sapienza University of Rome, Italy</div>
+          <div class="speaker-bio">Geodesist at Sapienza University of Rome and creator of the GNSS Total Variometric Approach for real-time earthquake and tsunami detection.</div>
+          <a href="https://blogs.egu.eu/divisions/g/?p=4413" target="_blank" rel="noopener" class="speaker-source">Source: EGU ↗</a>
+          <div class="speaker-badge online"><span class="dot"></span>Online</div>
+        </div>
+      </div>
+
+      <div class="speaker-card">
+        <img class="speaker-photo" src="img/speakers/maria-molina.jpg" alt="Maria Graciela Molina" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="speaker-avatar">MM</div>
+        <div class="speaker-info">
+          <div class="speaker-name">Maria Graciela Molina</div>
+          <div class="speaker-field">Aeronomy</div>
+          <div class="speaker-affil">Universidad Nacional de Tucumán, Argentina</div>
+          <div class="speaker-bio">Leads the Tucumán Space Weather Center and chairs the Latin American Association of Space Geophysics (ALAGE), applying machine learning to ionospheric forecasting.</div>
+          <a href="https://bicyt.conicet.gov.ar/fichas/persona/en/335012" target="_blank" rel="noopener" class="speaker-source">Source: CONICET ↗</a>
+          <div class="speaker-badge online"><span class="dot"></span>Online</div>
+        </div>
+      </div>
+
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <section id="about">
+    <div class="section-label">About the Workshop</div>
+    <h2>A space where <em>science</em> meets technology</h2>
+    <p>
+      MNS4A is an international forum for geophysicists and technologists to discuss the most pressing challenges at the intersection of atmospheric modeling, observational networks, and scientific instrumentation — bridging fundamental science with real-world applications.
+    </p>
+    <div class="objective-box">
+      <p>
+        The workshop facilitates discussion on advancing real-time data acquisition, modeling techniques, and measurement systems — including applications that address both societal challenges and technological demands from the perspective of aeronomy and the atmosphere-ionosphere system.
+      </p>
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <section>
+    <div class="section-label">Scientific Focus</div>
+    <h2>Natural hazards &amp; the <em>ionosphere-atmosphere</em> system</h2>
+    <p>
+      The primary scientific focus is on presenting advances and challenges in modeling and measuring the variability of the atmosphere-ionosphere system, with special emphasis on natural hazards and space weather phenomena.
+    </p>
+
+    <div class="communities">
+      <div class="community-pill"><div class="icon" style="background:#4fc3f7"></div><span>Aeronomy</span></div>
+      <div class="community-pill"><div class="icon" style="background:#a8edcc"></div><span>Seismology</span></div>
+      <div class="community-pill"><div class="icon" style="background:#f0c060"></div><span>Meteorology</span></div>
+      <div class="community-pill"><div class="icon" style="background:#cf9fff"></div><span>Space Weather</span></div>
+      <div class="community-pill"><div class="icon" style="background:#f09575"></div><span>Instrumentation</span></div>
+      <div class="community-pill"><div class="icon" style="background:#6da547"></div><span>Networks</span></div>
+      <div class="community-pill"><div class="icon" style="background:#943788"></div><span>Modeling</span></div>
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <section id="sessions">
+    <div class="section-label">Workshop Sessions</div>
+    <h2>Session <em>structure</em></h2>
+    <p>The workshop is organized into three core thematic sessions.</p>
+    <div class="sessions-grid">
+
+      <!-- SESSION 1: MODELING -->
+      <div class="session-card">
+        <div class="session-num">SESSION 01 · MODELING</div>
+        <h3>Modeling of Atmosphere and Ionosphere Variabilities</h3>
+        <p>
+        This session welcomes contributions on modeling approaches for forecasting and hazard characterization, including emerging techniques such as machine learning and data-driven methods, data assimilation, and data–model integration. Topics also include strategies to reduce observational gaps through optimized instrument deployment and expanded monitoring networks, as well as multidisciplinary integration of atmospheric, ionospheric, seismic, and geodetic observations. Recent developments in distributed sensing technologies, GNSS monitoring, and multi-sensor approaches have opened new opportunities for understanding the impacts of natural hazards across different geophysical domains. Modeling plays a central role in aeronomy because it enables the quantitative investigation of physical mechanisms that cannot be isolated from observations alone, linking lithospheric and meteorological conditions, neutral dynamics, ionospheric electrodynamics, plasma transport, composition, and conductivity across the thermosphere–ionosphere system. Recent advances have improved the representation of key aeronomic phenomena such as Traveling Ionospheric Disturbances, Sq current systems, the equatorial electrojet, vertical E × B drifts, plasma density structures, sporadic E layers, and plasma irregularities, leading to a better understanding of their variability with local time, season, solar flux, geomagnetic activity, and longitude, as well as space weather impacts on technological systems. Continued progress, however, depends on stronger observational constraints and further development of physics-based, empirical, machine learning, and data-driven models, particularly through studies integrating ground-based and satellite observations, evaluating model performance, improving forecast capabilities, and investigating sensitivities to winds, electric fields, conductivities, lower atmospheric forcing, and geomagnetic disturbances
+        </p>
+
+        <div class="session-chairs">
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Jonas Rodrigues Souza <a href="https://orcid.org/0000-0001-7725-7785" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Sophia Rodrigues Laranja <a href="https://orcid.org/0000-0002-9984-3723" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Saúl Alejandro Sánchez Juarez <a href="https://orcid.org/0000-0002-2172-8290" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Laysa Cristina Araujo Resende <a href="https://orcid.org/0000-0001-6968-6184" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+        </div>
+
+        <div class="topics">
+          <span class="topic-tag">Physics-based modeling</span>
+          <span class="topic-tag">Empirical models</span>
+          <span class="topic-tag">Data-driven methods</span>
+          <span class="topic-tag">Data assimilation</span>
+          <span class="topic-tag">TIDs &amp; natural hazards</span>
+          <span class="topic-tag">Space weather</span>
+          <span class="topic-tag">Forecast capability</span>
+        </div>
+      </div>
+
+      <!-- SESSION 2: NETWORKS -->
+      <div class="session-card aurora-card">
+        <div class="session-num">SESSION 02 · NETWORKS</div>
+        <h3>Scientific Networks for Atmosphere and Ionospheric Applications</h3>
+        <p>
+          We invite contributions related to open scientific questions in aeronomy, including applications of multi-instrument observational networks for studies of atmosphere-ionosphere coupling, space weather, and geospace variability. Advances in aeronomic research have been driven by integrated ground-based and space-based observational networks, enabling coordinated measurements across multiple spatial and temporal scales and improving our understanding of atmospheric and ionospheric processes. Ground-based instruments, including seismometers, Fabry-Perot interferometers, radars, ionosondes, GNSS receivers, magnetometers, All-sky imagers, and riometers, provide continuous high-resolution observations, while satellite missions offer global coverage and synoptic monitoring of large-scale phenomena. Despite significant progress, major scientific challenges remain due to gaps in the geographic distribution of observational infrastructure, and real-time data acquisition,  limiting our understanding of spatial-temporal variability and atmosphere-ionosphere coupling. This session will address key open questions in aeronomy, emphasizing observational gaps and international efforts to expand and coordinate instrumentation networks.
+        </p>
+
+        <div class="session-chairs">
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Sony Su Chen <a href="https://orcid.org/0000-0001-6307-7484" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Prosper Kwamla Nyassor <a href="https://orcid.org/0000-0001-8484-6334" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Ângela Machado dos Santos <a href="https://orcid.org/0000-0002-3751-6030" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Rogério Hisashi Honda <a href="https://orcid.org/0000-0003-0083-5115" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+        </div>
+
+        <div class="topics">
+          <span class="topic-tag aurora">Ground-based networks</span>
+          <span class="topic-tag aurora">Satellite observations</span>
+          <span class="topic-tag aurora">GNSS &amp; GPS arrays</span>
+          <span class="topic-tag aurora">Magnetometers</span>
+          <span class="topic-tag aurora">Ionosondes</span>
+          <span class="topic-tag aurora">Observational gaps</span>
+          <span class="topic-tag aurora">Global coverage</span>
+        </div>
+      </div>
+
+      <!-- SESSION 3: SCIENTIFIC INSTRUMENTATION -->
+      <div class="session-card gold-card full">
+        <div class="session-num">SESSION 03 · INSTRUMENTATION</div>
+        <h3>Scientific Instrumentation and Challenges</h3>
+        <p>
+          This session welcomes contributions on instrument development, acquisition, operation, maintenance, dataflow coordination, low-cost alternatives, instrument intercomparison, nowcasting, data assimilation, novel observational strategies, advances in data acquisition and analysis, and coordinated observations. The advancement of scientific instruments is essential for observing atmospheric and space phenomena across different spatiotemporal scales and for understanding the coupling among the lithosphere, atmosphere, ionosphere, and space environment. Ground-based and space-borne instruments, including rockets and satellites, provide complementary observations that support studies of atmospheric and ionospheric variability and their impacts on technological infrastructure and socioeconomic activities. Ground-based instruments offer continuous, long-term, and high-temporal-resolution monitoring, although with limited spatial coverage. Space-borne instruments provide broader spatial coverage and a global perspective, generally with lower temporal resolution. Both passive and active techniques are widely used, but they may face limitations related to weather conditions, environmental interference, operational complexity, technical constraints, and financial costs.
+        </p>
+
+        <div class="session-chairs">
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Rodolfo de Jesus <a href="https://orcid.org/0000-0003-3709-6774" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Chair</span><span class="chair-name">Dr. Vinícius Deggeroni <a href="https://orcid.org/0000-0002-0725-6055" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Vânia Fátima Andrioli <a href="https://orcid.org/0000-0001-9065-2122" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+          <div class="chair-row"><span class="chair-label">Co-chair</span><span class="chair-name">Dr. Oluwasegun Michael Adebayo <a href="https://orcid.org/0000-0001-7717-6256" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="affil">— INPE</span></span></div>
+        </div>
+
+        <div class="topics">
+          <span class="topic-tag gold">Instrument development</span>
+          <span class="topic-tag gold">Low-cost solutions</span>
+          <span class="topic-tag gold">Signal processing</span>
+          <span class="topic-tag gold">Passive &amp; active techniques</span>
+          <span class="topic-tag gold">Instrument intercomparison</span>
+          <span class="topic-tag gold">Data assimilation</span>
+          <span class="topic-tag gold">Nowcasting</span>
+          <span class="topic-tag gold">Space-borne platforms</span>
+        </div>
+      </div>
+
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <section id="agenda">
+    <div class="section-label">Program &amp; Schedule</div>
+    <h2>Three-day <em>schedule</em> <span class="date-highlight">19–21 October</span></h2>
+    <p>
+      The workshop spans three full days of invited talks, contributed presentations, and round-table discussions. Each day is dedicated to one of the three scientific sessions — Day 1: Modeling, Day 2: Networks, Day 3: Instrumentation — mirroring the sessions described above. <!-- PROGRAMA:INTRO:INICIO -->Titles and first authors are listed below; click a title to read its abstract. Slots still marked TBD will be filled as the program is finalised.<!-- PROGRAMA:INTRO:FIM -->
+    </p>
+
+    <div class="agenda-days">
+
+      <!-- DAY 1 -->
+      <div class="agenda-day">
+        <div class="day-header">
+          <div class="day-num">Day <em>01</em></div>
+          <div class="day-date">19 October</div>
+          <div class="day-theme">Modeling</div>
+          <div class="day-chairs">
+            <div class="chair-group">
+              <span class="chair-role">Chairs</span>
+              <ul class="chair-list">
+                <li>Jonas R. Souza</li>
+                <li>Sophia R. Laranja</li>
+              </ul>
+            </div>
+            <div class="chair-group">
+              <span class="chair-role">Co-chairs</span>
+              <ul class="chair-list">
+                <li>Saúl A. Sánchez Juarez</li>
+                <li>Laysa C. Araujo Resende</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slots">
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:50–11:10</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:00–14:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">15:40–16:20</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div class="agenda-day">
+        <div class="day-header">
+          <div class="day-num">Day <em>02</em></div>
+          <div class="day-date">20 October</div>
+          <div class="day-theme">Networks</div>
+          <div class="day-chairs">
+            <div class="chair-group">
+              <span class="chair-role">Chairs</span>
+              <ul class="chair-list">
+                <li>Sony S. Chen</li>
+                <li>Prosper K. Nyassor</li>
+              </ul>
+            </div>
+            <div class="chair-group">
+              <span class="chair-role">Co-chairs</span>
+              <ul class="chair-list">
+                <li>Ângela Machado dos Santos</li>
+                <li>Rogério H. Honda</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slots">
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-185236324" title="Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris</span><span class="talk-author">Alexandre Alvares Pimenta</span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260918-084719684" title="Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption</span><span class="talk-author">Vania F Andrioli <em>et al.</em></span></button></span></div>
+          <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">10:50–11:10</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260818-105547803" title="Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network</span><span class="talk-author">Gabriel Brando <em>et al.</em></span></button></span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260829-132411672" title="Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation</span><span class="talk-author">Olufemi L. Ogunmola <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">14:00–14:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260829-233025150" title="Multi-Instrument Ground Networks for Equatorial Aeronomy — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Multi-Instrument Ground Networks for Equatorial Aeronomy</span><span class="talk-author">D. Scipion <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-141725462" title="The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion</span><span class="talk-author">Ângela Machado dos Santos <em>et al.</em></span></button></span></div>
+          <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260930-231819644" title="NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection</span><span class="talk-author">S. A. Sanchez <em>et al.</em></span></button></span></div>
+          <div class="slot has-talk"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content"><button type="button" class="talk-link" data-id="T20260712-185417959" title="Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector — click to read the abstract" aria-haspopup="dialog"><span class="talk-title">Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector</span><span class="talk-author">Carolina de Sousa do Carmo <em>et al.</em></span></button></span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">15:40–16:20</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div class="agenda-day">
+        <div class="day-header">
+          <div class="day-num">Day <em>03</em></div>
+          <div class="day-date">21 October</div>
+          <div class="day-theme">Instrumentation</div>
+          <div class="day-chairs">
+            <div class="chair-group">
+              <span class="chair-role">Chairs</span>
+              <ul class="chair-list">
+                <li>Rodolfo de Jesus</li>
+                <li>Vinícius Deggeroni</li>
+              </ul>
+            </div>
+            <div class="chair-group">
+              <span class="chair-role">Co-chairs</span>
+              <ul class="chair-list">
+                <li>Vânia F. Andrioli</li>
+                <li>Oluwasegun M. Adebayo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slots">
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">09:00–09:40</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">09:40–10:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:00–10:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">10:20–10:50</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">10:50–11:10</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">11:10–11:50</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">11:50–13:40</span><span class="slot-content">Lunch</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">13:40–14:00</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:00–14:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">14:20–14:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">14:40–15:00</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:00–15:20</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot"><span class="slot-meta"><span class="slot-time">15:20–15:40</span><span class="type-badge talk">Talk</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot invited-slot"><span class="slot-meta"><span class="slot-time">15:40–16:20</span><span class="type-badge invited">Invited</span></span><span class="slot-content tbd">TBD</span></div>
+          <div class="slot break-slot"><span class="slot-time">16:20–16:40</span><span class="slot-content">Coffee break</span></div>
+          <div class="slot round-slot"><span class="slot-time">16:40–17:30</span><span class="slot-content"><span class="type-badge round">Round table</span></span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- POSTER SESSION -->
+    <div class="poster-session" id="posters">
+      <h3>Poster <em>session</em></h3>
+      <p>
+        Each day includes a poster session, following the scientific theme of the day. Posters are numbered P01 to P24; titles and authors will be listed here as the program is finalised.
+      </p>
+      <div class="poster-days">
+      <!-- POSTERS DAY 1 -->
+      <div class="poster-day">
+        <div class="poster-day-head">
+          <div class="poster-day-top"><span class="poster-day-num">Day <em>01</em></span><span class="poster-day-date">19 October</span></div>
+          <div class="poster-day-theme">Modeling</div>
+        </div>
+        <div class="poster-list">
+          <div class="poster-card" data-poster="P01"><span class="poster-no">P01</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P02"><span class="poster-no">P02</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P03"><span class="poster-no">P03</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P04"><span class="poster-no">P04</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P05"><span class="poster-no">P05</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P06"><span class="poster-no">P06</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P07"><span class="poster-no">P07</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P08"><span class="poster-no">P08</span><span class="poster-content tbd">TBD</span></div>
+        </div>
+      </div>
+
+      <!-- POSTERS DAY 2 -->
+      <div class="poster-day">
+        <div class="poster-day-head">
+          <div class="poster-day-top"><span class="poster-day-num">Day <em>02</em></span><span class="poster-day-date">20 October</span></div>
+          <div class="poster-day-theme">Networks</div>
+        </div>
+        <div class="poster-list">
+          <div class="poster-card" data-poster="P09"><span class="poster-no">P09</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P10"><span class="poster-no">P10</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P11"><span class="poster-no">P11</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P12"><span class="poster-no">P12</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P13"><span class="poster-no">P13</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P14"><span class="poster-no">P14</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P15"><span class="poster-no">P15</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P16"><span class="poster-no">P16</span><span class="poster-content tbd">TBD</span></div>
+        </div>
+      </div>
+
+      <!-- POSTERS DAY 3 -->
+      <div class="poster-day">
+        <div class="poster-day-head">
+          <div class="poster-day-top"><span class="poster-day-num">Day <em>03</em></span><span class="poster-day-date">21 October</span></div>
+          <div class="poster-day-theme">Instrumentation</div>
+        </div>
+        <div class="poster-list">
+          <div class="poster-card" data-poster="P17"><span class="poster-no">P17</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P18"><span class="poster-no">P18</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P19"><span class="poster-no">P19</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P20"><span class="poster-no">P20</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P21"><span class="poster-no">P21</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P22"><span class="poster-no">P22</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P23"><span class="poster-no">P23</span><span class="poster-content tbd">TBD</span></div>
+          <div class="poster-card" data-poster="P24"><span class="poster-no">P24</span><span class="poster-content tbd">TBD</span></div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <section id="loc">
+    <div class="section-label">Local Organizing Committee (LOC)</div>
+    <h2>Local organizing <em>committee</em></h2>
+    <p>
+      The Local Organizing Committee is responsible for the logistical and operational coordination of MNS4A, hosted at INPE — São José dos Campos.
+    </p>
+
+    <div class="committee-status confirmed"> 
+      <span class="pulse pulse-green"></span>
+      <span>Confirmed</span>
+    </div>
+
+    <div class="committee-grid">
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Esfhan Alam Kherani <a href="https://orcid.org/0000-0003-0182-2252" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Clezio Denardini <a href="https://orcid.org/0000-0002-3624-2461" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Ângela Machado dos Santos <a href="https://orcid.org/0000-0002-3751-6030" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Laysa Cristina Araujo Resende <a href="https://orcid.org/0000-0001-6968-6184" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Oluwasegun Michael Adebayo <a href="https://orcid.org/0000-0001-7717-6256" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Prosper Kwamla Nyassor <a href="https://orcid.org/0000-0001-8484-6334" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Rodolfo de Jesus <a href="https://orcid.org/0000-0003-3709-6774" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Rogério Hisashi Honda <a href="https://orcid.org/0000-0003-0083-5115" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Saúl Alejandro Sánchez Juarez <a href="https://orcid.org/0000-0002-2172-8290" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Sony Su Chen <a href="https://orcid.org/0000-0001-6307-7484" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Sophia Rodrigues Laranja <a href="https://orcid.org/0000-0002-9984-3723" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Vânia Fátima Andrioli <a href="https://orcid.org/0000-0001-9065-2122" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Vinícius Deggeroni <a href="https://orcid.org/0000-0002-0725-6055" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member loc-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Eliah Fernanda de Maria de São Sabbas Tavares <a href="https://orcid.org/0000-0002-4381-7446" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <section id="committee">
+    <div class="section-label">Scientific Organizing Committee (SOC)</div>
+    <h2>Scientific organizing <em>committee</em></h2>
+    <p>
+      The Scientific Organizing Committee (SOC) brings together researchers from Brazil and abroad working across aeronomy, ionospheric physics, and observational networks.
+    </p>
+
+    <div class="committee-status confirmed"> 
+      <span class="pulse pulse-green"></span>
+      <span>Confirmed</span>
+    </div>
+
+    <div class="committee-grid">
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Esfhan Alam Kherani <a href="https://orcid.org/0000-0003-0182-2252" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Alexandre Alvares Pimenta <a href="https://orcid.org/0000-0001-7263-0368" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Alison de Oliveira Moraes <a href="https://orcid.org/0000-0002-6493-1694" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IAE / UNITAL</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Boris Maletckii <a href="https://orcid.org/0000-0001-7435-3069" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UTokyo, Japan</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Danny Scipión <a href="https://orcid.org/0000-0002-6807-0238" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IGP, Peru</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Elvira Astafyeva <a href="https://orcid.org/0000-0002-3819-3835" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IPGP, France</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Francisco Carlos de Meneses Jr. <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">IFPR</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. George Sand Leão Araújo de França <a href="https://orcid.org/0000-0002-2694-5868" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">USP</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Giorgio Picanço <a href="https://orcid.org/0000-0003-3926-396X" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UMass Lowell, USA</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Igo Paulino da Silva <a href="https://orcid.org/0000-0001-9560-1842" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UFCG</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Inez Staciarini Batista <a href="https://orcid.org/0000-0001-5385-4112" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. José Henrique Fernandez <a href="https://orcid.org/0000-0002-7993-2972" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UFRN</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Juliano Moro <a href="https://orcid.org/0000-0003-4078-2222" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">INPE</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Marco Antonio Ridenti <a href="https://orcid.org/0000-0001-6483-5128" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">ITA</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Marco Milla <a href="https://orcid.org/0000-0001-9067-863X" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">PUC, Peru</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Maurício José Alves Bolzam <a href="https://orcid.org/0000-0002-6037-5483" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UFJ</span></div></div>
+      <div class="committee-member"><div class="marker marker-green"></div><div class="member-info"><span class="member-name">Dr. Virginia Klausner de Oliveira <a href="https://orcid.org/0000-0003-0250-5574" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a></span><span class="member-affil">UNIVAP</span></div></div>
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <section>
+    <div class="section-label">Format &amp; Participation</div>
+    <h2>An <em>inclusive</em> scientific forum</h2>
+    <p>
+      MNS4A is designed to be a forum for researchers at all career stages. The organizing committee is committed to including early-career researchers in oral presentations, alongside invited senior scientists. The tone of the workshop is collaborative and open — this is not a workshop for the select few, but for anyone genuinely working to solve problems at the intersection of science, instrumentation, and societal need.
+    </p>
+    <div class="objective-box">
+      <p>
+        Early-career researchers are especially encouraged to participate and present their work. The scientific committee will actively seek to include emerging voices in oral sessions, recognizing that fresh perspectives are essential to the progress of the field.
+      </p>
+    </div>
+    <p style="margin-top: 20px;">
+      Contributions are welcome in oral and poster format. The scientific committee will evaluate submissions and provide feedback on texts before final structuring of the program.
+    </p>
+
+    <div class="section-cta" id="submit" style="background:linear-gradient(135deg,rgba(79,195,247,0.05) 0%,rgba(168,237,204,0.05) 100%); border-color:rgba(168,237,204,0.2); border-left-color:var(--aurora);">
+
+      <!-- Attendee header -->
+      <div style="border-bottom:1px solid rgba(168,237,204,0.1);">
+
+        <div class="scta-header">
+          <div class="scta-heading">
+            <span class="section-label" style="margin-bottom:0; color:var(--electric-dim);">Attending Without Presenting</span>
+            <strong>Want to join as an observer?</strong>
+          </div>
+          <p class="scta-desc">Researchers interested in attending MNS4A without submitting a contribution are warmly welcome.</p>
+        </div>
+
+      </div>
+
+      <!-- Attendee button, centered -->
+      <div style="display:flex; gap:16px; padding:20px 32px; border-bottom:1px solid rgba(168,237,204,0.1); flex-wrap:wrap; justify-content:center;">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKAtCOdjfY-IBl_jjMFhvDw8NO7OuVSeAAXc0sJjZcthdwlA/viewform?usp=dialog" class="btn-submit" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#7ed320 0%,#d4f542 100%); box-shadow:0 0 0 1px rgba(196,240,40,0.6),0 4px 20px rgba(160,220,30,0.45),0 0 50px rgba(196,240,40,0.25);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 2v4M12 2v4M17 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 12h10M7 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Attendee Only
+        </a>
+      </div>
+
+      <!-- Shared conditions footer -->
+      <div style="padding:18px 32px;">
+        <span class="scta-conditions-label">Participation conditions</span>
+        <div class="free-badge-row" style="margin-top:8px;">
+          <span class="free-badge">✓ No registration fee</span>
+          <span class="free-badge">✓ Open to all career stages</span>
+        </div>
+        <p class="scta-notice">
+          ⚠ MNS4A is unfortunately unable to provide financial support for workshop attendance expenses. If you have received written confirmation, please disregard this notice.
+        </p>
+      </div>
+
+    </div>
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════ VENUE -->
+  <section id="venue">
+    <div class="section-label">Venue &amp; Travel</div>
+    <h2 style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+      Getting to <em>São José dos Campos</em>
+      <a href="https://maps.app.goo.gl/jy4VyPabTZRqsths6" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:7px; font-family:'DM Mono',monospace; font-size:11px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:#1a1a1a; background:linear-gradient(135deg,#4285f4,#34a853,#fbbc05,#ea4335); padding:1px; border-radius:4px; text-decoration:none; flex-shrink:0;">
+        <span style="display:inline-flex; align-items:center; gap:6px; background:var(--navy); border-radius:3px; padding:5px 12px; color:var(--white);">
+          <!-- Google Maps pin icon -->
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#ea4335"/>
+            <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+          </svg>
+          <span style="background:linear-gradient(90deg,#4285f4,#34a853,#fbbc05,#ea4335); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-size:11px;">View on Google Maps</span>
+        </span>
+      </a>
+    </h2>
+    <p>
+      The workshop takes place at INPE — National Institute for Space Research, located in São José dos Campos, SP, Brazil. The closest international gateway is Guarulhos International Airport (GRU), approximately 70 km away. Participants are responsible for arranging their own travel to the venue.
+    </p>
+
+    <!-- TRANSPORT TABLE -->
+    <div style="border:1px solid var(--border); border-radius:4px; margin-top:28px; overflow:hidden;">
+      <div style="padding:16px 24px; background:rgba(79,195,247,0.04); border-bottom:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--electric-dim);">From GRU Airport → São José dos Campos</div>
+      </div>
+      <div class="venue-cols" style="display:grid; grid-template-columns:1fr 1fr;">
+        <div style="padding:20px 24px; border-right:1px solid var(--border);">
+          <div style="font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; color:var(--white); margin-bottom:4px;">Direct Bus</div>
+          <div style="font-size:13px; color:var(--muted); line-height:1.6;">Intercity bus from GRU directly to São José dos Campos, approximately 1 hour 30 minutes.</div>
+          <div style="margin-top:10px; display:flex; gap:6px;">
+            <span class="topic-tag" style="font-size:10px;">~1h 30 min</span>
+            <span class="topic-tag aurora" style="font-size:10px;">GRU → SJC</span>
+          </div>
+        </div>
+        <div style="padding:20px 24px;">
+          <div style="font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; color:var(--white); margin-bottom:4px;">Taxi / Rideshare</div>
+          <div style="font-size:13px; color:var(--muted); line-height:1.6;">Taxis and rideshare apps available at the airport for a direct transfer. Journey time varies with traffic conditions.</div>
+          <div style="margin-top:10px; display:flex; gap:6px;">
+            <span class="topic-tag" style="font-size:10px;">Door-to-door</span>
+            <span class="topic-tag gold" style="font-size:10px;">~1h – 1h 30 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCOMMODATION TABLE -->
+    <h3 style="margin-top:40px; margin-bottom:6px; font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--white);">Accommodation <em style="font-style:italic; color:var(--ink-soft);">near the venue</em></h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.7;">MNS4A is unfortunately unable to cover accommodation or transport expenses. If you have received written confirmation stating otherwise, please disregard this notice.</p>
+
+    <div style="border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+      <div style="padding:16px 24px; background:rgba(168,237,204,0.04); border-bottom:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--aurora-dim);">Hotels near the conference site</div>
+      </div>
+      <div class="venue-cols" style="display:grid; grid-template-columns:1fr 1fr;">
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Ema Palace Hotel</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Rua Jorge Barbosa Moreira, 70</div>
+          <div style="display:flex; gap:6px;">
+            <a href="https://www.hotelemapalace.com.br/en/" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551239255555" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 3925-5555</a>
+          </div>
+        </div>
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Hotel Nacional Inn SJC</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Av. Deputado Benedito Matarazzo, 9009</div>
+          <div style="display:flex; gap:6px;">
+            <a href="https://www.nacionalinn.com.br/hotel-nacionalinn-sjc" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551239470000" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 3947-0000</a>
+          </div>
+        </div>
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Ibis Colinas</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Av. Dr. Jorge Zarur, 81 Torre I</div>
+          <div style="display:flex; gap:6px;">
+            <a href="https://www.accorhotels.com/gb/hotel-6035-ibis-sao-jose-dos-campos-colinas/index.shtml" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551239042400" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 3904-2400</a>
+          </div>
+        </div>
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Mercure São José dos Campos</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Av. Dr. Jorge Zarur, 81 Tower II</div>
+          <div style="display:flex; gap:6px;">
+            <a href="https://www.accorhotels.com/gb/hotel-5168-mercure-sao-jose-dos-campos-hotel/index.shtml" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551239042300" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 3904-2300</a>
+          </div>
+        </div>
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Astro Hotel</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Av. Dr. Nelson D'Àvila, 933</div>
+          <div style="display:flex; gap:6px;">
+            <a href="http://www.astrohotel.com.br" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551239416999" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 3941-6999</a>
+          </div>
+        </div>
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Dan Inn São José dos Campos</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Av. João Guilhermino, 287</div>
+          <div style="display:flex; gap:6px;">
+            <a href="https://www.nacionalinn.com.br/hoteis/hotel-dan-inn-sao-jose-dos-campos" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551239418588" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 3941-8588</a>
+          </div>
+        </div>
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Novotel São José dos Campos</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Av. Dr. Nelson D'Àvila, 2200</div>
+          <div style="display:flex; gap:6px;">
+            <a href="http://www.novotel.com/gb/hotel-0472-novotel-sao-jose-dos-campos/index.shtml" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551240097800" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 4009-7800</a>
+          </div>
+        </div>
+
+        <div style="padding:16px 24px; border-bottom:1px solid var(--border); border-right:1px solid var(--border);">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--white); margin-bottom:3px;">Golden Tulip</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:10px;">Av. São João, 2200</div>
+          <div style="display:flex; gap:6px;">
+            <a href="https://sao-jose-dos-campos.goldentulip.com/pt-br/?gad_source=1&gad_campaignid=8514192908&gclid=CjwKCAjw6MPRBhBTEiwAd-7Mr-IisWCyMaPtrN7YcXJ9zJzOseu_0aqxAx2jdKPp7yu5Do6xq6ZYmRoCLGQQAvD_BwE" target="_blank" rel="noopener" class="pill-link" style="font-size:10px; padding:3px 9px;">Website</a>
+            <a href="tel:+551240097800" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; border:1px solid var(--border); border-radius:2px; padding:3px 9px;">+55 12 4009-7800</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════ VISA -->
+  <section id="visa">
+    <div class="section-label">Visa Requirements</div>
+    <h2>Entering <em>Brazil</em></h2>
+    <p>
+      Participants are kindly advised to contact the Consulate or Embassy of Brazil in their country to make the necessary arrangements for obtaining any visa required to enter Brazil. Please also verify whether a transit visa applies to your itinerary.
+    </p>
+
+    <div class="objective-box">
+      <p>
+        Adequate health insurance is the personal responsibility of each workshop participant. Invitation letters for visa purposes are issued only upon request and exclusively to participants who have completed the registration process.
+      </p>
+    </div>
+
+    <div class="sessions-grid" style="margin-top:28px;">
+
+      <div class="session-card">
+        <div class="session-num">ACTION 01 · INVITATION LETTER</div>
+        <h3>Request Your Invitation Letter</h3>
+        <p>To request an official invitation letter for visa purposes, write to the organizing committee after completing your registration.</p>
+        <a href="mailto:saul.juarez@inpe.br" style="display:inline-flex; align-items:center; gap:7px; margin-top:12px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--aurora); text-decoration:none; border:1px solid rgba(168,237,204,0.25); background:rgba(168,237,204,0.05); border-radius:3px; padding:7px 14px; transition:background 0.2s, border-color 0.2s;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          saul.juarez@inpe.br
+        </a>
+      </div>
+
+      <div class="session-card">
+        <div class="session-num">ACTION 02 · CONSULAR INFORMATION</div>
+        <h3>Find a Brazilian Embassy</h3>
+        <p>Locate the nearest Brazilian consular post in your country and check the latest entry requirements for Brazilian visa applicants.</p>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
+          <a href="https://www.gov.br/mre/en?set_language=en" target="_blank" rel="noopener" class="pill-link">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/></svg>
+            MRE — Visa details
+          </a>
+          <a href="https://www.gov.br/mre/pt-br/assuntos/Embaixadas-Consulados-Missoes/do-brasil-no-exterior" target="_blank" rel="noopener" class="pill-link">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="2"/></svg>
+            Locate a Brazilian Embassy
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="margin-top:20px; font-size:13.5px; color:var(--muted);">
+      Future announcements and further information will be communicated to all registered participants by email.
+    </p>
+
+  <a href="#" class="back-to-top"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</a>
+  </section>
+
+</main>
+
+<footer>
+  <div style="max-width:1000px; margin:0 auto; padding:48px 32px 32px; border-top:1px solid var(--border);">
+    <div class="ionodiet-block">
+
+      <!-- Left column: identity -->
+      <div class="ionodiet-left">
+        <div class="ionodiet-eyebrow">This workshop is a product of</div>
+        <div class="ionodiet-title">Project<br>IONO-DIET</div>
+        <div class="ionodiet-tags">
+          <span class="ionodiet-tag">FAPESP 2022/03502-6</span>
+          <span class="ionodiet-tag">ANR — AAPG2022</span>
+          <span class="ionodiet-tag">2023 – 2026</span>
+        </div>
+      </div>
+
+      <!-- Right column: description -->
+      <div class="ionodiet-right">
+        <p class="ionodiet-desc">
+          MNS4A is a direct scientific output of <em>IONO-DIET — Ionospheric Detection and Imaging of Earthquakes and Tsunamis in Near-Real Time</em>, a joint Brazil–France initiative aimed at developing the first ionosphere-based system for near-real-time detection of earthquakes and tsunamis from GNSS-TEC measurements.
+        </p>
+        <div class="ionodiet-pis">
+          <span class="ionodiet-pi-label">Principal Investigators</span>
+          <div class="ionodiet-pi-row">
+            <span class="ionodiet-pi">Dr. Esfhan Alam Kherani <a href="https://orcid.org/0000-0003-0182-2252" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="ionodiet-pi-inst">INPE</span></span>
+            <span class="ionodiet-pi-sep">·</span>
+            <span class="ionodiet-pi">Dr. Elvira Astafyeva <a href="https://orcid.org/0000-0002-3819-3835" target="_blank" rel="noopener" class="orcid-link" title="ORCID iD"><svg class="orcid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><circle fill="#A6CE39" cx="128" cy="128" r="128"/><path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.3-13.7-39.4-43.7-39.4h-23.7v79.1zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/></svg></a> <span class="ionodiet-pi-inst">IPGP / CNRS</span></span>
+          </div>
+        </div>
+        <div class="ionodiet-partners">
+          <span class="ionodiet-partner-label">Partner institutions</span>
+          <span class="ionodiet-partners-list">
+            <a href="https://www.gov.br/inpe" target="_blank" rel="noopener" class="ionodiet-partner-link">INPE</a>
+            &nbsp;·&nbsp;
+            <a href="https://www.ipgp.fr" target="_blank" rel="noopener" class="ionodiet-partner-link">IPGP</a>
+            &nbsp;·&nbsp;
+            <a href="https://www.norsar.no" target="_blank" rel="noopener" class="ionodiet-partner-link">NORSAR</a>
+            &nbsp;·&nbsp;
+            <a href="https://erau.edu" target="_blank" rel="noopener" class="ionodiet-partner-link">ERAU</a>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+
+<!-- INSTITUTION LOGOS -->
+    <div class="logos-strip">
+
+      <div class="logos-label">Financial Support</div>
+      <div class="logos-row" style="margin-bottom:28px;">
+        <a class="logo-item" href="https://fapesp.br" target="_blank" rel="noopener" title="FAPESP">
+          <img src="img/logo_fapesp.png" alt="FAPESP" class="logo-wide"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">FAPESP</div>
+        </a>
+        <a class="logo-item" href="https://anr.fr" target="_blank" rel="noopener" title="ANR">
+          <img src="img/logo_anr.png" alt="ANR"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">ANR</div>
+        </a>
+      </div>
+
+      <div class="logos-label">Realization</div>
+      <div class="logos-row" style="margin-bottom:28px;">
+        <a class="logo-item" href="https://www.gov.br/inpe" target="_blank" rel="noopener" title="INPE">
+          <img src="img/logo_inpe.png" alt="INPE"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">INPE</div>
+        </a>
+        <a class="logo-item" href="https://www.gov.br/mcti/pt-br" target="_blank" rel="noopener" title="Brasil">
+          <img src="img/logo_mcti.png" alt="Brasil" class = "logo-wide"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">Brasil</div>
+        </a>
+      </div>
+
+      <div class="logos-label">Supporting Institutions</div>
+      <div class="logos-row">
+        <a class="logo-item" href="https://www.unb.br/" target="_blank" rel="noopener" title="UnB">
+          <img src="img/logo_unb.png" alt="UnB"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">UnB</div>
+        </a>
+        <a class="logo-item" href="https://www.ipgp.fr" target="_blank" rel="noopener" title="IPGP">
+          <img src="img/logo_ipgp.png" alt="IPGP"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">IPGP</div>
+        </a>
+        <a class="logo-item" href="https://www.norsar.no" target="_blank" rel="noopener" title="NORSAR">
+          <img src="img/logo_norsar.png" alt="NORSAR"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">NORSAR</div>
+        </a>
+        <a class="logo-item" href="https://erau.edu" target="_blank" rel="noopener" title="ERAU">
+          <img src="img/logo_erau.png" alt="ERAU" class="logo-wide"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">ERAU</div>
+        </a>
+        <a class="logo-item" href="https://sbgea.org.br/" target="_blank" rel="noopener" title="SBGEA">
+          <img src="img/logo_sbgea.png" alt="SBGEA"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="logo-fallback">SBGEA</div>
+        </a>
+      </div>
+
+    </div>
+
+
+    <p style="font-size:11px; color:var(--muted); text-align:center; border-top:1px solid var(--border); padding-top:20px; letter-spacing:0.05em;">Organized by the MNS4A Local &amp; Scientific Organizing Committee (SOC) · INPE — São José dos Campos</p>
+  </div>
+</footer>
+
+<!-- PROGRAMA:MODAL:INICIO — gerado por gerar_agenda.py; não edite à mão -->
+<dialog id="abstract-dialog" class="abs-dialog" aria-labelledby="abs-title">
+  <div class="abs-card">
+    <button type="button" class="abs-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="abs-eyebrow"></div>
+    <h3 class="abs-title" id="abs-title"></h3>
+    <div class="abs-authors"></div>
+    <div class="abs-affils"></div>
+    <div class="abs-presenter"></div>
+    <div class="abs-label">Abstract</div>
+    <div class="abs-body"></div>
+  </div>
+</dialog>
+<script type="application/json" id="programa-data">
+{
+"T20260930-185236324":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"09:40","fim":"10:00","titulo":"Bolide Explosions and Climate Change in the Upper Atmosphere: Possible Implications for VLEO/LEO Satellites and Space Debris","autores":[{"n":"Alexandre Alvares Pimenta","m":"1"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research - INPE"}],"apresentador":"","abstract":["The upper atmosphere responds to natural disturbances and climate-driven forcing over a broad range of temporal and spatial scales. Understanding these responses is increasingly important because variations in atmospheric temperature and neutral density may affect satellite in Very Low Earth Orbit (VLEO) and Low Earth Orbit (LEO). A remarkable example of an impulsive natural disturbance was the super-bolide observed over southeastern Brazil on 25 May 2023. The event released an estimated energy equivalent to approximately 21 kilotons of TNT, with the main explosion occurring at approximately 96–99 km altitude. The observations indicate that energetic bolide explosions can be associated with measurable upper-atmospheric perturbations and raise the possibility that sufficiently intense events may temporarily modify the aerodynamic environment encountered by objects in very low orbits. At much longer timescales, increasing atmospheric CO₂ can enhance radiative cooling in the mesosphere and lower thermosphere (MLT). Integrating ground-based and space-based observations with atmospheric modeling is therefore essential for quantifying these responses and assessing their implications for VLEO/LEO satellite operations, orbital decay, and the long-term persistence of space debris."]},
+"T20260918-084719684":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"10:00","fim":"10:20","titulo":"Monitoring Atmospheric Responses to Natural Hazards Using Meteor Radar: Detection of the Lamb Wave from the 2022 Hunga Tonga Eruption","autores":[{"n":"Vania F Andrioli","m":"1"},{"n":"Saul Alejandro Sanches Juarez","m":"1"},{"n":"Paulo P. Batista","m":"1"},{"n":"Alexandre Pimenta","m":"1"},{"n":"Hisao Takahashi","m":"1"},{"n":"Esfhan Alam Kherani","m":"1"},{"n":"Maria Paulete Martins","m":"1"},{"n":"Femi Olajide-Owoyomi","m":"1"},{"n":"Rodolfo de Jesus","m":"1,2,3"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research (INPE), São José dos Campos, SP, Brazil"},{"m":"2","t":"State Key Laboratory for Space Weather, National Space Science Center, Chinese Academy of Sciences, Beijing, China"},{"m":"3","t":"China-Brazil Joint Laboratory for Space Weather, NSSC/INPE, São José dos Campos, SP, Brazil"}],"apresentador":"","abstract":["The eruption of the Hunga Tonga–Hunga Ha'apai volcano on 15 January 2022 generated one of the most intense atmospheric disturbances observed in recent decades, producing a global-scale Lamb wave that propagated through the atmosphere. In this study, we investigate the detection of the atmospheric response to the eruption using meteor radar observations from Cachoeira Paulista (22.7°S, 45.0°W), Brazil. Horizontal winds in the mesosphere and lower thermosphere (MLT) region were analyzed to identify perturbations associated with the passage of the Lamb wave over South America. The observations revealed a coherent disturbance in the mesospheric winds following the eruption, with characteristics consistent with the propagation of the Lamb wave. This study demonstrates the capability of meteor radar systems to detect and characterize atmospheric disturbances generated by major natural hazards, highlighting the importance of continuous ground-based observations for monitoring the coupling between the lower and upper atmosphere. The results also emphasize the value of long-term meteor radar networks for investigating the atmospheric impacts of extreme geophysical events and improving our understanding of vertical coupling processes in the Earth's atmosphere."]},
+"T20260818-105547803":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"10:50","fim":"11:10","titulo":"Modernization, Structure and Applications of the Observatório Nacional Geomagnetic Network","autores":[{"n":"Gabriel Brando","m":"1"},{"n":"Plinio Jaqueto","m":"1"},{"n":"Edwin Camacho","m":"1"},{"n":"José Alejandro Alfonzo","m":"1"},{"n":"André Wiermann","m":"1"},{"n":"Luiz Benyosef","m":"1"},{"n":"Fábio Vieira","m":"1"},{"n":"Cristiano Mendel","m":"2"},{"n":"Jürgen Matzka","m":"3"},{"n":"Marcos Vinicius da Silva","m":"3"}],"afiliacoes":[{"m":"1","t":"Observatório Nacional, Brazil"},{"m":"2","t":"Universidade Federal do Pará, Brazil"},{"m":"3","t":"GFZ Helmholtz Centre for Geosciences, Germany"}],"apresentador":"","abstract":["Observatório Nacional (ON) is a Brazilian research institute that has been performing magnetic measurements since its creation nearly 200 years ago. Historically, ON is in charge of specific geomagnetic networks in Brazil, including geomagnetic observatories (Vassouras and Tatuoca) and repeat stations (over 175 stations). The presentation will be structured in three parts. In the first part, we will highlight some recent efforts implemented to modernize ON’s geomagnetic network, going through instrumentation, best practices of operations and data processing. As a consequence, we will also demonstrate how the modernization led to new applications of the data, which includes geomagnetic modeling, industry applications and research about ionospheric processes. In the second part of the presentation, we will focus on the motivation, concept and applications of the 5-years old Macapá magnetic station installed in the equatorial region of Brazil through a cooperation with Universidade Federal do Pará (Brazil) and GFZ Helmholtz Centre for Geosciences (Germany). The third part will deal with the near future planning for ON’s network and our recent developments on magnetic sensor manufacturing."]},
+"T20260829-132411672":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"13:40","fim":"14:00","titulo":"Cusp-Type Sporadic-E Layers at São José dos Campos and Palmas Low-Latitude Stations: Morphology, Altitude Distribution and Tidal Modulation","autores":[{"n":"Olufemi L. Ogunmola","m":"1"},{"n":"Marcio T. A. H. Muella","m":"1"},{"n":"Paulo R. Fagundes","m":"1"},{"n":"Valdir G. Pillat","m":"1"},{"n":"Peter T. Muka","m":"1"},{"n":"Thiago A. M. Mancilla","m":"1"}],"afiliacoes":[{"m":"1","t":"Universidade do Vale do Paraíba (IP\u0026D – Laboratório de Física e Astronomia), São José dos Campos, SP - Brasil"}],"apresentador":"","abstract":["This study investigates the characteristic behavior of cusp-type sporadic E (〖Es〗_c ) layers over the Brazilian sector using ionosonde observations from São José dos Campos (〖23.2〗^° S,〖45.8〗^° W,dip lat.: 〖21.0〗^° S) and Palmas (〖10.3〗^° S,〖48.3〗^° W,dip lat.:〖09.03〗^° S) during December 2008 to November 2009. Measurements were obtained using Canadian Advanced Digital Ionosonde (CADI) systems and analyzed on a seasonal basis. At the São José dos Campos and Palmas stations, Es layers were morphologically classified, with 〖Es〗_c treated as a distinct subclass from other Es morphologies. The 〖Es〗_c morphology exhibited two characteristic trace signatures: symmetric and asymmetric. Symmetric cusp traces generally occurred at mean virtual heights of approximately 100 – 105 km, whereas asymmetric cusps tended to occur at higher altitudes. The higher-altitude occurrence of asymmetric cusps may indicate the downward progression of higher-type Es layers, typically observed at approximately 120 – 140 km, toward the lower-altitude asymmetric cusp morphology. Wavelet and spectral analyses of the Es parameters at São José dos Campos and Palmas revealed periodicities ranging from 3 to 24 h, consistent with modulation by atmospheric tides. Enhanced power at periods shorter than 12 h was observed at São José dos Campos, while 6 – 8 h oscillations were particularly evident at Palmas during autumn, winter, and spring."]},
+"T20260829-233025150":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"14:00","fim":"14:20","titulo":"Multi-Instrument Ground Networks for Equatorial Aeronomy","autores":[{"n":"D. Scipion","m":"1"},{"n":"K. Kuyeng","m":"1"},{"n":"C. De La Jara","m":"1"},{"n":"J. Espinoza","m":"1"},{"n":"C. Valladares","m":"2"},{"n":"F. Rodrigues","m":"3"},{"n":"J. Chau","m":"4"}],"afiliacoes":[{"m":"1","t":"Observatorio Geofísico de Jicamarca, Instituto Geofísico del Perú"},{"m":"2","t":"Boston University"},{"m":"3","t":"University of Texas at Dallas"},{"m":"4","t":"Leibniz Institute of Atmospheric Physics"}],"apresentador":"","abstract":["Characterizing atmosphere–ionosphere coupling and low-latitude space weather requires coordinated observations from complementary ground-based sensors. The Jicamarca Geophysical Observatory (JGO) operates active and passive observing systems and coordinates the Low-Latitude Ionospheric Sensor Network (LISN), comprising magnetometers, GNSS receivers, and ionosondes distributed across South America. To address regional coverage gaps, LISN has incorporated low-cost (~US$5,000) portable oblique-sounding receivers based on USRP and GNU Radio. These measurements are complemented by a novel ionospheric inversion methodology that combines ray tracing and Particle Swarm Optimization (PSO) to reconstruct partial ionospheric profiles in near real time. JGO also operates the AMISR-14 array alongside the main radar and supports the SIMONe meteor radar network, with stations in northern and central Peru, to measure mesospheric winds and meteor dynamics. Together, these coordinated networks provide multi-instrument observations in near real time to support the Peruvian Space Weather Monitoring Center, enabling continuous space-weather hazard analysis. They also provide essential datasets for constraining and validating global atmospheric and ionospheric climatological models."]},
+"T20260930-141725462":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"14:20","fim":"14:40","titulo":"The Brazilian Digisonde and Fabry–Perot Network: Current Status, Scientific Applications, and Perspectives for Expansion","autores":[{"n":"Ângela Machado dos Santos","m":"1"},{"n":"Jonas Rodrigues de Souza","m":"1"},{"n":"Inez Staciarini Batista","m":"1"},{"n":"Robert Kerr","m":"2"},{"n":"Juanita Riccobono","m":"2"},{"n":"Mike Migliozzi","m":"2"},{"n":"Sudha Kapali","m":"2"},{"n":"Patrick Dandenault","m":"3"},{"n":"Rafael Luiz Araujo de Mesquita","m":"4"},{"n":"Alexandre Álvares Pimenta","m":"1"},{"n":"Lucas Vaz Peres","m":"4"},{"n":"Rodrigo Silva","m":"4"},{"n":"Theomar Neves","m":"4"},{"n":"Cristiano Wrasse","m":"1"},{"n":"Chunxiau Yan","m":"5"},{"n":"Zhengkuan Liu","m":"5"}],"afiliacoes":[{"m":"1","t":"National Institute for Space Research, São José dos Campos, SP, Brazil"},{"m":"2","t":"Computational Physics Inc., Lowell, MA, USA"},{"m":"3","t":"Johns Hopkins University Applied Physics Laboratory, Laurel, MD, USA"},{"m":"4","t":"Federal University of Western Pará, Santarém, Brazil"},{"m":"5","t":"State Key Laboratory of Space Weather, NSSC/CAS, Beijing, China"}],"apresentador":"","abstract":["Ground-based observations are essential for investigating the electrodynamics and variability of the equatorial and low-latitude ionosphere, particularly during space-weather events. Brazil offers an unique geomagnetic domain for such studies, extending from the low northern latitudes, through the equatorial latitudes, to the low southern latitudes. Here, we present the current status and scientific potential of the Brazilian network of ionosondes and Fabry–Perot interferometers, focusing on ionospheric electrodynamics, atmosphere–ionosphere coupling, and space weather. The Digisonde network comprises stations at Boa Vista (2.82°N, 60.67°W), Santarém (2.44°S, 54.70°W), Fortaleza (3.72°S, 38.52°W), São Luís (2.59°S, 44.21°W), Campo Grande (20.44°S, 54.54°W), Cachoeira Paulista (22.68°S, 45.00°W), Santa Maria (29.69°S, 53.81°W), and Juazeirinho (7.07°S, 36.58°W), providing observations over a broad range of latitudes. Fabry–Perot observations at Cachoeira Paulista and Santarém complement these measurements with thermospheric neutral-wind observations. The combined dataset supports studies of the equatorial ionization anomaly, pre-reversal enhancement, plasma drifts, equatorial plasma bubbles, atmospheric and ionospheric disturbances, and storm-time responses. We also highlight the importance of open data access, collaborative use, long-term maintenance, and network expansion to strengthen Brazilian aeronomy research and foster scientific collaborations."]},
+"T20260930-231819644":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"15:00","fim":"15:20","titulo":"NRT-TECPRO: Near-Real-Time GNSS Ionospheric Monitoring for Natural Hazard Detection","autores":[{"n":"S. A. Sanchez","m":"1"},{"n":"E. A. Kherani","m":"1"},{"n":"E. Astafyeva","m":"2"},{"n":"B. Maletckii","m":"3"},{"n":"A. P. Almeida","m":"4"},{"n":"R. H. Honda","m":"1"}],"afiliacoes":[{"m":"1","t":"INPE, Brasil"},{"m":"2","t":"IPGP, Paris"},{"m":"3","t":"Earthquake Research Institute of the University of Tokyo, Japan"},{"m":"4","t":"Universidade Presbiteriana Mackenzie, Brasil"}],"apresentador":"Saul A Snnchez","abstract":["NRT-TECPRO is an open, automated platform that combines real-time seismic signals with multi-constellation satellite observations (GPS, GLONASS, Galileo, and BeiDou), delivering processed GNSS metrics with only a 2-to-5-minute latency. Its core engine automatically calculates key ionospheric variations (TEC, dTEC, and ROTI), made instantly available through interactive dashboards and APIs. By correlating ground seismic activity with upper-atmosphere disturbances, NRT-TECPRO transforms complex data streams into critical operational intelligence for tsunami early warning systems, space weather monitoring, and disaster mitigation"]},
+"T20260712-185417959":{"tipo":"oral","rotulo":"Oral presentation","dia":2,"data":"20 October","tema":"Networks","inicio":"15:20","fim":"15:40","titulo":"Unexpected Suppression and Longitudinal Asymmetry of Equatorial Plasma Bubbles during the 7–8 October 2024 Geomagnetic Storm over the American Sector","autores":[{"n":"Carolina de Sousa do Carmo","m":"1,3"},{"n":"Lei Dai","m":"2"},{"n":"Cristiano Max Wrasse","m":"3"},{"n":"Diego Barros Silva","m":"3"},{"n":"Hisao Takahashi","m":"3"},{"n":"Joaquim Eduardo Rezende Costa","m":"3"},{"n":"Luiz Fillip Rodrigues Vital","m":"4"},{"n":"Paulo Ricardo Jauer","m":"3"},{"n":"Cesar De La Jara","m":"5"},{"n":"Alexander José Carrasco","m":"6"},{"n":"Cosme Alexandre Oliveira Barros Figueiredo","m":"7"},{"n":"Chi Wang","m":"2"},{"n":"Hui Li","m":"2"},{"n":"Liu Zhengkuan","m":"2"}],"afiliacoes":[{"m":"1","t":"China-Brazil Joint Laboratory for Space Weather (CBJLSW)"},{"m":"2","t":"State Key Laboratory of Space Weather (NSSC/CAS)"},{"m":"3","t":"National Institute for Space Research (INPE)"},{"m":"4","t":"Paraíba State University (UEPB)"},{"m":"5","t":"Instituto Geofísico del Perú"},{"m":"6","t":"University of the Andes (ULA)"},{"m":"7","t":"Federal University of Campina Grande (UFCG)"}],"apresentador":"","abstract":["This study investigates the ionospheric response to the moderate (G2) geomagnetic storm of 7–8 October 2024 over the American sector, with emphasis on the generation and suppression of equatorial plasma bubbles (EPBs). A comprehensive analysis was performed using GNSS-derived total electron content (TEC) and rate of TEC index (ROTI), ionosonde observations from Jicamarca (JICA) and São Luís (SALU), and thermospheric neutral wind measurements from the Fabry–Perot interferometer at Cachoeira Paulista (CHPI). Although the storm produced favorable conditions for EPB development, including a pronounced pre-reversal enhancement (PRE) with vertical plasma drifts exceeding 40 m/s, post-sunset EPBs were unexpectedly suppressed. In addition, post-midnight EPBs developed only over the western side of the Latin American sector, while no plasma irregularities were detected over the eastern sector, revealing a marked longitudinal asymmetry in EPB occurrence. The suppression of post-sunset EPBs and the absence of post-midnight EPBs in the eastern sector may be associated with the combined influence of disturbed meridional winds and enhanced E-region conductivity related to the presence of a sporadic E (Es) layer. These results demonstrate that even moderate geomagnetic storms can produce complex and regionally distinct ionospheric responses, highlighting the important role of local electrodynamic and neutral atmospheric processes in controlling EPB development and suppression."]}
+}
+</script>
+<script>
+(function () {
+  var dlg = document.getElementById('abstract-dialog');
+  var store = document.getElementById('programa-data');
+  if (!dlg || !store) return;
+  var data = {};
+  try { data = JSON.parse(store.textContent); } catch (e) { return; }
+  var trigger = null;
+  function q(sel) { return dlg.querySelector(sel); }
+
+  function fill(id) {
+    var t = data[id];
+    if (!t) return false;
+    dlg.setAttribute('data-tipo', t.tipo);
+    q('.abs-eyebrow').textContent = ['Day ' + t.dia, t.tema, t.data, t.inicio + '\u2013' + t.fim, t.rotulo]
+      .filter(Boolean).join(' \u00b7 ');
+    q('.abs-title').textContent = t.titulo;
+    var au = q('.abs-authors');
+    au.textContent = '';
+    (t.autores || []).forEach(function (a, i) {
+      if (i) au.appendChild(document.createTextNode('; '));
+      au.appendChild(document.createTextNode(a.n));
+      if (a.m) { var sp = document.createElement('sup'); sp.textContent = a.m; au.appendChild(sp); }
+    });
+    var aff = q('.abs-affils');
+    aff.textContent = '';
+    (t.afiliacoes || []).forEach(function (a) {
+      var d = document.createElement('div');
+      if (a.m) { var sp = document.createElement('sup'); sp.textContent = a.m; d.appendChild(sp); }
+      d.appendChild(document.createTextNode((a.m ? ' ' : '') + a.t));
+      aff.appendChild(d);
+    });
+    var pr = q('.abs-presenter');
+    pr.textContent = t.apresentador ? 'Presenting author: ' + t.apresentador : '';
+    pr.style.display = t.apresentador ? '' : 'none';
+    var body = q('.abs-body');
+    body.textContent = '';
+    (t.abstract || []).forEach(function (p) {
+      var el = document.createElement('p');
+      el.textContent = p;
+      body.appendChild(el);
+    });
+    q('.abs-card').scrollTop = 0;
+    return true;
+  }
+
+  function onClosed() {
+    document.documentElement.classList.remove('abs-open');
+    if (trigger && trigger.focus) trigger.focus();
+    trigger = null;
+  }
+
+  function openDialog(id, el) {
+    if (!fill(id)) return;
+    trigger = el || null;
+    document.documentElement.classList.add('abs-open');
+    if (typeof dlg.showModal === 'function') { if (!dlg.open) dlg.showModal(); }
+    else { dlg.setAttribute('open', ''); }
+  }
+
+  function closeDialog() {
+    if (typeof dlg.close === 'function') { dlg.close(); }
+    else { dlg.removeAttribute('open'); onClosed(); }
+  }
+
+  dlg.addEventListener('close', onClosed);
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.talk-link[data-id]') : null;
+    if (b) { openDialog(b.getAttribute('data-id'), b); return; }
+    var aberto = dlg.open || dlg.hasAttribute('open');
+    if (aberto && (e.target === dlg || (e.target.closest && e.target.closest('.abs-close')))) closeDialog();
+  });
+})();
+</script>
+<!-- PROGRAMA:MODAL:FIM -->
+
+<script>
+/* Menu (botão ☰): abre/fecha a lista de links */
+(function () {
+  var nav = document.querySelector('nav');
+  var btn = nav && nav.querySelector('.nav-toggle');
+  if (!btn) return;
+  function set(open) {
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  btn.addEventListener('click', function () { set(!nav.classList.contains('open')); });
+  nav.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.nav-links a, .nav-btn, .nav-submit')) set(false); });
+  document.addEventListener('click', function (e) { if (!nav.contains(e.target)) set(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('open')) { set(false); btn.focus(); }
+  });
+})();
+</script>
+
+</body>
+</html>

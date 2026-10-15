@@ -1,0 +1,112 @@
+% =====================================================================
+% MNS4A certificate - all text placed over the background image
+%
+% Put the background image (logos, MNS4A header, frame; WITHOUT any of
+% the text below) in the same folder as fundo.jpg (or change \fundo).
+% Compile with: pdflatex certificado_mns4a_texto.tex
+%
+% Usage (one page per certificate):
+%   \certificado{Name}{Paragraph text}
+% Use \\ inside the paragraph for the line break.
+% The fixed texts (title, "This is to certify that", signatories) are
+% defined in the configuration block below.
+% =====================================================================
+\documentclass[a4paper,landscape]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,landscape,margin=0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{helvet}
+\usepackage{mathpazo}   % serif font for the name
+\renewcommand{\familydefault}{\sfdefault}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\definecolor{navy}{HTML}{0B2A5B}
+\definecolor{bluetext}{HTML}{1F4E8C}
+
+% ---------- Configuration ----------
+\newcommand{\fundo}{fundo.jpg}   % background image
+
+% Fixed texts
+\newcommand{\titulo}{CERTIFICATE OF RECOGNITION}
+\newcommand{\certifythat}{This is to certify that}
+
+% Signatories
+\newcommand{\assinanteA}{Dr. Esfhan Alam Kherani}
+\newcommand{\cargoA}{Chair of NMS4A}
+\newcommand{\assinanteB}{Dr. L\'aysa Cristina Araujo Resende Chagas}
+\newcommand{\cargoB}{President of SBGEA}
+
+% Vertical positions (distance from the top of the page) - adjust if needed
+\newcommand{\ytitulo}{8.0cm}
+\newcommand{\ycertify}{9.6cm}
+\newcommand{\ynome}{11.6cm}
+\newcommand{\ycorpo}{14.2cm}
+\newcommand{\yassin}{18.0cm}
+
+% ---------- One certificate ----------
+% #1 name | #2 paragraph text
+\newcommand{\certificado}[2]{%
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture,overlay,shift={(current page.north west)}]
+    \node[anchor=north west,inner sep=0] at (0,0)
+      {\includegraphics[width=\paperwidth,height=\paperheight]{\fundo}};
+    % Title
+    \node[font=\LARGE\color{bluetext}]
+      at (0.5\paperwidth,-\ytitulo) {\titulo};
+    % "This is to certify that"
+    \node[font=\large\color{navy}]
+      at (0.5\paperwidth,-\ycertify) {\certifythat};
+    % Name
+    \node[font=\fontsize{28}{32}\selectfont\bfseries\rmfamily\color{navy}]
+      at (0.5\paperwidth,-\ynome) {#1};
+    % Body
+    \node[font=\Large\color{navy},text width=0.95\paperwidth,align=center]
+      at (0.5\paperwidth,-\ycorpo) {#2};
+    % Signatories
+    \node[align=center,font=\normalsize\color{navy}]
+      at (0.328\paperwidth,-\yassin) {{\bfseries\assinanteA}\\\cargoA};
+    \node[align=center,font=\normalsize\color{navy}]
+      at (0.715\paperwidth,-\yassin) {{\bfseries\assinanteB}\\\cargoB};
+  \end{tikzpicture}%
+  \clearpage}
+
+% ---------- Default texts for presentation certificates ----------
+% #1 presenter name | #2 title of the work | #3 session name
+\newcommand{\localdata}{of the MNS4A Workshop,
+  held in S\~ao Jos\'e dos Campos (SP), Brazil, from 19 to 21 October 2026.}
+
+% Oral presentation
+\newcommand{\oral}[3]{%
+  \certificado{#1}{has presented the oral talk entitled {\bfseries ``#2''}
+    in the Session ``#3'' \localdata}}
+
+% Poster presentation
+\newcommand{\poster}[3]{%
+  \certificado{#1}{has presented the poster entitled {\bfseries ``#2''}
+    in the Session ``#3'' \localdata}}
+
+% Invited talk
+\newcommand{\convidado}[3]{%
+  \certificado{#1}{has presented the invited talk entitled {\bfseries ``#2''}
+    in the Session ``#3'' \localdata}}
+
+% ---------- Default text for attendee (listener) certificates ----------
+% #1 attendee name
+\newcommand{\ouvinte}[1]{{%
+  \renewcommand{\titulo}{CERTIFICATE OF PARTICIPATION}%
+  \certificado{#1}{has attended the MNS4A Workshop,
+    held in S\~ao Jos\'e dos Campos (SP), Brazil, from 19 to 21 October 2026.}}}
+
+\begin{document}
+
+% Examples (one of each type)
+\oral{Presenter Name}{Title of the Presented Work}{Session Name}
+\poster{Presenter Name}{Title of the Presented Work}{Session Name}
+\convidado{Presenter Name}{Title of the Presented Work}{Session Name}
+\ouvinte{Attendee Name}
+
+\end{document}
