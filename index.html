@@ -2280,6 +2280,11 @@
   /* Highlights: botão dourado */
   .nav-btn.nav-highlights { color: var(--gold); background: rgba(240, 192, 96, 0.14); border-color: var(--gold); }
   .nav-btn.nav-highlights:hover, .nav-btn.nav-highlights:focus-visible { color: var(--navy); background: var(--gold); }
+  .album-cover .gallery-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .alb-error { margin: 8px 0; padding: 16px 18px; font-size: 14px; line-height: 1.7; color: #ffb4b4;
+    background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.4); border-radius: 4px; }
+  .alb-error code { font-family: 'DM Mono', monospace; font-size: 12.5px; color: #ffd6d6; }
 </style>
 </head>
 <body>
@@ -2417,7 +2422,7 @@
         <img src="img/gallery/capa.jpg" alt="MNS4A workshop photo album cover" onerror="this.style.display='none'">
         <span class="album-cover-info">
           <span class="album-cover-title">Photo album</span>
-          <span class="album-cover-cta">View all <span class="album-count">0</span> photos &rarr;</span>
+          <span class="album-cover-cta">Open album &rarr;</span>
         </span>
       </button>
     </div>
@@ -3404,19 +3409,18 @@
   <div class="lb-stage"><img alt=""></div>
   <div class="lb-bar"><span class="lb-caption"></span><span class="lb-count"></span></div>
 </dialog>
+<script src="img/gallery/photos.js"></script>
 <script>
-/* ÁLBUM — a lista de fotos vem de  img/gallery/photos.json  (gerado por gerar_fotos.py; não precisa renomear nada).
+/* ÁLBUM — a lista de fotos vem de img/gallery/photos.js (ou photos.json), gerados por gerar_fotos.py; não precisa renomear nada.
    Fotos grandes: img/gallery/<nome>.jpg      Miniaturas (opcionais): img/gallery/thumbs/<mesmo nome>.jpg
    A capa é img/gallery/capa.jpg (no HTML da seção #overview).
-   Sem o photos.json (ex.: abrindo o arquivo direto do disco), usa o esquema numerado abaixo como reserva. */
+   Se o photos.json não carregar, o álbum mostra o motivo na própria janela. */
 (function () {
   var ALBUM = {
     manifest: 'img/gallery/photos.json',
     dir: 'img/gallery/',
     thumbDir: 'img/gallery/thumbs/',
-    batch: 30,                      // quantas miniaturas aparecem por vez ("Load more")
-    // reserva (só se o photos.json não existir): foto-001.jpg ... foto-NNN.jpg
-    fallback: { count: 12, prefix: 'foto-', digits: 3, ext: '.jpg' }
+    batch: 30                       // quantas miniaturas aparecem por vez ("Load more")
   };
 
   var album = document.getElementById('album'), lb = document.getElementById('lightbox');
@@ -3432,27 +3436,50 @@
   function cap(i) { return photos[i - 1].caption || ''; }
   function src(base, i) { return base + encodeURIComponent(file(i)).replace(/%2F/g, '/'); }
 
+  var loadError = '';
   function setPhotos(list) {
     photos = list; shown = 0; grid.textContent = '';
-    Array.prototype.forEach.call(document.querySelectorAll('.album-count'), function (el) { el.textContent = N(); });
-    album.querySelector('.alb-total').textContent = N() + ' photos';
+    Array.prototype.forEach.call(document.querySelectorAll('.album-cover-cta'), function (el) {
+      el.innerHTML = N() ? 'View all <span class="album-count">' + N() + '</span> photos &rarr;' : 'Open album &rarr;';
+    });
+    album.querySelector('.alb-total').textContent = N() ? N() + ' photos' : '';
     if (album.open || album.hasAttribute('open')) render();
   }
-  (function () {
-    var f = ALBUM.fallback, list = [];
-    for (var i = 1; i <= f.count; i++) { var n = String(i); while (n.length < f.digits) n = '0' + n; list.push({ file: f.prefix + n + f.ext, caption: '' }); }
-    setPhotos(list);
-  })();
-  if (window.fetch) {
-    fetch(ALBUM.manifest, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (j) {
-      var arr = Array.isArray(j) ? j : (j && j.photos) || [];
-      var list = arr.map(function (x) { return typeof x === 'string' ? { file: x, caption: '' } : { file: x.file, caption: x.caption || '' }; })
-                    .filter(function (x) { return x.file; });
-      if (list.length) setPhotos(list);
-    }).catch(function () {});
+  function toList(j) {
+    var arr = Array.isArray(j) ? j : (j && j.photos) || [];
+    return arr.map(function (x) { return typeof x === 'string' ? { file: x, caption: '' } : { file: x.file, caption: x.caption || '' }; })
+              .filter(function (x) { return x.file; });
+  }
+  setPhotos([]);
+  var pre = window.MNS4A_PHOTOS ? toList(window.MNS4A_PHOTOS) : [];   // img/gallery/photos.js (funciona até abrindo o arquivo direto do disco)
+  if (pre.length) {
+    setPhotos(pre);
+  } else if (window.fetch) {
+    fetch(ALBUM.manifest, { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (j) {
+      var list = toList(j);
+      if (!list.length) throw new Error('lista vazia');
+      loadError = ''; setPhotos(list);
+    }).catch(function (err) { fail(err); });
+  } else { fail(new Error('navegador sem suporte a fetch')); }
+  function fail(err) {
+    var why = location.protocol === 'file:'
+      ? 'A página foi aberta direto do disco (file://), e o navegador bloqueia a leitura da lista. Abra por um servidor (ex.: python3 -m http.server e depois http://localhost:8000) ou pelo site publicado.'
+      : 'Confira se o arquivo existe em ' + ALBUM.manifest + ', se foi publicado e se o JSON é válido.';
+    loadError = 'Não foi possível carregar a lista de fotos (' + ALBUM.manifest + '). ' + why + ' Detalhe: ' + (err && err.message ? err.message : err);
+    if (window.console) console.warn('MNS4A album: ' + loadError);
+    if (album.open || album.hasAttribute('open')) render();
   }
 
   function render() {
+    if (!N()) {
+      grid.textContent = '';
+      var d = document.createElement('div'); d.className = 'alb-error';
+      d.textContent = loadError || 'Carregando fotos…';
+      grid.appendChild(d); moreWrap.hidden = true; return;
+    }
     var end = Math.min(shown + ALBUM.batch, N()), frag = document.createDocumentFragment();
     for (var i = shown + 1; i <= end; i++) {
       var f = document.createElement('figure');
@@ -3474,7 +3501,7 @@
 
   function openAlbum(el) {
     trigger = el || null;
-    if (!shown) render();
+    if (!shown || !N()) render();
     document.documentElement.classList.add('abs-open');
     if (typeof album.showModal === 'function') { if (!album.open) album.showModal(); } else { album.setAttribute('open', ''); }
   }
